@@ -4,9 +4,8 @@ setwd("~")
 library(dplyr)
 
 inp <- "/home/dhjs/Documentos/R_projects/electoral_accountability/datos"
-
-out <- "/home/dhjs/Documentos/R_projects/electoral_accountability/databases"
 list.files(inp)
+out <- "/home/dhjs/Documentos/R_projects/electoral_accountability/databases"
 
 data <- read.csv(paste(inp, "data.csv", sep = "/"))
 

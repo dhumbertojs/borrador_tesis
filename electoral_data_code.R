@@ -4,6 +4,8 @@ setwd("~")
 library(dplyr)
 
 inp <- "/home/dhjs/Documentos/R_projects/electoral_accountability/datos"
+
+out <- "/home/dhjs/Documentos/R_projects/electoral_accountability/databases"
 list.files(inp)
 
 data <- read.csv(paste(inp, "data.csv", sep = "/"))
@@ -34,3 +36,4 @@ data <- data %>%
   ungroup()
 
 ##20,725 observaciones: sin NA de Oaxaca, sin tomar en cuenta "Otros" partidos" 
+write.csv(data, paste(out, "Electoral.csv", sep = "/"), row.names = F)

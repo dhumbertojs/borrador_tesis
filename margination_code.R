@@ -2,6 +2,7 @@ rm(list = ls())
 setwd("~")
 
 library(dplyr)
+library(stringr)
 
 inp <- "/home/dhjs/Documentos/R_projects/electoral_accountability/datos"
 list.files(inp)
@@ -15,7 +16,8 @@ mar <- mar %>%
   mutate(
     IM = as.numeric(IM),
     POB_TOT = as.numeric(POB_TOT),
-    CVE_MUN = as.character(formatC(CVE_MUN, , width=5, format="d", flag = "0")),
+    #CVE_MUN = paste0("0", CVE_MUN),
+    CVE_MUN = str_pad(CVE_MUN, width = 5, side = "left", pad = "0"),
     muniYear = paste(CVE_MUN, AÑO, sep = "_")
   )
 
@@ -241,7 +243,9 @@ mar <- bind_rows(list(mar, t.91, t.92, t.93, t.94, t.96,
                       t.97, t.98, t.99, t.01, t.02, t.03, 
                       t.04, t.06, t.07, t.08, t.09, t.11, 
                       t.12, t.13, t.14))
-mar <- select(mar, muniYear, IM, POB_TOT)
+mar <- mar %>% 
+  select(muniYear, IM, POB_TOT) %>% 
+  mutate(POB_TOT = round(POB_TOT))
 
 as.data.frame(mar, row.names = NULL)
 write.csv (mar, paste(out, "margination.csv", sep = "/"), row.names = F)

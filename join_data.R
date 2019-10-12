@@ -64,8 +64,11 @@ try <- try %>%
  ungroup() %>% 
   select(-c(agua, dren, elec, tot_del, hom, 
             t.agua, t.dren, t.elec, t.del, t.hom, 
-            lt.agua, lt.dren, lt.elec, lt.del, lt.hom))
-   
+            lt.agua, lt.dren, lt.elec, lt.del, lt.hom)) %>% 
+  filter(win_top != "Otros") %>% 
+  mutate(alt = ifelse(as.character(win_top) != as.character(inc_top), 1, 0))
+nrow(try)
 ##Con esta transformación me quedan 10,587 observaciones
+#despues del filter son 10,230
 
 write.csv(try, paste(out, "final.csv", sep = "/"), row.names = F)

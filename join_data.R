@@ -33,7 +33,8 @@ ele <- ele %>%
 # #64,710 observaciones
 
 try <- inner_join(ele, ser, by = "muniYear")
-try <- inner_join(try, cri, by = "muniYear")
+try <- left_join(try, cri, by = "muniYear")
+#13,373
 try <- inner_join(try, mar, by = "muniYear")
 #11,142 observaciones
 

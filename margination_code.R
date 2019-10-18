@@ -16,7 +16,6 @@ mar <- mar %>%
   mutate(
     IM = as.numeric(IM),
     POB_TOT = as.numeric(POB_TOT),
-    #CVE_MUN = paste0("0", CVE_MUN),
     CVE_MUN = str_pad(CVE_MUN, width = 5, side = "left", pad = "0"),
     muniYear = paste(CVE_MUN, AÑO, sep = "_")
   )

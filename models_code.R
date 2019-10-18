@@ -5,6 +5,7 @@ library(dplyr)
 library(stargazer)
 library(lfe)
 library(lme4)
+library(glmmML)
 
 inp <- "/home/dhjs/Documentos/R_projects/electoral_accountability"
 list.files(inp)
@@ -33,29 +34,38 @@ data <- read.csv(paste(inp, "final.csv", sep = "/"))
 # t4 <- lm(inc.ch ~ ch.del + log(POB_TOT) + IM + conco, data)
 # t5 <- lm(inc.ch ~ ch.hom + log(POB_TOT) + IM + conco, data)
 # 
-# t6 <- glm(alt ~ ch.agua + log(POB_TOT) + IM + conco, data, family = binomial(link = "probit"))
-# t7 <- glm(alt ~ ch.elec + log(POB_TOT) + IM + conco, data, family = binomial(link = "probit"))
-# t8 <- glm(alt ~ ch.dren + log(POB_TOT) + IM + conco, data, family = binomial(link = "probit"))
-# t9 <- glm(alt ~ ch.del + log(POB_TOT) + IM + conco, data, family = binomial(link = "probit"))
-# t10 <- glm(alt ~ ch.hom + log(POB_TOT) + IM + conco, data, family = binomial(link = "probit"))
+# t6 <- glm(alt ~ ch.agua + log(POB_TOT) + IM + conco, data, family = binomial(link = "logit"))
+# t7 <- glm(alt ~ ch.elec + log(POB_TOT) + IM + conco, data, family = binomial(link = "logit"))
+# t8 <- glm(alt ~ ch.dren + log(POB_TOT) + IM + conco, data, family = binomial(link = "logit"))
+# t9 <- glm(alt ~ ch.del + log(POB_TOT) + IM + conco, data, family = binomial(link = "logit"))
+# t10 <- glm(alt ~ ch.hom + log(POB_TOT) + IM + conco, data, family = binomial(link = "logit"))
 # 
 # stargazer(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, type = "html", out = paste(out, "todos.html", sep = "/"), flip = T)
 
 #Efectos fijos
 
-u1 <- felm(inc.ch ~ ch.agua + log(POB_TOT) + IM + conco | 0 | 0 | edo_year, data)
-u2 <- felm(inc.ch ~ ch.elec + log(POB_TOT) + IM + conco | 0 | 0 | edo_year, data)
-u3 <- felm(inc.ch ~ ch.dren + log(POB_TOT) + IM + conco | 0 | 0 | edo_year, data)
-u4 <- felm(inc.ch ~ ch.del + log(POB_TOT) + IM + conco | 0 | 0 | edo_year, data)
-u5 <- felm(inc.ch ~ ch.hom + log(POB_TOT) + IM + conco | 0 | 0 | edo_year, data)
+u1 <- felm(inc.ch ~ ch.agua + log(POB_TOT) + IM + conco | edo.year | 0 | 0, data)
+u2 <- felm(inc.ch ~ ch.elec + log(POB_TOT) + IM + conco | edo.year | 0 | 0, data)
+u3 <- felm(inc.ch ~ ch.dren + log(POB_TOT) + IM + conco | edo.year | 0 | 0, data)
+u4 <- felm(inc.ch ~ ch.del + log(POB_TOT) + IM + conco | edo.year | 0 | 0, data)
+u5 <- felm(inc.ch ~ ch.hom + log(POB_TOT) + IM + conco | edo.year | 0 | 0, data)
 
-u6 <- glmer(alt ~ ch.agua + log(POB_TOT) + IM + conco + (1 | edo_year), data, model = binomial("probit"))
-u7 <- glmer(alt ~ ch.elec + log(POB_TOT) + IM + conco + (1 | edo_year), data, model = binomial("probit"))
-u8 <- glmer(alt ~ ch.dren + log(POB_TOT) + IM + conco + (1 | edo_year), data, model = binomial("probit"))
-u9 <- glmer(alt ~ ch.del + log(POB_TOT) + IM + conco + (1 | edo_year), data, model = binomial("probit"))
-u10 <- glmer(alt ~ ch.hom + log(POB_TOT) + IM + conco + (1 | edo_year), data, model = binomial("probit"))
+u6 <- glmer(alt ~ ch.agua + log(POB_TOT) + IM + conco + (1 | edo.year), data, family = binomial)
+u7 <- glmer(alt ~ ch.elec + log(POB_TOT) + IM + conco + (1 | edo.year), data, family = binomial)
+u8 <- glmer(alt ~ ch.dren + log(POB_TOT) + IM + conco + (1 | edo.year), data, family = binomial)
+u9 <- glmer(alt ~ ch.del + log(POB_TOT) + IM + conco + (1 | edo.year), data, family = binomial)
+u10 <- glmer(alt ~ ch.hom + log(POB_TOT) + IM + conco + (1 | edo.year), data, family = binomial)
 
-stargazer(u1, u2, u3, u4, u5, u6, u7, u8, u9, u10, type = "html", out = paste(out, "todos_FE.html", sep = "/"), flip = T)
+stargazer(u1, u2, u3, u4, u5, u6, u7, u8, u9, u10,
+          type = "html", out = paste(out, "todos_FE.html", sep = "/"), flip = T)
+
+# summary(glm.cluster(alt ~ ch.agua + log(POB_TOT) + IM + conco, family = binomial(link = "logit"), cluster = "edo.year", data = data)) ##Esto son errores estandar agrupados 
+
+# u11 <- glmmboot(alt ~ ch.agua + log(POB_TOT) + IM + conco, family = binomial("logit"), data, edo.year)
+# u12 <- glmmboot(alt ~ ch.dren + log(POB_TOT) + IM + conco, family = binomial("logit"), data, edo.year)
+# u13 <- glmmboot(alt ~ ch.elec + log(POB_TOT) + IM + conco, family = binomial("logit"), data, edo.year)
+# u14 <- glmmboot(alt ~ ch.del + log(POB_TOT) + IM + conco, family = binomial("logit"), data, edo.year)
+# u15 <- glmmboot(alt ~ ch.hom + log(POB_TOT) + IM + conco, family = binomial("logit"), data, edo.year)
 
 #PAN####
 # PAN1 <- lm(inc.ch ~ ch.agua + log(POB_TOT) + IM + conco, data, subset = inc_top == "PAN")
@@ -64,29 +74,37 @@ stargazer(u1, u2, u3, u4, u5, u6, u7, u8, u9, u10, type = "html", out = paste(ou
 # PAN4 <- lm(inc.ch ~ ch.del + log(POB_TOT) + IM + conco, data, subset = inc_top == "PAN")
 # PAN5 <- lm(inc.ch ~ ch.hom + log(POB_TOT) + IM + conco, data, subset = inc_top == "PAN")
 # 
-# PAN6 <- glm(alt ~ ch.agua + log(POB_TOT) + IM + conco, data, subset = inc_top == "PAN", family = binomial(link = "probit"))
-# PAN7 <- glm(alt ~ ch.elec + log(POB_TOT) + IM + conco, data, subset = inc_top == "PAN", family = binomial(link = "probit"))
-# PAN8 <- glm(alt ~ ch.dren + log(POB_TOT) + IM + conco, data, subset = inc_top == "PAN", family = binomial(link = "probit"))
-# PAN9 <- glm(alt ~ ch.del + log(POB_TOT) + IM + conco, data, subset = inc_top == "PAN", family = binomial(link = "probit"))
-# PAN10 <- glm(alt ~ ch.hom + log(POB_TOT) + IM + conco, data, subset = inc_top == "PAN", family = binomial(link = "probit"))
+# PAN6 <- glm(alt ~ ch.agua + log(POB_TOT) + IM + conco, data, subset = inc_top == "PAN", family = binomial(link = "logit"))
+# PAN7 <- glm(alt ~ ch.elec + log(POB_TOT) + IM + conco, data, subset = inc_top == "PAN", family = binomial(link = "logit"))
+# PAN8 <- glm(alt ~ ch.dren + log(POB_TOT) + IM + conco, data, subset = inc_top == "PAN", family = binomial(link = "logit"))
+# PAN9 <- glm(alt ~ ch.del + log(POB_TOT) + IM + conco, data, subset = inc_top == "PAN", family = binomial(link = "logit"))
+# PAN10 <- glm(alt ~ ch.hom + log(POB_TOT) + IM + conco, data, subset = inc_top == "PAN", family = binomial(link = "logit"))
 # 
 # stargazer(PAN1, PAN2, PAN3, PAN4, PAN5, PAN6, PAN7, PAN8, PAN9, PAN10, type = "html", out = paste(out, "PAN.html", sep = "/"), flip = T)
 
 #Efectos fijos
 
-panfe1 <- felm(inc.ch ~ ch.agua + log(POB_TOT) + IM + conco | 0 | 0 | edo_year, data, subset = inc_top == "PAN")
-panfe2 <- felm(inc.ch ~ ch.elec + log(POB_TOT) + IM + conco | 0 | 0 | edo_year, data, subset = inc_top == "PAN")
-panfe3 <- felm(inc.ch ~ ch.dren + log(POB_TOT) + IM + conco | 0 | 0 | edo_year, data, subset = inc_top == "PAN")
-panfe4 <- felm(inc.ch ~ ch.del + log(POB_TOT) + IM + conco | 0 | 0 | edo_year, data, subset = inc_top == "PAN")
-panfe5 <- felm(inc.ch ~ ch.hom + log(POB_TOT) + IM + conco | 0 | 0 | edo_year, data, subset = inc_top == "PAN")
+panfe1 <- felm(inc.ch ~ ch.agua + log(POB_TOT) + IM + conco | edo.year | 0 | 0, data, subset = inc_top == "PAN")
+panfe2 <- felm(inc.ch ~ ch.elec + log(POB_TOT) + IM + conco | edo.year | 0 | 0, data, subset = inc_top == "PAN")
+panfe3 <- felm(inc.ch ~ ch.dren + log(POB_TOT) + IM + conco | edo.year | 0 | 0, data, subset = inc_top == "PAN")
+panfe4 <- felm(inc.ch ~ ch.del + log(POB_TOT) + IM + conco | edo.year | 0 | 0, data, subset = inc_top == "PAN")
+panfe5 <- felm(inc.ch ~ ch.hom + log(POB_TOT) + IM + conco | edo.year | 0 | 0, data, subset = inc_top == "PAN")
 
-panfe6 <- glmer(alt ~ ch.agua + log(POB_TOT) + IM + conco + (1 | edo_year), data, subset = inc_top == "PAN", model = binomial("probit"))
-panfe7 <- glmer(alt ~ ch.elec + log(POB_TOT) + IM + conco + (1 | edo_year), data, subset = inc_top == "PAN", model = binomial("probit"))
-panfe8 <- glmer(alt ~ ch.dren + log(POB_TOT) + IM + conco + (1 | edo_year), data, subset = inc_top == "PAN", model = binomial("probit"))
-panfe9 <- glmer(alt ~ ch.del + log(POB_TOT) + IM + conco + (1 | edo_year), data, subset = inc_top == "PAN", model = binomial("probit"))
-panfe10 <- glmer(alt ~ ch.hom + log(POB_TOT) + IM + conco + (1 | edo_year), data, subset = inc_top == "PAN", model = binomial("probit"))
+panfe6 <- glmer(alt ~ ch.agua + log(POB_TOT) + IM + conco + (1 | edo.year), data, subset = inc_top == "PAN", family = binomial)
+panfe7 <- glmer(alt ~ ch.elec + log(POB_TOT) + IM + conco + (1 | edo.year), data, subset = inc_top == "PAN", family = binomial)
+panfe8 <- glmer(alt ~ ch.dren + log(POB_TOT) + IM + conco + (1 | edo.year), data, subset = inc_top == "PAN", family = binomial)
+panfe9 <- glmer(alt ~ ch.del + log(POB_TOT) + IM + conco + (1 | edo.year), data, subset = inc_top == "PAN", family = binomial)
+panfe10 <- glmer(alt ~ ch.hom + log(POB_TOT) + IM + conco + (1 | edo.year), data, subset = inc_top == "PAN", family = binomial)
 
-stargazer(panfe1, panfe2, panfe3, panfe4, panfe5, panfe6, panfe7, panfe8, panfe9, panfe10, type = "html", out = paste(out, "PAN_FE.html", sep = "/"), flip = T)
+stargazer(panfe1, panfe2, panfe3, panfe4, panfe5, panfe6, panfe7, panfe8, panfe9, panfe10, 
+          type = "html", out = paste(out, "PAN_FE.html", sep = "/"), flip = T)
+
+
+# panfe11 <- glmmboot(alt ~ ch.agua + log(POB_TOT) + IM + conco, family = binomial, data, edo.year, subset = inc_top == "PAN")
+# panfe12 <- glmmboot(alt ~ ch.dren + log(POB_TOT) + IM + conco, family = binomial, data, edo.year, subset = inc_top == "PAN")
+# panfe13 <- glmmboot(alt ~ ch.elec + log(POB_TOT) + IM + conco, family = binomial, data, edo.year, subset = inc_top == "PAN")
+# panfe14 <- glmmboot(alt ~ ch.del + log(POB_TOT) + IM + conco, family = binomial, data, edo.year, subset = inc_top == "PAN")
+# panfe15 <- glmmboot(alt ~ ch.hom + log(POB_TOT) + IM + conco, family = binomial, data, edo.year, subset = inc_top == "PAN")
 
 #PRI####
 # pri1 <- lm(inc.ch ~ ch.agua + log(POB_TOT) + IM + conco, data, subset = inc_top == "PRI")
@@ -95,29 +113,36 @@ stargazer(panfe1, panfe2, panfe3, panfe4, panfe5, panfe6, panfe7, panfe8, panfe9
 # pri4 <- lm(inc.ch ~ ch.del + log(POB_TOT) + IM + conco, data, subset = inc_top == "PRI")
 # pri5 <- lm(inc.ch ~ ch.hom + log(POB_TOT) + IM + conco, data, subset = inc_top == "PRI")
 # 
-# pri6 <- glm(alt ~ ch.agua + log(POB_TOT) + IM + conco, data, subset = inc_top == "PRI", family = binomial(link = "probit"))
-# pri7 <- glm(alt ~ ch.elec + log(POB_TOT) + IM + conco, data, subset = inc_top == "PRI", family = binomial(link = "probit"))
-# pri8 <- glm(alt ~ ch.dren + log(POB_TOT) + IM + conco, data, subset = inc_top == "PRI", family = binomial(link = "probit"))
-# pri9 <- glm(alt ~ ch.del + log(POB_TOT) + IM + conco, data, subset = inc_top == "PRI", family = binomial(link = "probit"))
-# pri10 <- glm(alt ~ ch.hom + log(POB_TOT) + IM + conco, data, subset = inc_top == "PRI", family = binomial(link = "probit"))
+# pri6 <- glm(alt ~ ch.agua + log(POB_TOT) + IM + conco, data, subset = inc_top == "PRI", family = binomial(link = "logit"))
+# pri7 <- glm(alt ~ ch.elec + log(POB_TOT) + IM + conco, data, subset = inc_top == "PRI", family = binomial(link = "logit"))
+# pri8 <- glm(alt ~ ch.dren + log(POB_TOT) + IM + conco, data, subset = inc_top == "PRI", family = binomial(link = "logit"))
+# pri9 <- glm(alt ~ ch.del + log(POB_TOT) + IM + conco, data, subset = inc_top == "PRI", family = binomial(link = "logit"))
+# pri10 <- glm(alt ~ ch.hom + log(POB_TOT) + IM + conco, data, subset = inc_top == "PRI", family = binomial(link = "logit"))
 # 
 # stargazer(pri1, pri2, pri3, pri4, pri5, pri6, pri7, pri8, pri9, pri10, type = "html", out = paste(out, "PRI.html", sep = "/"), flip = T)
 
 #Efectos fijos
 
-prife1 <- felm(inc.ch ~ ch.agua + log(POB_TOT) + IM + conco | 0 | 0 | edo_year, data, subset = inc_top == "PRI")
-prife2 <- felm(inc.ch ~ ch.elec + log(POB_TOT) + IM + conco | 0 | 0 | edo_year, data, subset = inc_top == "PRI")
-prife3 <- felm(inc.ch ~ ch.dren + log(POB_TOT) + IM + conco | 0 | 0 | edo_year, data, subset = inc_top == "PRI")
-prife4 <- felm(inc.ch ~ ch.del + log(POB_TOT) + IM + conco | 0 | 0 | edo_year, data, subset = inc_top == "PRI")
-prife5 <- felm(inc.ch ~ ch.hom + log(POB_TOT) + IM + conco | 0 | 0 | edo_year, data, subset = inc_top == "PRI")
+prife1 <- felm(inc.ch ~ ch.agua + log(POB_TOT) + IM + conco | edo.year | 0 | 0, data, subset = inc_top == "PRI")
+prife2 <- felm(inc.ch ~ ch.elec + log(POB_TOT) + IM + conco | edo.year | 0 | 0, data, subset = inc_top == "PRI")
+prife3 <- felm(inc.ch ~ ch.dren + log(POB_TOT) + IM + conco | edo.year | 0 | 0, data, subset = inc_top == "PRI")
+prife4 <- felm(inc.ch ~ ch.del + log(POB_TOT) + IM + conco | edo.year | 0 | 0, data, subset = inc_top == "PRI")
+prife5 <- felm(inc.ch ~ ch.hom + log(POB_TOT) + IM + conco | edo.year | 0 | 0, data, subset = inc_top == "PRI")
 
-prife6 <- glmer(alt ~ ch.agua + log(POB_TOT) + IM + conco + (1 | edo_year), data, subset = inc_top == "PRI", model = binomial("probit"))
-prife7 <- glmer(alt ~ ch.elec + log(POB_TOT) + IM + conco + (1 | edo_year), data, subset = inc_top == "PRI", model = binomial("probit"))
-prife8 <- glmer(alt ~ ch.dren + log(POB_TOT) + IM + conco + (1 | edo_year), data, subset = inc_top == "PRI", model = binomial("probit"))
-prife9 <- glmer(alt ~ ch.del + log(POB_TOT) + IM + conco + (1 | edo_year), data, subset = inc_top == "PRI", model = binomial("probit"))
-prife10 <- glmer(alt ~ ch.hom + log(POB_TOT) + IM + conco + (1 | edo_year), data, subset = inc_top == "PRI", model = binomial("probit"))
+prife6 <- glmer(alt ~ ch.agua + log(POB_TOT) + IM + conco + (1 | edo.year), data, subset = inc_top == "PRI", family = binomial)
+prife7 <- glmer(alt ~ ch.elec + log(POB_TOT) + IM + conco + (1 | edo.year), data, subset = inc_top == "PRI", family = binomial)
+prife8 <- glmer(alt ~ ch.dren + log(POB_TOT) + IM + conco + (1 | edo.year), data, subset = inc_top == "PRI", family = binomial)
+prife9 <- glmer(alt ~ ch.del + log(POB_TOT) + IM + conco + (1 | edo.year), data, subset = inc_top == "PRI", family = binomial)
+prife10 <- glmer(alt ~ ch.hom + log(POB_TOT) + IM + conco + (1 | edo.year), data, subset = inc_top == "PRI", family = binomial)
 
-stargazer(prife1, prife2, prife3, prife4, prife5, prife6, prife7, prife8, prife9, prife10, type = "html", out = paste(out, "PRI_FE.html", sep = "/"), flip = T)
+stargazer(prife1, prife2, prife3, prife4, prife5, prife6, prife7, prife8, prife9, prife10, 
+          type = "html", out = paste(out, "PRI_FE.html", sep = "/"), flip = T)
+
+# prife11 <- glmmboot(alt ~ ch.agua + log(POB_TOT) + IM + conco, family = binomial, data, edo.year, subset = inc_top == "PRI")
+# prife12 <- glmmboot(alt ~ ch.dren + log(POB_TOT) + IM + conco, family = binomial, data, edo.year, subset = inc_top == "PRI")
+# prife13 <- glmmboot(alt ~ ch.elec + log(POB_TOT) + IM + conco, family = binomial, data, edo.year, subset = inc_top == "PRI")
+# prife14 <- glmmboot(alt ~ ch.del + log(POB_TOT) + IM + conco, family = binomial, data, edo.year, subset = inc_top == "PRI")
+# prife15 <- glmmboot(alt ~ ch.hom + log(POB_TOT) + IM + conco, family = binomial, data, edo.year, subset = inc_top == "PRI")
 
 #PRD####
 # prd1 <- lm(inc.ch ~ ch.agua + log(POB_TOT) + IM + conco, data, subset = inc_top == "PRD")
@@ -126,26 +151,33 @@ stargazer(prife1, prife2, prife3, prife4, prife5, prife6, prife7, prife8, prife9
 # prd4 <- lm(inc.ch ~ ch.del + log(POB_TOT) + IM + conco, data, subset = inc_top == "PRD")
 # prd5 <- lm(inc.ch ~ ch.hom + log(POB_TOT) + IM + conco, data, subset = inc_top == "PRD")
 # 
-# prd6 <- glm(alt ~ ch.agua + log(POB_TOT) + IM + conco, data, subset = inc_top == "PRD", family = binomial(link = "probit"))
-# prd7 <- glm(alt ~ ch.elec + log(POB_TOT) + IM + conco, data, subset = inc_top == "PRD", family = binomial(link = "probit"))
-# prd8 <- glm(alt ~ ch.dren + log(POB_TOT) + IM + conco, data, subset = inc_top == "PRD", family = binomial(link = "probit"))
-# prd9 <- glm(alt ~ ch.del + log(POB_TOT) + IM + conco, data, subset = inc_top == "PRD", family = binomial(link = "probit"))
-# prd10 <- glm(alt ~ ch.hom + log(POB_TOT) + IM + conco, data, subset = inc_top == "PRD", family = binomial(link = "probit"))
+# prd6 <- glm(alt ~ ch.agua + log(POB_TOT) + IM + conco, data, subset = inc_top == "PRD", family = binomial(link = "logit"))
+# prd7 <- glm(alt ~ ch.elec + log(POB_TOT) + IM + conco, data, subset = inc_top == "PRD", family = binomial(link = "logit"))
+# prd8 <- glm(alt ~ ch.dren + log(POB_TOT) + IM + conco, data, subset = inc_top == "PRD", family = binomial(link = "logit"))
+# prd9 <- glm(alt ~ ch.del + log(POB_TOT) + IM + conco, data, subset = inc_top == "PRD", family = binomial(link = "logit"))
+# prd10 <- glm(alt ~ ch.hom + log(POB_TOT) + IM + conco, data, subset = inc_top == "PRD", family = binomial(link = "logit"))
 # 
 # stargazer(prd1, prd2, prd3, prd4, prd5, prd6, prd7, prd8, prd9, prd10, type = "html", out = paste(out, "PRD.html", sep = "/"), flip = T)
 
 #Efectos fijos
 
-prdfe1 <- felm(inc.ch ~ ch.agua + log(POB_TOT) + IM + conco | 0 | 0 | edo_year, data, subset = inc_top == "PRD")
-prdfe2 <- felm(inc.ch ~ ch.elec + log(POB_TOT) + IM + conco | 0 | 0 | edo_year, data, subset = inc_top == "PRD")
-prdfe3 <- felm(inc.ch ~ ch.dren + log(POB_TOT) + IM + conco | 0 | 0 | edo_year, data, subset = inc_top == "PRD")
-prdfe4 <- felm(inc.ch ~ ch.del + log(POB_TOT) + IM + conco | 0 | 0 | edo_year, data, subset = inc_top == "PRD")
-prdfe5 <- felm(inc.ch ~ ch.hom + log(POB_TOT) + IM + conco | 0 | 0 | edo_year, data, subset = inc_top == "PRD")
+prdfe1 <- felm(inc.ch ~ ch.agua + log(POB_TOT) + IM + conco | edo.year | 0 | 0, data, subset = inc_top == "PRD")
+prdfe2 <- felm(inc.ch ~ ch.elec + log(POB_TOT) + IM + conco | edo.year | 0 | 0, data, subset = inc_top == "PRD")
+prdfe3 <- felm(inc.ch ~ ch.dren + log(POB_TOT) + IM + conco | edo.year | 0 | 0, data, subset = inc_top == "PRD")
+prdfe4 <- felm(inc.ch ~ ch.del + log(POB_TOT) + IM + conco | edo.year | 0 | 0, data, subset = inc_top == "PRD")
+prdfe5 <- felm(inc.ch ~ ch.hom + log(POB_TOT) + IM + conco | edo.year | 0 | 0, data, subset = inc_top == "PRD")
 
-prdfe6 <- glmer(alt ~ ch.agua + log(POB_TOT) + IM + conco + (1 | edo_year), data, subset = inc_top == "PRD", model = binomial("probit"))
-prdfe7 <- glmer(alt ~ ch.elec + log(POB_TOT) + IM + conco + (1 | edo_year), data, subset = inc_top == "PRD", model = binomial("probit"))
-prdfe8 <- glmer(alt ~ ch.dren + log(POB_TOT) + IM + conco + (1 | edo_year), data, subset = inc_top == "PRD", model = binomial("probit"))
-prdfe9 <- glmer(alt ~ ch.del + log(POB_TOT) + IM + conco + (1 | edo_year), data, subset = inc_top == "PRD", model = binomial("probit"))
-prdfe10 <- glmer(alt ~ ch.hom + log(POB_TOT) + IM + conco + (1 | edo_year), data, subset = inc_top == "PRD", model = binomial("probit"))
+prdfe6 <- glmer(alt ~ ch.agua + log(POB_TOT) + IM + conco + (1 | edo.year), data, subset = inc_top == "PRD", family = binomial)
+prdfe7 <- glmer(alt ~ ch.elec + log(POB_TOT) + IM + conco + (1 | edo.year), data, subset = inc_top == "PRD", family = binomial)
+prdfe8 <- glmer(alt ~ ch.dren + log(POB_TOT) + IM + conco + (1 | edo.year), data, subset = inc_top == "PRD", family = binomial)
+prdfe9 <- glmer(alt ~ ch.del + log(POB_TOT) + IM + conco + (1 | edo.year), data, subset = inc_top == "PRD", family = binomial)
+prdfe10 <- glmer(alt ~ ch.hom + log(POB_TOT) + IM + conco + (1 | edo.year), data, subset = inc_top == "PRD", family = binomial)
 
-stargazer(prdfe1, prdfe2, prdfe3, prdfe4, prdfe5, prdfe6, prdfe7, prdfe8, prdfe9, prdfe10, type = "html", out = paste(out, "PRD_FE.html", sep = "/"), flip = T)
+stargazer(prdfe1, prdfe2, prdfe3, prdfe4, prdfe5, prdfe6, prdfe7, prdfe8, prdfe9, prdfe10, 
+          type = "html", out = paste(out, "PRD_FE.html", sep = "/"), flip = T)
+
+# prdfe11 <- glmmboot(alt ~ ch.agua + log(POB_TOT) + IM + conco, family = binomial("logit"), data, edo.year, subset = inc_top == "PRD")
+# prdfe12 <- glmmboot(alt ~ ch.dren + log(POB_TOT) + IM + conco, family = binomial("logit"), data, edo.year, subset = inc_top == "PRD")
+# prdfe13 <- glmmboot(alt ~ ch.elec + log(POB_TOT) + IM + conco, family = binomial("logit"), data, edo.year, subset = inc_top == "PRD")
+# prdfe14 <- glmmboot(alt ~ ch.del + log(POB_TOT) + IM + conco, family = binomial("logit"), data, edo.year, subset = inc_top == "PRD")
+# prdfe15 <- glmmboot(alt ~ ch.hom + log(POB_TOT) + IM + conco, family = binomial("logit"), data, edo.year, subset = inc_top == "PRD")

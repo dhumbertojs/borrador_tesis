@@ -2,6 +2,7 @@ rm(list = ls())
 setwd("~")
 
 library(dplyr)
+library(stringr)
 
 inp <- "/home/dhjs/Documentos/R_projects/electoral_accountability/databases"
 list.files(inp)
@@ -67,7 +68,11 @@ try <- try %>%
             t.agua, t.dren, t.elec, t.del, t.hom, 
             lt.agua, lt.dren, lt.elec, lt.del, lt.hom)) %>% 
   filter(win_top != "Otros") %>% 
-  mutate(alt = ifelse(as.character(win_top) != as.character(inc_top), 1, 0))
+  mutate(
+    alt = ifelse(as.character(win_top) != as.character(inc_top), 1, 0),
+    state = str_pad(state, width = 2, side = "left", pad = "0"),
+    edo.year = paste(state, year, sep = "_")
+    )
 nrow(try)
 ##Con esta transformación me quedan 10,587 observaciones
 #despues del filter son 10,230

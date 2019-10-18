@@ -13,24 +13,33 @@ out <- "/home/dhjs/Documentos/R_projects/electoral_accountability/tables"
 data <- read.csv(paste(inp, "final.csv", sep = "/"))
 ##Hay 10,230 observaciones
 
+# data <- data %>% 
+#   filter(
+#     ch.agua >= -100 &
+#       ch.dren >= -100 & 
+#       ch.elec >= -100 &
+#       ch.hom >= -100 &
+#       ch.del >= -100
+#   ) #Con esto quedan 697 observaciones...
+
 # Modelos -----------------------------------------------------------------
 
 #Modelo lineal
 #summary(lm(inc.ch ~ ch.agua + log(POB_TOT) + IM + conco, data)) 
-#Se eliminaron 4,561 por missingness
-t1 <- lm(inc.ch ~ ch.agua + log(POB_TOT) + IM + conco, data)
-t2 <- lm(inc.ch ~ ch.elec + log(POB_TOT) + IM + conco, data)
-t3 <- lm(inc.ch ~ ch.dren + log(POB_TOT) + IM + conco, data)
-t4 <- lm(inc.ch ~ ch.del + log(POB_TOT) + IM + conco, data)
-t5 <- lm(inc.ch ~ ch.hom + log(POB_TOT) + IM + conco, data)
 
-t6 <- glm(alt ~ ch.agua + log(POB_TOT) + IM + conco, data, family = binomial(link = "probit"))
-t7 <- glm(alt ~ ch.elec + log(POB_TOT) + IM + conco, data, family = binomial(link = "probit"))
-t8 <- glm(alt ~ ch.dren + log(POB_TOT) + IM + conco, data, family = binomial(link = "probit"))
-t9 <- glm(alt ~ ch.del + log(POB_TOT) + IM + conco, data, family = binomial(link = "probit"))
-t10 <- glm(alt ~ ch.hom + log(POB_TOT) + IM + conco, data, family = binomial(link = "probit"))
-
-stargazer(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, type = "html", out = paste(out, "todos.html", sep = "/"), flip = T)
+# t1 <- lm(inc.ch ~ ch.agua + log(POB_TOT) + IM + conco, data)
+# t2 <- lm(inc.ch ~ ch.elec + log(POB_TOT) + IM + conco, data)
+# t3 <- lm(inc.ch ~ ch.dren + log(POB_TOT) + IM + conco, data)
+# t4 <- lm(inc.ch ~ ch.del + log(POB_TOT) + IM + conco, data)
+# t5 <- lm(inc.ch ~ ch.hom + log(POB_TOT) + IM + conco, data)
+# 
+# t6 <- glm(alt ~ ch.agua + log(POB_TOT) + IM + conco, data, family = binomial(link = "probit"))
+# t7 <- glm(alt ~ ch.elec + log(POB_TOT) + IM + conco, data, family = binomial(link = "probit"))
+# t8 <- glm(alt ~ ch.dren + log(POB_TOT) + IM + conco, data, family = binomial(link = "probit"))
+# t9 <- glm(alt ~ ch.del + log(POB_TOT) + IM + conco, data, family = binomial(link = "probit"))
+# t10 <- glm(alt ~ ch.hom + log(POB_TOT) + IM + conco, data, family = binomial(link = "probit"))
+# 
+# stargazer(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, type = "html", out = paste(out, "todos.html", sep = "/"), flip = T)
 
 #Efectos fijos
 
@@ -49,19 +58,19 @@ u10 <- glmer(alt ~ ch.hom + log(POB_TOT) + IM + conco + (1 | edo_year), data, mo
 stargazer(u1, u2, u3, u4, u5, u6, u7, u8, u9, u10, type = "html", out = paste(out, "todos_FE.html", sep = "/"), flip = T)
 
 #PAN####
-PAN1 <- lm(inc.ch ~ ch.agua + log(POB_TOT) + IM + conco, data, subset = inc_top == "PAN")
-PAN2 <- lm(inc.ch ~ ch.elec + log(POB_TOT) + IM + conco, data, subset = inc_top == "PAN")
-PAN3 <- lm(inc.ch ~ ch.dren + log(POB_TOT) + IM + conco, data, subset = inc_top == "PAN")
-PAN4 <- lm(inc.ch ~ ch.del + log(POB_TOT) + IM + conco, data, subset = inc_top == "PAN")
-PAN5 <- lm(inc.ch ~ ch.hom + log(POB_TOT) + IM + conco, data, subset = inc_top == "PAN")
-
-PAN6 <- glm(alt ~ ch.agua + log(POB_TOT) + IM + conco, data, subset = inc_top == "PAN", family = binomial(link = "probit"))
-PAN7 <- glm(alt ~ ch.elec + log(POB_TOT) + IM + conco, data, subset = inc_top == "PAN", family = binomial(link = "probit"))
-PAN8 <- glm(alt ~ ch.dren + log(POB_TOT) + IM + conco, data, subset = inc_top == "PAN", family = binomial(link = "probit"))
-PAN9 <- glm(alt ~ ch.del + log(POB_TOT) + IM + conco, data, subset = inc_top == "PAN", family = binomial(link = "probit"))
-PAN10 <- glm(alt ~ ch.hom + log(POB_TOT) + IM + conco, data, subset = inc_top == "PAN", family = binomial(link = "probit"))
-
-stargazer(PAN1, PAN2, PAN3, PAN4, PAN5, PAN6, PAN7, PAN8, PAN9, PAN10, type = "html", out = paste(out, "PAN.html", sep = "/"), flip = T)
+# PAN1 <- lm(inc.ch ~ ch.agua + log(POB_TOT) + IM + conco, data, subset = inc_top == "PAN")
+# PAN2 <- lm(inc.ch ~ ch.elec + log(POB_TOT) + IM + conco, data, subset = inc_top == "PAN")
+# PAN3 <- lm(inc.ch ~ ch.dren + log(POB_TOT) + IM + conco, data, subset = inc_top == "PAN")
+# PAN4 <- lm(inc.ch ~ ch.del + log(POB_TOT) + IM + conco, data, subset = inc_top == "PAN")
+# PAN5 <- lm(inc.ch ~ ch.hom + log(POB_TOT) + IM + conco, data, subset = inc_top == "PAN")
+# 
+# PAN6 <- glm(alt ~ ch.agua + log(POB_TOT) + IM + conco, data, subset = inc_top == "PAN", family = binomial(link = "probit"))
+# PAN7 <- glm(alt ~ ch.elec + log(POB_TOT) + IM + conco, data, subset = inc_top == "PAN", family = binomial(link = "probit"))
+# PAN8 <- glm(alt ~ ch.dren + log(POB_TOT) + IM + conco, data, subset = inc_top == "PAN", family = binomial(link = "probit"))
+# PAN9 <- glm(alt ~ ch.del + log(POB_TOT) + IM + conco, data, subset = inc_top == "PAN", family = binomial(link = "probit"))
+# PAN10 <- glm(alt ~ ch.hom + log(POB_TOT) + IM + conco, data, subset = inc_top == "PAN", family = binomial(link = "probit"))
+# 
+# stargazer(PAN1, PAN2, PAN3, PAN4, PAN5, PAN6, PAN7, PAN8, PAN9, PAN10, type = "html", out = paste(out, "PAN.html", sep = "/"), flip = T)
 
 #Efectos fijos
 
@@ -80,19 +89,19 @@ panfe10 <- glmer(alt ~ ch.hom + log(POB_TOT) + IM + conco + (1 | edo_year), data
 stargazer(panfe1, panfe2, panfe3, panfe4, panfe5, panfe6, panfe7, panfe8, panfe9, panfe10, type = "html", out = paste(out, "PAN_FE.html", sep = "/"), flip = T)
 
 #PRI####
-pri1 <- lm(inc.ch ~ ch.agua + log(POB_TOT) + IM + conco, data, subset = inc_top == "PRI")
-pri2 <- lm(inc.ch ~ ch.elec + log(POB_TOT) + IM + conco, data, subset = inc_top == "PRI")
-pri3 <- lm(inc.ch ~ ch.dren + log(POB_TOT) + IM + conco, data, subset = inc_top == "PRI")
-pri4 <- lm(inc.ch ~ ch.del + log(POB_TOT) + IM + conco, data, subset = inc_top == "PRI")
-pri5 <- lm(inc.ch ~ ch.hom + log(POB_TOT) + IM + conco, data, subset = inc_top == "PRI")
-
-pri6 <- glm(alt ~ ch.agua + log(POB_TOT) + IM + conco, data, subset = inc_top == "PRI", family = binomial(link = "probit"))
-pri7 <- glm(alt ~ ch.elec + log(POB_TOT) + IM + conco, data, subset = inc_top == "PRI", family = binomial(link = "probit"))
-pri8 <- glm(alt ~ ch.dren + log(POB_TOT) + IM + conco, data, subset = inc_top == "PRI", family = binomial(link = "probit"))
-pri9 <- glm(alt ~ ch.del + log(POB_TOT) + IM + conco, data, subset = inc_top == "PRI", family = binomial(link = "probit"))
-pri10 <- glm(alt ~ ch.hom + log(POB_TOT) + IM + conco, data, subset = inc_top == "PRI", family = binomial(link = "probit"))
-
-stargazer(pri1, pri2, pri3, pri4, pri5, pri6, pri7, pri8, pri9, pri10, type = "html", out = paste(out, "PRI.html", sep = "/"), flip = T)
+# pri1 <- lm(inc.ch ~ ch.agua + log(POB_TOT) + IM + conco, data, subset = inc_top == "PRI")
+# pri2 <- lm(inc.ch ~ ch.elec + log(POB_TOT) + IM + conco, data, subset = inc_top == "PRI")
+# pri3 <- lm(inc.ch ~ ch.dren + log(POB_TOT) + IM + conco, data, subset = inc_top == "PRI")
+# pri4 <- lm(inc.ch ~ ch.del + log(POB_TOT) + IM + conco, data, subset = inc_top == "PRI")
+# pri5 <- lm(inc.ch ~ ch.hom + log(POB_TOT) + IM + conco, data, subset = inc_top == "PRI")
+# 
+# pri6 <- glm(alt ~ ch.agua + log(POB_TOT) + IM + conco, data, subset = inc_top == "PRI", family = binomial(link = "probit"))
+# pri7 <- glm(alt ~ ch.elec + log(POB_TOT) + IM + conco, data, subset = inc_top == "PRI", family = binomial(link = "probit"))
+# pri8 <- glm(alt ~ ch.dren + log(POB_TOT) + IM + conco, data, subset = inc_top == "PRI", family = binomial(link = "probit"))
+# pri9 <- glm(alt ~ ch.del + log(POB_TOT) + IM + conco, data, subset = inc_top == "PRI", family = binomial(link = "probit"))
+# pri10 <- glm(alt ~ ch.hom + log(POB_TOT) + IM + conco, data, subset = inc_top == "PRI", family = binomial(link = "probit"))
+# 
+# stargazer(pri1, pri2, pri3, pri4, pri5, pri6, pri7, pri8, pri9, pri10, type = "html", out = paste(out, "PRI.html", sep = "/"), flip = T)
 
 #Efectos fijos
 
@@ -111,19 +120,19 @@ prife10 <- glmer(alt ~ ch.hom + log(POB_TOT) + IM + conco + (1 | edo_year), data
 stargazer(prife1, prife2, prife3, prife4, prife5, prife6, prife7, prife8, prife9, prife10, type = "html", out = paste(out, "PRI_FE.html", sep = "/"), flip = T)
 
 #PRD####
-prd1 <- lm(inc.ch ~ ch.agua + log(POB_TOT) + IM + conco, data, subset = inc_top == "PRD")
-prd2 <- lm(inc.ch ~ ch.elec + log(POB_TOT) + IM + conco, data, subset = inc_top == "PRD")
-prd3 <- lm(inc.ch ~ ch.dren + log(POB_TOT) + IM + conco, data, subset = inc_top == "PRD")
-prd4 <- lm(inc.ch ~ ch.del + log(POB_TOT) + IM + conco, data, subset = inc_top == "PRD")
-prd5 <- lm(inc.ch ~ ch.hom + log(POB_TOT) + IM + conco, data, subset = inc_top == "PRD")
-
-prd6 <- glm(alt ~ ch.agua + log(POB_TOT) + IM + conco, data, subset = inc_top == "PRD", family = binomial(link = "probit"))
-prd7 <- glm(alt ~ ch.elec + log(POB_TOT) + IM + conco, data, subset = inc_top == "PRD", family = binomial(link = "probit"))
-prd8 <- glm(alt ~ ch.dren + log(POB_TOT) + IM + conco, data, subset = inc_top == "PRD", family = binomial(link = "probit"))
-prd9 <- glm(alt ~ ch.del + log(POB_TOT) + IM + conco, data, subset = inc_top == "PRD", family = binomial(link = "probit"))
-prd10 <- glm(alt ~ ch.hom + log(POB_TOT) + IM + conco, data, subset = inc_top == "PRD", family = binomial(link = "probit"))
-
-stargazer(prd1, prd2, prd3, prd4, prd5, prd6, prd7, prd8, prd9, prd10, type = "html", out = paste(out, "PRD.html", sep = "/"), flip = T)
+# prd1 <- lm(inc.ch ~ ch.agua + log(POB_TOT) + IM + conco, data, subset = inc_top == "PRD")
+# prd2 <- lm(inc.ch ~ ch.elec + log(POB_TOT) + IM + conco, data, subset = inc_top == "PRD")
+# prd3 <- lm(inc.ch ~ ch.dren + log(POB_TOT) + IM + conco, data, subset = inc_top == "PRD")
+# prd4 <- lm(inc.ch ~ ch.del + log(POB_TOT) + IM + conco, data, subset = inc_top == "PRD")
+# prd5 <- lm(inc.ch ~ ch.hom + log(POB_TOT) + IM + conco, data, subset = inc_top == "PRD")
+# 
+# prd6 <- glm(alt ~ ch.agua + log(POB_TOT) + IM + conco, data, subset = inc_top == "PRD", family = binomial(link = "probit"))
+# prd7 <- glm(alt ~ ch.elec + log(POB_TOT) + IM + conco, data, subset = inc_top == "PRD", family = binomial(link = "probit"))
+# prd8 <- glm(alt ~ ch.dren + log(POB_TOT) + IM + conco, data, subset = inc_top == "PRD", family = binomial(link = "probit"))
+# prd9 <- glm(alt ~ ch.del + log(POB_TOT) + IM + conco, data, subset = inc_top == "PRD", family = binomial(link = "probit"))
+# prd10 <- glm(alt ~ ch.hom + log(POB_TOT) + IM + conco, data, subset = inc_top == "PRD", family = binomial(link = "probit"))
+# 
+# stargazer(prd1, prd2, prd3, prd4, prd5, prd6, prd7, prd8, prd9, prd10, type = "html", out = paste(out, "PRD.html", sep = "/"), flip = T)
 
 #Efectos fijos
 

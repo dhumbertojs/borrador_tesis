@@ -54,19 +54,20 @@ try <- try %>%
     lt.elec = lag(t.elec, n = 1), 
     lt.del = lag(t.del, n = 1),
     lt.hom = lag(hom, n = 1),
+    #Valor presente - valor pasado / valor pasado
     
-    ch.agua = ifelse(!is.na(lt.agua) & !is.na(t.agua), (t.agua - lt.agua) * 100/t.agua, NA),
-    ch.dren = ifelse(!is.na(lt.dren) & !is.na(t.dren), (t.dren - lt.dren) * 100/t.dren, NA),
-    ch.elec = ifelse(!is.na(lt.elec) & !is.na(t.elec), (t.elec - lt.elec) * 100/t.elec, NA),
-    ch.del = ifelse(!is.na(lt.del) & !is.na(t.del), (t.del - lt.del) * 100/t.del, NA),
-    ch.hom = ifelse(!is.na(lt.hom) & !is.na(t.hom), (t.hom - lt.hom) * 100/t.hom, NA)
+    ch.agua = ifelse(!is.na(lt.agua) & !is.na(t.agua), (t.agua - lt.agua) * 100/lt.agua, NA),
+    ch.dren = ifelse(!is.na(lt.dren) & !is.na(t.dren), (t.dren - lt.dren) * 100/lt.dren, NA),
+    ch.elec = ifelse(!is.na(lt.elec) & !is.na(t.elec), (t.elec - lt.elec) * 100/lt.elec, NA),
+    ch.del = ifelse(!is.na(lt.del) & !is.na(t.del), (t.del - lt.del) * 100/lt.del, NA),
+    ch.hom = ifelse(!is.na(lt.hom) & !is.na(t.hom), (t.hom - lt.hom) * 100/lt.hom, NA)
   )  %>% 
  filter(!is.infinite(ch.agua) & !is.infinite(ch.dren) & !is.infinite(ch.elec) & 
           !is.infinite(ch.del) & !is.infinite(ch.hom)) %>% 
  ungroup() %>% 
   select(-c(agua, dren, elec, tot_del, hom, 
-            t.agua, t.dren, t.elec, t.del, t.hom, 
-            lt.agua, lt.dren, lt.elec, lt.del, lt.hom)) %>% 
+           t.agua, t.dren, t.elec, t.del, t.hom, 
+           lt.agua, lt.dren, lt.elec, lt.del, lt.hom)) %>% 
   filter(win_top != "Otros") %>% 
   mutate(
     alt = ifelse(as.character(win_top) != as.character(inc_top), 1, 0),

@@ -6,6 +6,8 @@ library(stargazer)
 library(lfe)
 library(lme4)
 library(glmmML)
+library(tidyr)
+library(Hmisc)
 
 inp <- "/home/dhjs/Documentos/R_projects/electoral_accountability"
 list.files(inp)
@@ -13,6 +15,32 @@ out <- "/home/dhjs/Documentos/R_projects/electoral_accountability/tables"
 
 data <- read.csv(paste(inp, "final.csv", sep = "/"))
 ##Hay 10,230 observaciones
+
+data <- data %>% 
+  select(
+    muniYear, state, muni, year, wintop_state, win_top, inc_top, conco,        
+    inc.ch, IM, POB_TOT, ch.agua, ch.dren, ch.elec, ch.del, ch.hom, alt, edo.year     
+  )
+
+tabla <- data %>% 
+  select(
+    IM, POB_TOT,
+    inc.ch, ch.agua, ch.dren, ch.elec, ch.del, ch.hom     
+  ) %>% 
+  rename(POB = POB_TOT) %>% 
+  summarise_all(funs(mean, sd, min, max), na.rm = T) %>% 
+  pivot_longer(everything()) %>% 
+  separate(name, into = c("variable", "stat"), sep = "_") %>% 
+  mutate(value = round(value, 3))
+
+
+corr <- data %>% 
+  select(
+  alt, inc.ch, ch.agua, ch.dren, ch.elec, ch.del, ch.hom, IM, POB_TOT
+) %>% 
+  rename(pob = POB_TOT, im = IM)
+
+rcorr(as.matrix(corr), type = "pearson")
 
 # Modelos -----------------------------------------------------------------
 
@@ -48,7 +76,14 @@ u9 <- glmer(alt ~ ch.del + log(POB_TOT) + IM + conco + (1 | edo.year), data, fam
 u10 <- glmer(alt ~ ch.hom + log(POB_TOT) + IM + conco + (1 | edo.year), data, family = binomial, subset = ch.hom < 100)
 
 stargazer(u1, u2, u3, u4, u5, u6, u7, u8, u9, u10,
-          type = "html", out = paste(out, "todos_FE.html", sep = "/"), flip = T)
+          title = "Tabla 4. Todas las observaciones",
+          covariate.labels = c("Agua", "Electricidad", "Drenaje", "Total de delitos", 
+                               "Homiciios", "Población", "Índice de marginación", 
+                               "Concordancia", "Constante"),
+          dep.var.labels = c("Cambio % del incumbent", "Alternancia"),
+          type = "html", 
+          out = paste(out, "todos_FE.html", sep = "/"), 
+          flip = T)
 
 # summary(glm.cluster(alt ~ ch.agua + log(POB_TOT) + IM + conco, family = binomial(link = "logit"), cluster = "edo.year", data = data)) ##Esto son errores estandar agrupados 
 
@@ -88,6 +123,11 @@ panfe9 <- glmer(alt ~ ch.del + log(POB_TOT) + IM + conco + (1 | edo.year), data,
 panfe10 <- glmer(alt ~ ch.hom + log(POB_TOT) + IM + conco + (1 | edo.year), data, subset = inc_top == "PAN" & ch.hom < 100, family = binomial)
 
 stargazer(panfe1, panfe2, panfe3, panfe4, panfe5, panfe6, panfe7, panfe8, panfe9, panfe10, 
+          title = "Tabla 5. Municipios gobernados por el PAN",
+          covariate.labels = c("Agua", "Electricidad", "Drenaje", "Total de delitos", 
+                               "Homiciios", "Población", "Índice de marginación", 
+                               "Concordancia", "Constante"),
+          dep.var.labels = c("Cambio % del incumbent", "Alternancia"),
           type = "html", out = paste(out, "PAN_FE.html", sep = "/"), flip = T)
 
 
@@ -127,6 +167,11 @@ prife9 <- glmer(alt ~ ch.del + log(POB_TOT) + IM + conco + (1 | edo.year), data,
 prife10 <- glmer(alt ~ ch.hom + log(POB_TOT) + IM + conco + (1 | edo.year), data, subset = inc_top == "PRI" & ch.hom < 100, family = binomial)
 
 stargazer(prife1, prife2, prife3, prife4, prife5, prife6, prife7, prife8, prife9, prife10, 
+          title = "Tabla 6. Municipios gobernados por el PRI",
+          covariate.labels = c("Agua", "Electricidad", "Drenaje", "Total de delitos", 
+                               "Homiciios", "Población", "Índice de marginación", 
+                               "Concordancia", "Constante"),
+          dep.var.labels = c("Cambio % del incumbent", "Alternancia"),
           type = "html", out = paste(out, "PRI_FE.html", sep = "/"), flip = T)
 
 # prife11 <- glmmboot(alt ~ ch.agua + log(POB_TOT) + IM + conco, family = binomial, data, edo.year, subset = inc_top == "PRI")
@@ -165,6 +210,11 @@ prdfe9 <- glmer(alt ~ ch.del + log(POB_TOT) + IM + conco + (1 | edo.year), data,
 prdfe10 <- glmer(alt ~ ch.hom + log(POB_TOT) + IM + conco + (1 | edo.year), data, subset = inc_top == "PRD" & ch.hom < 100, family = binomial)
 
 stargazer(prdfe1, prdfe2, prdfe3, prdfe4, prdfe5, prdfe6, prdfe7, prdfe8, prdfe9, prdfe10, 
+          title = "Tabla 7. Municipios gobernados por el PRD",
+          covariate.labels = c("Agua", "Electricidad", "Drenaje", "Total de delitos", 
+                               "Homiciios", "Población", "Índice de marginación", 
+                               "Concordancia", "Constante"),
+          dep.var.labels = c("Cambio % del incumbent", "Alternancia"),
           type = "html", out = paste(out, "PRD_FE.html", sep = "/"), flip = T)
 
 # prdfe11 <- glmmboot(alt ~ ch.agua + log(POB_TOT) + IM + conco, family = binomial("logit"), data, edo.year, subset = inc_top == "PRD")

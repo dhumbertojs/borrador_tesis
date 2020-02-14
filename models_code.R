@@ -63,17 +63,17 @@ rcorr(as.matrix(corr), type = "pearson")
 
 #Efectos fijos
 
-u1 <- felm(inc.ch ~ ch.agua + log(POB_TOT) + IM + conco | edo.year | 0 | muni, data, subset = ch.agua < 100)
-u2 <- felm(inc.ch ~ ch.elec + log(POB_TOT) + IM + conco | edo.year | 0 | muni, data, subset = ch.elec < 100)
-u3 <- felm(inc.ch ~ ch.dren + log(POB_TOT) + IM + conco | edo.year | 0 | muni, data, subset = ch.dren < 100)
-u4 <- felm(inc.ch ~ ch.del + log(POB_TOT) + IM + conco | edo.year | 0 | muni, data, subset = ch.del < 100)
+u1 <- felm(inc.ch ~ ch.agua + log(POB_TOT) + IM + conco | edo.year | 0 | muni, data, subset = ch.agua <= 100)
+u2 <- felm(inc.ch ~ ch.elec + log(POB_TOT) + IM + conco | edo.year | 0 | muni, data, subset = ch.elec <= 100)
+u3 <- felm(inc.ch ~ ch.dren + log(POB_TOT) + IM + conco | edo.year | 0 | muni, data, subset = ch.dren <= 100)
+u4 <- felm(inc.ch ~ ch.del + log(POB_TOT) + IM + conco | edo.year | 0 | muni, data, subset = ch.del <= 100)
 u5 <- felm(inc.ch ~ ch.hom + log(POB_TOT) + IM + conco | edo.year | 0 | muni, data, subset = ch.hom < 100)
 
-u6 <- glmer(alt ~ ch.agua + log(POB_TOT) + IM + conco + (1 | edo.year), data, family = binomial, subset = ch.agua < 100)
-u7 <- glmer(alt ~ ch.elec + log(POB_TOT) + IM + conco + (1 | edo.year), data, family = binomial, subset = ch.elec < 100)
-u8 <- glmer(alt ~ ch.dren + log(POB_TOT) + IM + conco + (1 | edo.year), data, family = binomial, subset = ch.dren < 100)
-u9 <- glmer(alt ~ ch.del + log(POB_TOT) + IM + conco + (1 | edo.year), data, family = binomial, subset = ch.del < 100)
-u10 <- glmer(alt ~ ch.hom + log(POB_TOT) + IM + conco + (1 | edo.year), data, family = binomial, subset = ch.hom < 100)
+u6 <- glmer(alt ~ ch.agua + log(POB_TOT) + IM + conco + (1 | edo.year), data, family = binomial, subset = ch.agua <= 100)
+u7 <- glmer(alt ~ ch.elec + log(POB_TOT) + IM + conco + (1 | edo.year), data, family = binomial, subset = ch.elec <= 100)
+u8 <- glmer(alt ~ ch.dren + log(POB_TOT) + IM + conco + (1 | edo.year), data, family = binomial, subset = ch.dren <= 100)
+u9 <- glmer(alt ~ ch.del + log(POB_TOT) + IM + conco + (1 | edo.year), data, family = binomial, subset = ch.del <= 100)
+u10 <- glmer(alt ~ ch.hom + log(POB_TOT) + IM + conco + (1 | edo.year), data, family = binomial, subset = ch.hom <= 100)
 
 stargazer(u1, u2, u3, u4, u5, u6, u7, u8, u9, u10,
           title = "Tabla 4. Todas las observaciones",
@@ -110,17 +110,17 @@ stargazer(u1, u2, u3, u4, u5, u6, u7, u8, u9, u10,
 
 #Efectos fijos
 
-panfe1 <- felm(inc.ch ~ ch.agua + log(POB_TOT) + IM + conco | edo.year | 0 | muni, data, subset = inc_top == "PAN" & ch.agua < 100)
-panfe2 <- felm(inc.ch ~ ch.elec + log(POB_TOT) + IM + conco | edo.year | 0 | muni, data, subset = inc_top == "PAN" & ch.elec < 100)
-panfe3 <- felm(inc.ch ~ ch.dren + log(POB_TOT) + IM + conco | edo.year | 0 | muni, data, subset = inc_top == "PAN" & ch.dren < 100)
-panfe4 <- felm(inc.ch ~ ch.del + log(POB_TOT) + IM + conco | edo.year | 0 | muni, data, subset = inc_top == "PAN" & ch.del < 100)
-panfe5 <- felm(inc.ch ~ ch.hom + log(POB_TOT) + IM + conco | edo.year | 0 | muni, data, subset = inc_top == "PAN" & ch.hom < 100)
+panfe1 <- felm(inc.ch ~ ch.agua + log(POB_TOT) + IM + conco | edo.year | 0 | muni, data, subset = inc_top == "PAN" & ch.agua <= 100)
+panfe2 <- felm(inc.ch ~ ch.elec + log(POB_TOT) + IM + conco | edo.year | 0 | muni, data, subset = inc_top == "PAN" & ch.elec <= 100)
+panfe3 <- felm(inc.ch ~ ch.dren + log(POB_TOT) + IM + conco | edo.year | 0 | muni, data, subset = inc_top == "PAN" & ch.dren <= 100)
+panfe4 <- felm(inc.ch ~ ch.del + log(POB_TOT) + IM + conco | edo.year | 0 | muni, data, subset = inc_top == "PAN" & ch.del <= 100)
+panfe5 <- felm(inc.ch ~ ch.hom + log(POB_TOT) + IM + conco | edo.year | 0 | muni, data, subset = inc_top == "PAN" & ch.hom <= 100)
 
-panfe6 <- glmer(alt ~ ch.agua + log(POB_TOT) + IM + conco + (1 | edo.year), data, subset = inc_top == "PAN" & ch.agua < 100, family = binomial)
-panfe7 <- glmer(alt ~ ch.elec + log(POB_TOT) + IM + conco + (1 | edo.year), data, subset = inc_top == "PAN" & ch.elec < 100, family = binomial)
-panfe8 <- glmer(alt ~ ch.dren + log(POB_TOT) + IM + conco + (1 | edo.year), data, subset = inc_top == "PAN" & ch.dren < 100, family = binomial)
-panfe9 <- glmer(alt ~ ch.del + log(POB_TOT) + IM + conco + (1 | edo.year), data, subset = inc_top == "PAN" & ch.del < 100, family = binomial)
-panfe10 <- glmer(alt ~ ch.hom + log(POB_TOT) + IM + conco + (1 | edo.year), data, subset = inc_top == "PAN" & ch.hom < 100, family = binomial)
+panfe6 <- glmer(alt ~ ch.agua + log(POB_TOT) + IM + conco + (1 | edo.year), data, subset = inc_top == "PAN" & ch.agua <= 100, family = binomial)
+panfe7 <- glmer(alt ~ ch.elec + log(POB_TOT) + IM + conco + (1 | edo.year), data, subset = inc_top == "PAN" & ch.elec <= 100, family = binomial)
+panfe8 <- glmer(alt ~ ch.dren + log(POB_TOT) + IM + conco + (1 | edo.year), data, subset = inc_top == "PAN" & ch.dren <= 100, family = binomial)
+panfe9 <- glmer(alt ~ ch.del + log(POB_TOT) + IM + conco + (1 | edo.year), data, subset = inc_top == "PAN" & ch.del <= 100, family = binomial)
+panfe10 <- glmer(alt ~ ch.hom + log(POB_TOT) + IM + conco + (1 | edo.year), data, subset = inc_top == "PAN" & ch.hom <= 100, family = binomial)
 
 stargazer(panfe1, panfe2, panfe3, panfe4, panfe5, panfe6, panfe7, panfe8, panfe9, panfe10, 
           title = "Tabla 5. Municipios gobernados por el PAN",
@@ -154,17 +154,17 @@ stargazer(panfe1, panfe2, panfe3, panfe4, panfe5, panfe6, panfe7, panfe8, panfe9
 
 #Efectos fijos
 
-prife1 <- felm(inc.ch ~ ch.agua + log(POB_TOT) + IM + conco | edo.year | 0 | muni, data, subset = inc_top == "PRI" & ch.agua < 100)
-prife2 <- felm(inc.ch ~ ch.elec + log(POB_TOT) + IM + conco | edo.year | 0 | muni, data, subset = inc_top == "PRI" & ch.elec < 100)
-prife3 <- felm(inc.ch ~ ch.dren + log(POB_TOT) + IM + conco | edo.year | 0 | muni, data, subset = inc_top == "PRI" & ch.dren < 100)
-prife4 <- felm(inc.ch ~ ch.del + log(POB_TOT) + IM + conco | edo.year | 0 | muni, data, subset = inc_top == "PRI" & ch.del < 100)
-prife5 <- felm(inc.ch ~ ch.hom + log(POB_TOT) + IM + conco | edo.year | 0 | muni, data, subset = inc_top == "PRI" & ch.hom < 100)
+prife1 <- felm(inc.ch ~ ch.agua + log(POB_TOT) + IM + conco | edo.year | 0 | muni, data, subset = inc_top == "PRI" & ch.agua <= 100)
+prife2 <- felm(inc.ch ~ ch.elec + log(POB_TOT) + IM + conco | edo.year | 0 | muni, data, subset = inc_top == "PRI" & ch.elec <= 100)
+prife3 <- felm(inc.ch ~ ch.dren + log(POB_TOT) + IM + conco | edo.year | 0 | muni, data, subset = inc_top == "PRI" & ch.dren <= 100)
+prife4 <- felm(inc.ch ~ ch.del + log(POB_TOT) + IM + conco | edo.year | 0 | muni, data, subset = inc_top == "PRI" & ch.del <= 100)
+prife5 <- felm(inc.ch ~ ch.hom + log(POB_TOT) + IM + conco | edo.year | 0 | muni, data, subset = inc_top == "PRI" & ch.hom <= 100)
 
-prife6 <- glmer(alt ~ ch.agua + log(POB_TOT) + IM + conco + (1 | edo.year), data, subset = inc_top == "PRI" & ch.agua < 100, family = binomial)
-prife7 <- glmer(alt ~ ch.elec + log(POB_TOT) + IM + conco + (1 | edo.year), data, subset = inc_top == "PRI" & ch.elec < 100, family = binomial)
-prife8 <- glmer(alt ~ ch.dren + log(POB_TOT) + IM + conco + (1 | edo.year), data, subset = inc_top == "PRI" & ch.dren < 100, family = binomial)
-prife9 <- glmer(alt ~ ch.del + log(POB_TOT) + IM + conco + (1 | edo.year), data, subset = inc_top == "PRI" & ch.del < 100, family = binomial)
-prife10 <- glmer(alt ~ ch.hom + log(POB_TOT) + IM + conco + (1 | edo.year), data, subset = inc_top == "PRI" & ch.hom < 100, family = binomial)
+prife6 <- glmer(alt ~ ch.agua + log(POB_TOT) + IM + conco + (1 | edo.year), data, subset = inc_top == "PRI" & ch.agua <= 100, family = binomial)
+prife7 <- glmer(alt ~ ch.elec + log(POB_TOT) + IM + conco + (1 | edo.year), data, subset = inc_top == "PRI" & ch.elec <= 100, family = binomial)
+prife8 <- glmer(alt ~ ch.dren + log(POB_TOT) + IM + conco + (1 | edo.year), data, subset = inc_top == "PRI" & ch.dren <= 100, family = binomial)
+prife9 <- glmer(alt ~ ch.del + log(POB_TOT) + IM + conco + (1 | edo.year), data, subset = inc_top == "PRI" & ch.del <= 100, family = binomial)
+prife10 <- glmer(alt ~ ch.hom + log(POB_TOT) + IM + conco + (1 | edo.year), data, subset = inc_top == "PRI" & ch.hom <= 100, family = binomial)
 
 stargazer(prife1, prife2, prife3, prife4, prife5, prife6, prife7, prife8, prife9, prife10, 
           title = "Tabla 6. Municipios gobernados por el PRI",
@@ -197,17 +197,17 @@ stargazer(prife1, prife2, prife3, prife4, prife5, prife6, prife7, prife8, prife9
 
 #Efectos fijos
 
-prdfe1 <- felm(inc.ch ~ ch.agua + log(POB_TOT) + IM + conco | edo.year | 0 | muni, data, subset = inc_top == "PRD" & ch.agua < 100)
-prdfe2 <- felm(inc.ch ~ ch.elec + log(POB_TOT) + IM + conco | edo.year | 0 | muni, data, subset = inc_top == "PRD" & ch.elec < 100)
-prdfe3 <- felm(inc.ch ~ ch.dren + log(POB_TOT) + IM + conco | edo.year | 0 | muni, data, subset = inc_top == "PRD" & ch.dren < 100)
-prdfe4 <- felm(inc.ch ~ ch.del + log(POB_TOT) + IM + conco | edo.year | 0 | muni, data, subset = inc_top == "PRD" & ch.del < 100)
-prdfe5 <- felm(inc.ch ~ ch.hom + log(POB_TOT) + IM + conco | edo.year | 0 | muni, data, subset = inc_top == "PRD" & ch.hom < 100)
+prdfe1 <- felm(inc.ch ~ ch.agua + log(POB_TOT) + IM + conco | edo.year | 0 | muni, data, subset = inc_top == "PRD" & ch.agua <= 100)
+prdfe2 <- felm(inc.ch ~ ch.elec + log(POB_TOT) + IM + conco | edo.year | 0 | muni, data, subset = inc_top == "PRD" & ch.elec <= 100)
+prdfe3 <- felm(inc.ch ~ ch.dren + log(POB_TOT) + IM + conco | edo.year | 0 | muni, data, subset = inc_top == "PRD" & ch.dren <= 100)
+prdfe4 <- felm(inc.ch ~ ch.del + log(POB_TOT) + IM + conco | edo.year | 0 | muni, data, subset = inc_top == "PRD" & ch.del <= 100)
+prdfe5 <- felm(inc.ch ~ ch.hom + log(POB_TOT) + IM + conco | edo.year | 0 | muni, data, subset = inc_top == "PRD" & ch.hom <= 100)
 
-prdfe6 <- glmer(alt ~ ch.agua + log(POB_TOT) + IM + conco + (1 | edo.year), data, subset = inc_top == "PRD" & ch.agua < 100, family = binomial)
-prdfe7 <- glmer(alt ~ ch.elec + log(POB_TOT) + IM + conco + (1 | edo.year), data, subset = inc_top == "PRD" & ch.elec < 100, family = binomial)
-prdfe8 <- glmer(alt ~ ch.dren + log(POB_TOT) + IM + conco + (1 | edo.year), data, subset = inc_top == "PRD" & ch.dren < 100, family = binomial)
-prdfe9 <- glmer(alt ~ ch.del + log(POB_TOT) + IM + conco + (1 | edo.year), data, subset = inc_top == "PRD" & ch.del < 100, family = binomial)
-prdfe10 <- glmer(alt ~ ch.hom + log(POB_TOT) + IM + conco + (1 | edo.year), data, subset = inc_top == "PRD" & ch.hom < 100, family = binomial)
+prdfe6 <- glmer(alt ~ ch.agua + log(POB_TOT) + IM + conco + (1 | edo.year), data, subset = inc_top == "PRD" & ch.agua <= 100, family = binomial)
+prdfe7 <- glmer(alt ~ ch.elec + log(POB_TOT) + IM + conco + (1 | edo.year), data, subset = inc_top == "PRD" & ch.elec <= 100, family = binomial)
+prdfe8 <- glmer(alt ~ ch.dren + log(POB_TOT) + IM + conco + (1 | edo.year), data, subset = inc_top == "PRD" & ch.dren <= 100, family = binomial)
+prdfe9 <- glmer(alt ~ ch.del + log(POB_TOT) + IM + conco + (1 | edo.year), data, subset = inc_top == "PRD" & ch.del <= 100, family = binomial)
+prdfe10 <- glmer(alt ~ ch.hom + log(POB_TOT) + IM + conco + (1 | edo.year), data, subset = inc_top == "PRD" & ch.hom <= 100, family = binomial)
 
 stargazer(prdfe1, prdfe2, prdfe3, prdfe4, prdfe5, prdfe6, prdfe7, prdfe8, prdfe9, prdfe10, 
           title = "Tabla 7. Municipios gobernados por el PRD",

@@ -10,7 +10,7 @@ list.files(inp)
 out <- "/home/dhjs/Documentos/R_projects/electoral_accountability/graphs"
 
 data <- read.csv(paste(inp, "final.csv", sep = "/"))
-#12171 observaciones
+nrow(data)
 
 #Quitar outliers
 t.agua <- cook.outliers(data$ch.agua)
@@ -18,6 +18,17 @@ t.dren <- cook.outliers(data$ch.dren)
 t.elec <- cook.outliers(data$ch.elec)
 t.hom <- cook.outliers(data$ch.hom)
 t.del <- cook.outliers(data$ch.del)
+
+tabla <- data %>% 
+  select(muniYear, state, win_top, win_state, ch.agua, ch.dren, ch.elec, ch.del, ch.hom) %>% 
+  mutate(
+    agua = factor(ifelse(ch.agua <= 100, "menor", "mayor")),
+    dren = factor(ifelse(ch.dren <= 100, "menor", "mayor")),
+    elec = factor(ifelse(ch.elec <= 100, "menor", "mayor")),
+    del = factor(ifelse(ch.del <= 100, "menor", "mayor")),
+    hom = factor(ifelse(ch.hom <= 100, "menor", "mayor"))
+  )
+summary(tabla)
 
 summary(t.agua$outliers)
 #min - 2491.5 , max -122.4
@@ -68,71 +79,266 @@ party <- c("PAN" = "#153588", "PRI" = "#E13A27", "PRD" = "#F6D626")
 
 # Diagramas de dispersión -------------------------------------------------
 
+#regresión todas las observaciones
 ggplot(data, aes(x = ch.agua, y = inc.share, col = inc_top)) +
   geom_jitter() +
   scale_colour_manual(values = party, name = "Partido") +
-  geom_smooth(method = "lm", se = F)
-ggsave("point_ch.agua.png", path = out, dpi = 300)
+  geom_smooth(method = "lm", se = F) +
+  labs(title = "Diagrama de dispersión de agua", subtitle = "Todas las observaciones", 
+       x = "Cambio % de agua", y = "Cambio % de votos al incumbent")
+ggsave("point_ch.agua_tot.png", path = out, dpi = 300)
 
 ggplot(data, aes(x = ch.dren, y = inc.share, col = inc_top)) +
   geom_jitter() +
   scale_colour_manual(values = party, name = "Partido") +
-  geom_smooth(method = "lm", se = F)
-ggsave("point_ch.dren.png", path = out, dpi = 300)
+  geom_smooth(method = "lm", se = F) +
+  labs(title = "Diagrama de dispersión de drenaje", subtitle = "Todas las observaciones", 
+       x = "Cambio % de drenaje", y = "Cambio % de votos al incumbent")
+ggsave("point_ch.dren_tot.png", path = out, dpi = 300)
 
 ggplot(data, aes(x = ch.elec, y = inc.share, col = inc_top)) +
   geom_jitter() +
   scale_colour_manual(values = party, name = "Partido") +
-  geom_smooth(method = "lm", se = F)
-ggsave("point_ch.elec.png", path = out, dpi = 300)
+  geom_smooth(method = "lm", se = F) +
+  labs(title = "Diagrama de dispersión de electricidad", subtitle = "Todas las observaciones", 
+       x = "Cambio % de eectricidad", y = "Cambio % de votos al incumbent")
+ggsave("point_ch.elec_tot.png", path = out, dpi = 300)
 
 ggplot(data, aes(x = ch.del, y = inc.share, col = inc_top)) +
   geom_jitter() +
   scale_colour_manual(values = party, name = "Partido") +
-  geom_smooth(method = "lm", se = F)
-ggsave("point_ch.del.png", path = out, dpi = 300)
+  geom_smooth(method = "lm", se = F) +
+  labs(title = "Diagrama de dispersión de delitos", subtitle = "Todas las observaciones", 
+       x = "Cambio % de delitos", y = "Cambio % de votos al incumbent")
+ggsave("point_ch.del_tot.png", path = out, dpi = 300)
 
 ggplot(data, aes(x = ch.hom, y = inc.share, col = inc_top)) +
   geom_jitter() +
   scale_colour_manual(values = party, name = "Partido") +
-  geom_smooth(method = "lm", se = F)
+  geom_smooth(method = "lm", se = F) +
+  labs(title = "Diagrama de dispersión de homicidios", subtitle = "Todas las observaciones", 
+       x = "Cambio % de homicidios", y = "Cambio % de votos al incumbent")
+ggsave("point_ch.hom_tot.png", path = out, dpi = 300)
+
+#Regresión por partidos menores a 100
+ggplot(data %>% filter(ch.agua <= 100), aes(x = ch.agua, y = inc.share, col = inc_top)) +
+  geom_jitter() +
+  scale_colour_manual(values = party, name = "Partido") +
+  geom_smooth(method = "lm", se = F) +
+  labs(title = "Diagrama de dispersión de agua", subtitle = "Entre -100 y 100", 
+       x = "Cambio % de agua", y = "Cambio % de votos al incumbent")
+ggsave("point_ch.agua.png", path = out, dpi = 300)
+
+ggplot(data %>% filter(ch.dren <= 100), aes(x = ch.dren, y = inc.share, col = inc_top)) +
+  geom_jitter() +
+  scale_colour_manual(values = party, name = "Partido") +
+  geom_smooth(method = "lm", se = F) +
+  labs(title = "Diagrama de dispersión de drenaje", subtitle = "Entre -100 y 100", 
+       x = "Cambio % de drenaje", y = "Cambio % de votos al incumbent")
+ggsave("point_ch.dren.png", path = out, dpi = 300)
+
+ggplot(data %>% filter(ch.elec <= 100), aes(x = ch.elec, y = inc.share, col = inc_top)) +
+  geom_jitter() +
+  scale_colour_manual(values = party, name = "Partido") +
+  geom_smooth(method = "lm", se = F) +
+  labs(title = "Diagrama de dispersión de electricidad", subtitle = "Entre -100 y 100", 
+       x = "Cambio % de electricidad", y = "Cambio % de votos al incumbent")
+ggsave("point_ch.elec.png", path = out, dpi = 300)
+
+ggplot(data %>% filter(ch.del <= 100), aes(x = ch.del, y = inc.share, col = inc_top)) +
+  geom_jitter() +
+  scale_colour_manual(values = party, name = "Partido") +
+  geom_smooth(method = "lm", se = F) +
+  labs(title = "Diagrama de dispersión de delitos", subtitle = "Entre -100 y 100", 
+       x = "Cambio % de delitos", y = "Cambio % de votos al incumbent")
+ggsave("point_ch.del.png", path = out, dpi = 300)
+
+ggplot(data %>% filter(ch.hom <= 100), aes(x = ch.hom, y = inc.share, col = inc_top)) +
+  geom_jitter() +
+  scale_colour_manual(values = party, name = "Partido") +
+  geom_smooth(method = "lm", se = F) +
+  labs(title = "Diagrama de dispersión de homicidios", subtitle = "Entre -100 y 100", 
+       x = "Cambio % de homicidios", y = "Cambio % de votos al incumbent")
 ggsave("point_ch.hom.png", path = out, dpi = 300)
+
+#observaciones mayores a 100
+ggplot(data %>% filter(ch.agua > 100), aes(x = ch.agua, y = inc.share, col = inc_top)) +
+  geom_jitter() +
+  scale_colour_manual(values = party, name = "Partido") +
+  geom_smooth(method = "lm", se = F) +
+  labs(title = "Diagrama de dispersión de agua", subtitle = "Mayor a 100", 
+       x = "Cambio % de agua", y = "Cambio % de votos al incumbent")
+ggsave("point_ch.agua_may.png", path = out, dpi = 300)
+
+ggplot(data %>% filter(ch.dren > 100), aes(x = ch.dren, y = inc.share, col = inc_top)) +
+  geom_jitter() +
+  scale_colour_manual(values = party, name = "Partido") +
+  geom_smooth(method = "lm", se = F) +
+  labs(title = "Diagrama de dispersión de drenaje", subtitle = "Mayor a 100", 
+       x = "Cambio % de drenaje", y = "Cambio % de votos al incumbent")
+ggsave("point_ch.dren_may.png", path = out, dpi = 300)
+
+ggplot(data %>% filter(ch.elec > 100), aes(x = ch.elec, y = inc.share, col = inc_top)) +
+  geom_jitter() +
+  scale_colour_manual(values = party, name = "Partido") +
+  geom_smooth(method = "lm", se = F) +
+  labs(title = "Diagrama de dispersión de electricidad", subtitle = "Mayor a 100", 
+       x = "Cambio % de electricidad", y = "Cambio % de votos al incumbent")
+ggsave("point_ch.elec_may.png", path = out, dpi = 300)
+
+ggplot(data %>% filter(ch.del > 100), aes(x = ch.del, y = inc.share, col = inc_top)) +
+  geom_jitter() +
+  scale_colour_manual(values = party, name = "Partido") +
+  geom_smooth(method = "lm", se = F) +
+  labs(title = "Diagrama de dispersión de delitos", subtitle = "Mayor a 100", 
+       x = "Cambio % de delitos", y = "Cambio % de votos al incumbent")
+ggsave("point_ch.del_may.png", path = out, dpi = 300)
+
+ggplot(data %>% filter(ch.hom > 100), aes(x = ch.hom, y = inc.share, col = inc_top)) +
+  geom_jitter() +
+  scale_colour_manual(values = party, name = "Partido") +
+  geom_smooth(method = "lm", se = F) +
+  labs(title = "Diagrama de dispersión de homicidios", subtitle = "Mayor a 100", 
+       x = "Cambio % de homicidios", y = "Cambio % de votos al incumbent")
+ggsave("point_ch.hom_may.png", path = out, dpi = 300)
 
 #Por alternancia ####
 ggplot(data, aes(x = ch.agua, y = inc.share, col = inc_top)) +
   geom_jitter() +
   scale_colour_manual(values = party, name = "Partido") +
   geom_smooth(method = "lm", se = F) +
-  facet_grid(. ~ alt)
-ggsave("point_alt_ch.agua.png", path = out, dpi = 300)
+  facet_grid(. ~ alt) +
+  labs(title = "Diagrama de dispersión de agua por alternancia", subtitle = "Todas las observaciones", 
+       x = "Cambio % de agua", y = "Cambio % de votos al incumbent")
+ggsave("point_alt_ch.agua_tot.png", path = out, dpi = 300)
 
 ggplot(data, aes(x = ch.dren, y = inc.share, col = inc_top)) +
   geom_jitter() +
   scale_colour_manual(values = party, name = "Partido") +
   geom_smooth(method = "lm", se = F) +
-  facet_grid(. ~ alt)
-ggsave("point_alt_ch.dren.png", path = out, dpi = 300)
+  facet_grid(. ~ alt) +
+  labs(title = "Diagrama de dispersión de drenaje por alternancia", subtitle = "Todas las observaciones", 
+       x = "Cambio % de drenaje", y = "Cambio % de votos al incumbent")
+ggsave("point_alt_ch.dren_tot.png", path = out, dpi = 300)
 
 ggplot(data, aes(x = ch.elec, y = inc.share, col = inc_top)) +
   geom_jitter() +
   scale_colour_manual(values = party, name = "Partido") +
   geom_smooth(method = "lm", se = F) +
-  facet_grid(. ~ alt)
-ggsave("point_alt_ch.elec.png", path = out, dpi = 300)
+  facet_grid(. ~ alt) +
+  labs(title = "Diagrama de dispersión de electricidad por alternancia", subtitle = "Todas las observaciones", 
+       x = "Cambio % de electricidad", y = "Cambio % de votos al incumbent")
+ggsave("point_alt_ch.elec_tot.png", path = out, dpi = 300)
 
 ggplot(data, aes(x = ch.del, y = inc.share, col = inc_top)) +
   geom_jitter() +
   scale_colour_manual(values = party, name = "Partido") +
   geom_smooth(method = "lm", se = F) +
-  facet_grid(. ~ alt)
-ggsave("point_alt_ch.del.png", path = out, dpi = 300)
+  facet_grid(. ~ alt) +
+  labs(title = "Diagrama de dispersión de delitos por alternancia", subtitle = "Todas las observaciones", 
+       x = "Cambio % de delitos", y = "Cambio % de votos al incumbent")
+ggsave("point_alt_ch.del_tot.png", path = out, dpi = 300)
 
 ggplot(data, aes(x = ch.hom, y = inc.share, col = inc_top)) +
   geom_jitter() +
   scale_colour_manual(values = party, name = "Partido") +
   geom_smooth(method = "lm", se = F) +
-  facet_grid(. ~ alt)
+  facet_grid(. ~ alt) +
+  labs(title = "Diagrama de dispersión de homicidios por alternancia", subtitle = "Todas las observaciones", 
+       x = "Cambio % de homicidios", y = "Cambio % de votos al incumbent")
+ggsave("point_alt_ch.hom_tot.png", path = out, dpi = 300)
+
+#Regresion alternancia <=100
+ggplot(data %>% filter(ch.agua <= 100), aes(x = ch.agua, y = inc.share, col = inc_top)) +
+  geom_jitter() +
+  scale_colour_manual(values = party, name = "Partido") +
+  geom_smooth(method = "lm", se = F) +
+  facet_grid(. ~ alt) +
+  labs(title = "Diagrama de dispersión de agua por alternancia", subtitle = "Entre -100 y 100", 
+       x = "Cambio % de agua", y = "Cambio % de votos al incumbent")
+ggsave("point_alt_ch.agua.png", path = out, dpi = 300)
+
+ggplot(data %>% filter(ch.dren <= 100), aes(x = ch.dren, y = inc.share, col = inc_top)) +
+  geom_jitter() +
+  scale_colour_manual(values = party, name = "Partido") +
+  geom_smooth(method = "lm", se = F) +
+  facet_grid(. ~ alt) +
+  labs(title = "Diagrama de dispersión de drenaje por alternancia", subtitle = "Entre -100 y 100", 
+       x = "Cambio % de drenaje", y = "Cambio % de votos al incumbent")
+ggsave("point_alt_ch.dren.png", path = out, dpi = 300)
+
+ggplot(data %>% filter(ch.elec <= 100), aes(x = ch.elec, y = inc.share, col = inc_top)) +
+  geom_jitter() +
+  scale_colour_manual(values = party, name = "Partido") +
+  geom_smooth(method = "lm", se = F) +
+  facet_grid(. ~ alt) +
+  labs(title = "Diagrama de dispersión de electricidad por alternancia", subtitle = "Entre -100 y 100", 
+       x = "Cambio % de electricidad", y = "Cambio % de votos al incumbent")
+ggsave("point_alt_ch.elec.png", path = out, dpi = 300)
+
+ggplot(data %>% filter(ch.del <= 100), aes(x = ch.del, y = inc.share, col = inc_top)) +
+  geom_jitter() +
+  scale_colour_manual(values = party, name = "Partido") +
+  geom_smooth(method = "lm", se = F) +
+  facet_grid(. ~ alt) +
+  labs(title = "Diagrama de dispersión de delitos por alternancia", subtitle = "Entre -100 y 100", 
+       x = "Cambio % de delitos", y = "Cambio % de votos al incumbent")
+ggsave("point_alt_ch.del.png", path = out, dpi = 300)
+
+ggplot(data %>% filter(ch.hom <= 100), aes(x = ch.hom, y = inc.share, col = inc_top)) +
+  geom_jitter() +
+  scale_colour_manual(values = party, name = "Partido") +
+  geom_smooth(method = "lm", se = F) +
+  facet_grid(. ~ alt) +
+  labs(title = "Diagrama de dispersión de homicidios por alternancia", subtitle = "Entre -100 y 100", 
+       x = "Cambio % de homicidios", y = "Cambio % de votos al incumbent")
 ggsave("point_alt_ch.hom.png", path = out, dpi = 300)
+
+#Regresion <=100
+ggplot(data %>% filter(ch.agua > 100), aes(x = ch.agua, y = inc.share, col = inc_top)) +
+  geom_jitter() +
+  scale_colour_manual(values = party, name = "Partido") +
+  geom_smooth(method = "lm", se = F) +
+  facet_grid(. ~ alt) +
+  labs(title = "Diagrama de dispersión de agua por alternancia", subtitle = "Mayor a 100", 
+       x = "Cambio % de agua", y = "Cambio % de votos al incumbent")
+ggsave("point_alt_ch.agua_may.png", path = out, dpi = 300)
+
+ggplot(data %>% filter(ch.dren > 100), aes(x = ch.dren, y = inc.share, col = inc_top)) +
+  geom_jitter() +
+  scale_colour_manual(values = party, name = "Partido") +
+  geom_smooth(method = "lm", se = F) +
+  facet_grid(. ~ alt) +
+  labs(title = "Diagrama de dispersión de drenaje por alternancia", subtitle = "Mayor a 100", 
+       x = "Cambio % de drenaje", y = "Cambio % de votos al incumbent")
+ggsave("point_alt_ch.dren_may.png", path = out, dpi = 300)
+
+ggplot(data %>% filter(ch.elec > 100), aes(x = ch.elec, y = inc.share, col = inc_top)) +
+  geom_jitter() +
+  scale_colour_manual(values = party, name = "Partido") +
+  geom_smooth(method = "lm", se = F) +
+  facet_grid(. ~ alt) +
+  labs(title = "Diagrama de dispersión de electricidad por alternancia", subtitle = "Mayor a 100", 
+       x = "Cambio % de electricidad", y = "Cambio % de votos al incumbent")
+ggsave("point_alt_ch.elec_may.png", path = out, dpi = 300)
+
+ggplot(data %>% filter(ch.del > 100), aes(x = ch.del, y = inc.share, col = inc_top)) +
+  geom_jitter() +
+  scale_colour_manual(values = party, name = "Partido") +
+  geom_smooth(method = "lm", se = F) +
+  facet_grid(. ~ alt) +
+  labs(title = "Diagrama de dispersión de delitos por alternancia", subtitle = "Mayor a 100", 
+       x = "Cambio % de delitos", y = "Cambio % de votos al incumbent")
+ggsave("point_alt_ch.del_may.png", path = out, dpi = 300)
+
+ggplot(data %>% filter(ch.hom > 100), aes(x = ch.hom, y = inc.share, col = inc_top)) +
+  geom_jitter() +
+  scale_colour_manual(values = party, name = "Partido") +
+  geom_smooth(method = "lm", se = F) +
+  facet_grid(. ~ alt) +
+  labs(title = "Diagrama de dispersión de homicidios por alternancia", subtitle = "Mayor a 100", 
+       x = "Cambio % de homicidios", y = "Cambio % de votos al incumbent")
+ggsave("point_alt_ch.hom_may.png", path = out, dpi = 300)
 
 
 # Boxplot por alternancia -----------------------------------------------------------------
@@ -158,6 +364,32 @@ ggplot(data) +
   facet_grid(. ~ alt)
 
 
+#Limitado a <= 100
+ggplot(data %>% filter(ch.agua <= 100)) +
+  geom_boxplot(aes(x = as.factor(year), y = ch.agua)) +
+  facet_grid(. ~ alt)
+#ggsave("boxplot_agua.png", path = out, dpi = 300)
+
+ggplot(data %>% filter(ch.dren <= 100)) +
+  geom_boxplot(aes(x = as.factor(year), y = ch.dren)) +
+  facet_grid(. ~ alt)
+#ggsave("boxplot_dren.png", path = out, dpi = 300)
+
+ggplot(data %>% filter(ch.elec <= 100)) +
+  geom_boxplot(aes(x = as.factor(year), y = ch.elec)) +
+  facet_grid(. ~ alt)
+#ggsave("boxplot_elec.png", path = out, dpi = 300)
+
+ggplot(data %>% filter(ch.del <= 100)) +
+  geom_boxplot(aes(x = as.factor(year), y = ch.del)) +
+  facet_grid(. ~ alt)
+#ggsave("boxplot_del.png", path = out, dpi = 300)
+
+ggplot(data %>% filter(ch.hom <= 100)) +
+  geom_boxplot(aes(x = as.factor(year), y = ch.hom)) +
+  facet_grid(. ~ alt)
+#ggsave("boxplot_hom.png", path = out, dpi = 300)
+
 # Boxplot por partido -----------------------------------------------------
 
 ggplot(data) +
@@ -180,6 +412,47 @@ ggplot(data) +
   geom_boxplot(aes(x = as.factor(year), y = ch.hom)) +
   facet_grid(. ~ inc_top)
 
+#limitado a <= 100
+ggplot(data %>% filter(ch.agua <= 100)) +
+  geom_boxplot(aes(x = as.factor(year), y = ch.agua)) +
+  facet_grid(. ~ inc_top)
+
+ggplot(data %>% filter(ch.dren <= 100)) +
+  geom_boxplot(aes(x = as.factor(year), y = ch.dren)) +
+  facet_grid(. ~ inc_top)
+
+ggplot(data %>% filter(ch.elec <= 100)) +
+  geom_boxplot(aes(x = as.factor(year), y = ch.elec)) +
+  facet_grid(. ~ inc_top)
+
+ggplot(data %>% filter(ch.del <= 100)) +
+  geom_boxplot(aes(x = as.factor(year), y = ch.del)) +
+  facet_grid(. ~ inc_top)
+
+ggplot(data %>% filter(ch.hom <= 100)) +
+  geom_boxplot(aes(x = as.factor(year), y = ch.hom)) +
+  facet_grid(. ~ inc_top)
+
+#limitado a > 100
+ggplot(data %>% filter(ch.agua > 100)) +
+  geom_boxplot(aes(x = as.factor(year), y = ch.agua)) +
+  facet_grid(. ~ inc_top)
+
+ggplot(data %>% filter(ch.dren > 100)) +
+  geom_boxplot(aes(x = as.factor(year), y = ch.dren)) +
+  facet_grid(. ~ inc_top)
+
+ggplot(data %>% filter(ch.elec > 100)) +
+  geom_boxplot(aes(x = as.factor(year), y = ch.elec)) +
+  facet_grid(. ~ inc_top)
+
+ggplot(data %>% filter(ch.del > 100)) +
+  geom_boxplot(aes(x = as.factor(year), y = ch.del)) +
+  facet_grid(. ~ inc_top)
+
+ggplot(data %>% filter(ch.hom > 100)) +
+  geom_boxplot(aes(x = as.factor(year), y = ch.hom)) +
+  facet_grid(. ~ inc_top)
 
 # random ------------------------------------------------------------------
 

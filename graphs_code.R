@@ -81,7 +81,7 @@ party <- c("PAN" = "#153588", "PRI" = "#E13A27", "PRD" = "#F6D626")
 
 #regresión todas las observaciones
 ggplot(data, aes(x = ch.agua, y = inc.share, col = inc_top)) +
-  geom_jitter() +
+  geom_jitter(alpha = 0.3) +
   scale_colour_manual(values = party, name = "Partido") +
   geom_smooth(method = "lm", se = F) +
   labs(title = "Diagrama de dispersión de agua", subtitle = "Todas las observaciones", 
@@ -89,7 +89,7 @@ ggplot(data, aes(x = ch.agua, y = inc.share, col = inc_top)) +
 ggsave("point_ch.agua_tot.png", path = out, dpi = 300)
 
 ggplot(data, aes(x = ch.dren, y = inc.share, col = inc_top)) +
-  geom_jitter() +
+  geom_jitter(alpha = 0.3) +
   scale_colour_manual(values = party, name = "Partido") +
   geom_smooth(method = "lm", se = F) +
   labs(title = "Diagrama de dispersión de drenaje", subtitle = "Todas las observaciones", 
@@ -97,7 +97,7 @@ ggplot(data, aes(x = ch.dren, y = inc.share, col = inc_top)) +
 ggsave("point_ch.dren_tot.png", path = out, dpi = 300)
 
 ggplot(data, aes(x = ch.elec, y = inc.share, col = inc_top)) +
-  geom_jitter() +
+  geom_jitter(alpha = 0.3) +
   scale_colour_manual(values = party, name = "Partido") +
   geom_smooth(method = "lm", se = F) +
   labs(title = "Diagrama de dispersión de electricidad", subtitle = "Todas las observaciones", 
@@ -105,7 +105,7 @@ ggplot(data, aes(x = ch.elec, y = inc.share, col = inc_top)) +
 ggsave("point_ch.elec_tot.png", path = out, dpi = 300)
 
 ggplot(data, aes(x = ch.del, y = inc.share, col = inc_top)) +
-  geom_jitter() +
+  geom_jitter(alpha = 0.3) +
   scale_colour_manual(values = party, name = "Partido") +
   geom_smooth(method = "lm", se = F) +
   labs(title = "Diagrama de dispersión de delitos", subtitle = "Todas las observaciones", 
@@ -113,7 +113,7 @@ ggplot(data, aes(x = ch.del, y = inc.share, col = inc_top)) +
 ggsave("point_ch.del_tot.png", path = out, dpi = 300)
 
 ggplot(data, aes(x = ch.hom, y = inc.share, col = inc_top)) +
-  geom_jitter() +
+  geom_jitter(alpha = 0.3) +
   scale_colour_manual(values = party, name = "Partido") +
   geom_smooth(method = "lm", se = F) +
   labs(title = "Diagrama de dispersión de homicidios", subtitle = "Todas las observaciones", 
@@ -122,7 +122,7 @@ ggsave("point_ch.hom_tot.png", path = out, dpi = 300)
 
 #Regresión por partidos menores a 100
 ggplot(data %>% filter(ch.agua <= 100), aes(x = ch.agua, y = inc.share, col = inc_top)) +
-  geom_jitter() +
+  geom_jitter(alpha = 0.3) +
   scale_colour_manual(values = party, name = "Partido") +
   geom_smooth(method = "lm", se = F) +
   labs(title = "Diagrama de dispersión de agua", subtitle = "Entre -100 y 100", 
@@ -130,7 +130,7 @@ ggplot(data %>% filter(ch.agua <= 100), aes(x = ch.agua, y = inc.share, col = in
 ggsave("point_ch.agua.png", path = out, dpi = 300)
 
 ggplot(data %>% filter(ch.dren <= 100), aes(x = ch.dren, y = inc.share, col = inc_top)) +
-  geom_jitter() +
+  geom_jitter(alpha = 0.3) +
   scale_colour_manual(values = party, name = "Partido") +
   geom_smooth(method = "lm", se = F) +
   labs(title = "Diagrama de dispersión de drenaje", subtitle = "Entre -100 y 100", 
@@ -138,7 +138,7 @@ ggplot(data %>% filter(ch.dren <= 100), aes(x = ch.dren, y = inc.share, col = in
 ggsave("point_ch.dren.png", path = out, dpi = 300)
 
 ggplot(data %>% filter(ch.elec <= 100), aes(x = ch.elec, y = inc.share, col = inc_top)) +
-  geom_jitter() +
+  geom_jitter(alpha = 0.3) +
   scale_colour_manual(values = party, name = "Partido") +
   geom_smooth(method = "lm", se = F) +
   labs(title = "Diagrama de dispersión de electricidad", subtitle = "Entre -100 y 100", 
@@ -146,7 +146,7 @@ ggplot(data %>% filter(ch.elec <= 100), aes(x = ch.elec, y = inc.share, col = in
 ggsave("point_ch.elec.png", path = out, dpi = 300)
 
 ggplot(data %>% filter(ch.del <= 100), aes(x = ch.del, y = inc.share, col = inc_top)) +
-  geom_jitter() +
+  geom_jitter(alpha = 0.3) +
   scale_colour_manual(values = party, name = "Partido") +
   geom_smooth(method = "lm", se = F) +
   labs(title = "Diagrama de dispersión de delitos", subtitle = "Entre -100 y 100", 
@@ -154,7 +154,7 @@ ggplot(data %>% filter(ch.del <= 100), aes(x = ch.del, y = inc.share, col = inc_
 ggsave("point_ch.del.png", path = out, dpi = 300)
 
 ggplot(data %>% filter(ch.hom <= 100), aes(x = ch.hom, y = inc.share, col = inc_top)) +
-  geom_jitter() +
+  geom_jitter(alpha = 0.3) +
   scale_colour_manual(values = party, name = "Partido") +
   geom_smooth(method = "lm", se = F) +
   labs(title = "Diagrama de dispersión de homicidios", subtitle = "Entre -100 y 100", 
@@ -163,7 +163,7 @@ ggsave("point_ch.hom.png", path = out, dpi = 300)
 
 #observaciones mayores a 100
 ggplot(data %>% filter(ch.agua > 100), aes(x = ch.agua, y = inc.share, col = inc_top)) +
-  geom_jitter() +
+  geom_jitter(alpha = 0.3) +
   scale_colour_manual(values = party, name = "Partido") +
   geom_smooth(method = "lm", se = F) +
   labs(title = "Diagrama de dispersión de agua", subtitle = "Mayor a 100", 
@@ -171,7 +171,7 @@ ggplot(data %>% filter(ch.agua > 100), aes(x = ch.agua, y = inc.share, col = inc
 ggsave("point_ch.agua_may.png", path = out, dpi = 300)
 
 ggplot(data %>% filter(ch.dren > 100), aes(x = ch.dren, y = inc.share, col = inc_top)) +
-  geom_jitter() +
+  geom_jitter(alpha = 0.3) +
   scale_colour_manual(values = party, name = "Partido") +
   geom_smooth(method = "lm", se = F) +
   labs(title = "Diagrama de dispersión de drenaje", subtitle = "Mayor a 100", 
@@ -179,7 +179,7 @@ ggplot(data %>% filter(ch.dren > 100), aes(x = ch.dren, y = inc.share, col = inc
 ggsave("point_ch.dren_may.png", path = out, dpi = 300)
 
 ggplot(data %>% filter(ch.elec > 100), aes(x = ch.elec, y = inc.share, col = inc_top)) +
-  geom_jitter() +
+  geom_jitter(alpha = 0.3) +
   scale_colour_manual(values = party, name = "Partido") +
   geom_smooth(method = "lm", se = F) +
   labs(title = "Diagrama de dispersión de electricidad", subtitle = "Mayor a 100", 
@@ -187,7 +187,7 @@ ggplot(data %>% filter(ch.elec > 100), aes(x = ch.elec, y = inc.share, col = inc
 ggsave("point_ch.elec_may.png", path = out, dpi = 300)
 
 ggplot(data %>% filter(ch.del > 100), aes(x = ch.del, y = inc.share, col = inc_top)) +
-  geom_jitter() +
+  geom_jitter(alpha = 0.3) +
   scale_colour_manual(values = party, name = "Partido") +
   geom_smooth(method = "lm", se = F) +
   labs(title = "Diagrama de dispersión de delitos", subtitle = "Mayor a 100", 
@@ -195,7 +195,7 @@ ggplot(data %>% filter(ch.del > 100), aes(x = ch.del, y = inc.share, col = inc_t
 ggsave("point_ch.del_may.png", path = out, dpi = 300)
 
 ggplot(data %>% filter(ch.hom > 100), aes(x = ch.hom, y = inc.share, col = inc_top)) +
-  geom_jitter() +
+  geom_jitter(alpha = 0.3) +
   scale_colour_manual(values = party, name = "Partido") +
   geom_smooth(method = "lm", se = F) +
   labs(title = "Diagrama de dispersión de homicidios", subtitle = "Mayor a 100", 
@@ -204,7 +204,7 @@ ggsave("point_ch.hom_may.png", path = out, dpi = 300)
 
 #Por alternancia ####
 ggplot(data, aes(x = ch.agua, y = inc.share, col = inc_top)) +
-  geom_jitter() +
+  geom_jitter(alpha = 0.3) +
   scale_colour_manual(values = party, name = "Partido") +
   geom_smooth(method = "lm", se = F) +
   facet_grid(. ~ alt) +
@@ -213,7 +213,7 @@ ggplot(data, aes(x = ch.agua, y = inc.share, col = inc_top)) +
 ggsave("point_alt_ch.agua_tot.png", path = out, dpi = 300)
 
 ggplot(data, aes(x = ch.dren, y = inc.share, col = inc_top)) +
-  geom_jitter() +
+  geom_jitter(alpha = 0.3) +
   scale_colour_manual(values = party, name = "Partido") +
   geom_smooth(method = "lm", se = F) +
   facet_grid(. ~ alt) +
@@ -222,7 +222,7 @@ ggplot(data, aes(x = ch.dren, y = inc.share, col = inc_top)) +
 ggsave("point_alt_ch.dren_tot.png", path = out, dpi = 300)
 
 ggplot(data, aes(x = ch.elec, y = inc.share, col = inc_top)) +
-  geom_jitter() +
+  geom_jitter(alpha = 0.3) +
   scale_colour_manual(values = party, name = "Partido") +
   geom_smooth(method = "lm", se = F) +
   facet_grid(. ~ alt) +
@@ -231,7 +231,7 @@ ggplot(data, aes(x = ch.elec, y = inc.share, col = inc_top)) +
 ggsave("point_alt_ch.elec_tot.png", path = out, dpi = 300)
 
 ggplot(data, aes(x = ch.del, y = inc.share, col = inc_top)) +
-  geom_jitter() +
+  geom_jitter(alpha = 0.3) +
   scale_colour_manual(values = party, name = "Partido") +
   geom_smooth(method = "lm", se = F) +
   facet_grid(. ~ alt) +
@@ -240,7 +240,7 @@ ggplot(data, aes(x = ch.del, y = inc.share, col = inc_top)) +
 ggsave("point_alt_ch.del_tot.png", path = out, dpi = 300)
 
 ggplot(data, aes(x = ch.hom, y = inc.share, col = inc_top)) +
-  geom_jitter() +
+  geom_jitter(alpha = 0.3) +
   scale_colour_manual(values = party, name = "Partido") +
   geom_smooth(method = "lm", se = F) +
   facet_grid(. ~ alt) +
@@ -250,7 +250,7 @@ ggsave("point_alt_ch.hom_tot.png", path = out, dpi = 300)
 
 #Regresion alternancia <=100
 ggplot(data %>% filter(ch.agua <= 100), aes(x = ch.agua, y = inc.share, col = inc_top)) +
-  geom_jitter() +
+  geom_jitter(alpha = 0.3) +
   scale_colour_manual(values = party, name = "Partido") +
   geom_smooth(method = "lm", se = F) +
   facet_grid(. ~ alt) +
@@ -259,7 +259,7 @@ ggplot(data %>% filter(ch.agua <= 100), aes(x = ch.agua, y = inc.share, col = in
 ggsave("point_alt_ch.agua.png", path = out, dpi = 300)
 
 ggplot(data %>% filter(ch.dren <= 100), aes(x = ch.dren, y = inc.share, col = inc_top)) +
-  geom_jitter() +
+  geom_jitter(alpha = 0.3) +
   scale_colour_manual(values = party, name = "Partido") +
   geom_smooth(method = "lm", se = F) +
   facet_grid(. ~ alt) +
@@ -268,7 +268,7 @@ ggplot(data %>% filter(ch.dren <= 100), aes(x = ch.dren, y = inc.share, col = in
 ggsave("point_alt_ch.dren.png", path = out, dpi = 300)
 
 ggplot(data %>% filter(ch.elec <= 100), aes(x = ch.elec, y = inc.share, col = inc_top)) +
-  geom_jitter() +
+  geom_jitter(alpha = 0.3) +
   scale_colour_manual(values = party, name = "Partido") +
   geom_smooth(method = "lm", se = F) +
   facet_grid(. ~ alt) +
@@ -277,7 +277,7 @@ ggplot(data %>% filter(ch.elec <= 100), aes(x = ch.elec, y = inc.share, col = in
 ggsave("point_alt_ch.elec.png", path = out, dpi = 300)
 
 ggplot(data %>% filter(ch.del <= 100), aes(x = ch.del, y = inc.share, col = inc_top)) +
-  geom_jitter() +
+  geom_jitter(alpha = 0.3) +
   scale_colour_manual(values = party, name = "Partido") +
   geom_smooth(method = "lm", se = F) +
   facet_grid(. ~ alt) +
@@ -286,7 +286,7 @@ ggplot(data %>% filter(ch.del <= 100), aes(x = ch.del, y = inc.share, col = inc_
 ggsave("point_alt_ch.del.png", path = out, dpi = 300)
 
 ggplot(data %>% filter(ch.hom <= 100), aes(x = ch.hom, y = inc.share, col = inc_top)) +
-  geom_jitter() +
+  geom_jitter(alpha = 0.3) +
   scale_colour_manual(values = party, name = "Partido") +
   geom_smooth(method = "lm", se = F) +
   facet_grid(. ~ alt) +
@@ -296,7 +296,7 @@ ggsave("point_alt_ch.hom.png", path = out, dpi = 300)
 
 #Regresion <=100
 ggplot(data %>% filter(ch.agua > 100), aes(x = ch.agua, y = inc.share, col = inc_top)) +
-  geom_jitter() +
+  geom_jitter(alpha = 0.3) +
   scale_colour_manual(values = party, name = "Partido") +
   geom_smooth(method = "lm", se = F) +
   facet_grid(. ~ alt) +
@@ -305,7 +305,7 @@ ggplot(data %>% filter(ch.agua > 100), aes(x = ch.agua, y = inc.share, col = inc
 ggsave("point_alt_ch.agua_may.png", path = out, dpi = 300)
 
 ggplot(data %>% filter(ch.dren > 100), aes(x = ch.dren, y = inc.share, col = inc_top)) +
-  geom_jitter() +
+  geom_jitter(alpha = 0.3) +
   scale_colour_manual(values = party, name = "Partido") +
   geom_smooth(method = "lm", se = F) +
   facet_grid(. ~ alt) +
@@ -314,7 +314,7 @@ ggplot(data %>% filter(ch.dren > 100), aes(x = ch.dren, y = inc.share, col = inc
 ggsave("point_alt_ch.dren_may.png", path = out, dpi = 300)
 
 ggplot(data %>% filter(ch.elec > 100), aes(x = ch.elec, y = inc.share, col = inc_top)) +
-  geom_jitter() +
+  geom_jitter(alpha = 0.3) +
   scale_colour_manual(values = party, name = "Partido") +
   geom_smooth(method = "lm", se = F) +
   facet_grid(. ~ alt) +
@@ -323,7 +323,7 @@ ggplot(data %>% filter(ch.elec > 100), aes(x = ch.elec, y = inc.share, col = inc
 ggsave("point_alt_ch.elec_may.png", path = out, dpi = 300)
 
 ggplot(data %>% filter(ch.del > 100), aes(x = ch.del, y = inc.share, col = inc_top)) +
-  geom_jitter() +
+  geom_jitter(alpha = 0.3) +
   scale_colour_manual(values = party, name = "Partido") +
   geom_smooth(method = "lm", se = F) +
   facet_grid(. ~ alt) +
@@ -332,7 +332,7 @@ ggplot(data %>% filter(ch.del > 100), aes(x = ch.del, y = inc.share, col = inc_t
 ggsave("point_alt_ch.del_may.png", path = out, dpi = 300)
 
 ggplot(data %>% filter(ch.hom > 100), aes(x = ch.hom, y = inc.share, col = inc_top)) +
-  geom_jitter() +
+  geom_jitter(alpha = 0.3) +
   scale_colour_manual(values = party, name = "Partido") +
   geom_smooth(method = "lm", se = F) +
   facet_grid(. ~ alt) +

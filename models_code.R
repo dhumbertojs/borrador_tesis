@@ -7,7 +7,6 @@ library(lfe)
 library(lme4)
 library(glmmML)
 library(tidyr)
-library(Hmisc)
 
 inp <- "/home/dhjs/Documentos/R_projects/electoral_accountability"
 list.files(inp)
@@ -16,31 +15,6 @@ out <- "/home/dhjs/Documentos/R_projects/electoral_accountability/tables"
 data <- read.csv(paste(inp, "final.csv", sep = "/"))
 ##Hay 10,230 observaciones
 
-data <- data %>% 
-  select(
-    muniYear, state, muni, year, wintop_state, win_top, inc_top, conco,        
-    inc.ch, IM, POB_TOT, ch.agua, ch.dren, ch.elec, ch.del, ch.hom, alt, edo.year     
-  )
-
-tabla <- data %>% 
-  select(
-    IM, POB_TOT,
-    inc.ch, ch.agua, ch.dren, ch.elec, ch.del, ch.hom     
-  ) %>% 
-  rename(POB = POB_TOT) %>% 
-  summarise_all(funs(mean, sd, min, max), na.rm = T) %>% 
-  pivot_longer(everything()) %>% 
-  separate(name, into = c("variable", "stat"), sep = "_") %>% 
-  mutate(value = round(value, 3))
-
-
-corr <- data %>% 
-  select(
-  alt, inc.ch, ch.agua, ch.dren, ch.elec, ch.del, ch.hom, IM, POB_TOT
-) %>% 
-  rename(pob = POB_TOT, im = IM)
-
-rcorr(as.matrix(corr), type = "pearson")
 
 # Modelos -----------------------------------------------------------------
 

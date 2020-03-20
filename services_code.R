@@ -5,6 +5,7 @@ library(dplyr)
 library(readxl)
 library(tidyr)
 library(janitor)
+library(imputeTS)
 
 inp <- "/home/dhjs/Documentos/R_projects/electoral_accountability/datos/servicios"
 list.files(inp)
@@ -271,6 +272,18 @@ summary(fin)
 #Hay 13,464 NA de agua
 #17,094 NA de drenaje
 #19,402 NA de electricidad
+
+#Vamos a imputar datos con un paquete
+##Dado que no hay un patrón sobre el cual calcular una tasa de crecimiento, utilicé un paquete de R
+#Este paquete reemplaza los NA por el promedio exponencial, agruper por municipio para que fuera algo más o menos creíble
+
+fin <- fin %>% 
+  mutate(muni = substr(muniYear, 1, 5)) %>% 
+  group_by(muni) %>% 
+  na_ma(weighting = "exponential", k = 2) %>% 
+  ungroup() %>% 
+  select(-muni)
+
 
 #Revisando los datos, un mismo municipio no reporta todos los datos para todos los años
 write.csv(fin, paste(out, "Services.csv", sep = "/"), row.names = F)

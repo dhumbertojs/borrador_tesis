@@ -4,6 +4,7 @@ setwd("~")
 library(dplyr)
 library(readxl)
 library(tidyr)
+library(imputeTS)
 
 inp <- "/home/dhjs/Documentos/R_projects/electoral_accountability/datos/bienes"
 list.files(inp)
@@ -178,9 +179,16 @@ fin <- fin %>%
   arrange(muniYear) %>% 
   select(muniYear, tot_del, hom)
 
+fin <- fin %>% 
+  mutate(muni = substr(muniYear, 1, 5)) %>% 
+  group_by(muni) %>% 
+  na_ma(weighting = "exponential", k = 2) %>% 
+  ungroup() %>% 
+  select(-muni)  
+
 summary(fin)
 
-##De los datos originales hay muchso NA
+##De los datos originales hay muchos NA
 #En total de delitos hay 7,994
 #En homicidios hay 10,100
 

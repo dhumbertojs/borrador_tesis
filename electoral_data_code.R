@@ -51,34 +51,27 @@ data <- data %>%
 
 data <- data %>% 
   mutate(
-    PAN.ch = ifelse(!is.na(PAN.s) & !is.na(lag_PAN.s), 
-                                           (PAN.s - lag_PAN.s)/lag_PAN.s, NA),
-    PRI.ch = ifelse(!is.na(PRI.s) & !is.na(lag_PRI.s), 
-                                           (PRI.s - lag_PRI.s)/lag_PRI.s, NA),
-    PRD.ch = ifelse(!is.na(PRD.s) & !is.na(lag_PRD.s), 
-                                           (PRD.s - lag_PRD.s)/lag_PRD.s, NA),
+    # PAN.ch = ifelse(!is.na(PAN.s) & !is.na(lag_PAN.s), 
+    #                                        (PAN.s - lag_PAN.s)/lag_PAN.s, NA),
+    # PRI.ch = ifelse(!is.na(PRI.s) & !is.na(lag_PRI.s), 
+    #                                        (PRI.s - lag_PRI.s)/lag_PRI.s, NA),
+    # PRD.ch = ifelse(!is.na(PRD.s) & !is.na(lag_PRD.s), 
+    #                                        (PRD.s - lag_PRD.s)/lag_PRD.s, NA),
     
-    PAN.ch2 = PAN.s - lag_PAN.s,
-    PRI.ch2 = PRI.s - lag_PRI.s,
-    PRD.ch2 = PRD.s - lag_PRD.s,
+    PAN.ch = PAN.s - lag_PAN.s,
+    PRI.ch = PRI.s - lag_PRI.s,
+    PRD.ch = PRD.s - lag_PRD.s,
+    
+    # inc.ch = ifelse(inc_top == "PAN", PAN.ch,
+    #                 ifelse(inc_top == "PRI", PRI.ch,
+    #                        ifelse(inc_top == "PRD", PRD.ch, NA))),
     
     inc.ch = ifelse(inc_top == "PAN", PAN.ch,
                     ifelse(inc_top == "PRI", PRI.ch,
                            ifelse(inc_top == "PRD", PRD.ch, NA))),
     
-    inc.ch2 = ifelse(inc_top == "PAN", PAN.ch2,
-                    ifelse(inc_top == "PRI", PRI.ch2,
-                           ifelse(inc_top == "PRD", PRD.ch2, NA))),
-    
     conco = ifelse(win_top == wintop_state, 1, 0)
   ) %>% 
   filter(!is.infinite(inc.ch))
-
-View(data %>% select(muni, year, win_top, inc_top, 
-                     PAN, PRI, PRD, total, 
-                     PAN.s, PRI.s, PRD.s, 
-                     lag_PAN.s, lag_PRI.s, lag_PRD.s,
-                     PAN.ch, PRI.ch, PRD.ch,
-                     inc.ch, inc.ch2) %>% filter(muni == "1001"), "holi")
 
 write.csv(data, paste(out, "Electoral.csv", sep = "/"), row.names = F)

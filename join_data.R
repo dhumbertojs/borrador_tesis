@@ -29,11 +29,15 @@ summary(mar)#Datos de marginación y población de 1990-2015
 # fin <- full_join(fin, cri, by = "muniYear")
 # fin <- full_join(fin, mar, by = "muniYear")
 # #64,710 observaciones
+nrow(ele)
+ele <- filter(ele, year >= 1994)
+nrow(ele)
 
-try <- left_join(ele, ser, by = "muniYear")
-try <- left_join(try, cri, by = "muniYear")
+try <- ele %>% 
+  left_join(ser, by = "muniYear") %>% 
+  left_join(cri, by = "muniYear") %>% 
 #13,373
-try <- left_join(try, mar, by = "muniYear")
+  left_join(mar, by = "muniYear")
 #11,142 observaciones
 
 try <- try %>% 
@@ -51,23 +55,23 @@ try <- try %>%
     lt.elec = lag(t.elec, n = 1, order_by = year), 
     lt.del = lag(t.del, n = 1, order_by = year),
     lt.hom = lag(t.hom, n = 1, order_by = year),
+    
     #Valor presente - valor pasado / valor pasado
+    # ch.agua = ifelse(!is.na(lt.agua) & !is.na(t.agua), ((t.agua - lt.agua) * 100)/lt.agua, NA),
+    # ch.dren = ifelse(!is.na(lt.dren) & !is.na(t.dren), ((t.dren - lt.dren) * 100)/lt.dren, NA),
+    # ch.elec = ifelse(!is.na(lt.elec) & !is.na(t.elec), ((t.elec - lt.elec) * 100)/lt.elec, NA),
+    # ch.del = ifelse(!is.na(lt.del) & !is.na(t.del), ((t.del - lt.del) * 100)/lt.del, NA),
+    # ch.hom = ifelse(!is.na(lt.hom) & !is.na(t.hom), ((t.hom - lt.hom) * 100)/lt.hom, NA),
     
-    ch.agua = ifelse(!is.na(lt.agua) & !is.na(t.agua), ((t.agua - lt.agua) * 100)/lt.agua, NA),
-    ch.dren = ifelse(!is.na(lt.dren) & !is.na(t.dren), ((t.dren - lt.dren) * 100)/lt.dren, NA),
-    ch.elec = ifelse(!is.na(lt.elec) & !is.na(t.elec), ((t.elec - lt.elec) * 100)/lt.elec, NA),
-    ch.del = ifelse(!is.na(lt.del) & !is.na(t.del), ((t.del - lt.del) * 100)/lt.del, NA),
-    ch.hom = ifelse(!is.na(lt.hom) & !is.na(t.hom), ((t.hom - lt.hom) * 100)/lt.hom, NA),
-    
-    ch.agua2 = t.agua - lt.agua,
-    ch.dren2 = t.dren - lt.dren,
-    ch.elec2 = t.elec - lt.elec,
-    ch.del2 = t.del - lt.del,
-    ch.hom2 = t.hom - lt.hom
+    ch.agua = t.agua - lt.agua,
+    ch.dren = t.dren - lt.dren,
+    ch.elec = t.elec - lt.elec,
+    ch.del = t.del - lt.del,
+    ch.hom = t.hom - lt.hom
     
   )  %>% 
- filter(!is.infinite(ch.agua) & !is.infinite(ch.dren) & !is.infinite(ch.elec) & 
-          !is.infinite(ch.del) & !is.infinite(ch.hom)) %>% 
+ # filter(!is.infinite(ch.agua) & !is.infinite(ch.dren) & !is.infinite(ch.elec) & 
+ #          !is.infinite(ch.del) & !is.infinite(ch.hom)) %>% 
  ungroup() %>% 
   # select(-c(agua, dren, elec, tot_del, hom, 
   #          t.agua, t.dren, t.elec, t.del, t.hom, 

@@ -42,6 +42,7 @@ try <- ele %>%
 
 try <- try %>% 
   mutate(
+    inc.ch = inc.ch*100,
     t.agua = (agua/POB_TOT) * 100000,
     t.dren = (dren/POB_TOT) * 100000,
     t.elec = (elec/POB_TOT) * 100000,
@@ -57,15 +58,15 @@ try <- try %>%
     lt.hom = lag(t.hom, n = 1, order_by = year),
     
     #Valor presente - valor pasado / valor pasado
-    # ch.agua = ifelse(!is.na(lt.agua) & !is.na(t.agua), ((t.agua - lt.agua) * 100)/lt.agua, NA),
+    ch.agua = ifelse(!is.na(lt.agua) & !is.na(t.agua), ((t.agua - lt.agua) * 100)/lt.agua, NA),
     # ch.dren = ifelse(!is.na(lt.dren) & !is.na(t.dren), ((t.dren - lt.dren) * 100)/lt.dren, NA),
-    # ch.elec = ifelse(!is.na(lt.elec) & !is.na(t.elec), ((t.elec - lt.elec) * 100)/lt.elec, NA),
+    ch.elec = ifelse(!is.na(lt.elec) & !is.na(t.elec), ((t.elec - lt.elec) * 100)/lt.elec, NA),
     # ch.del = ifelse(!is.na(lt.del) & !is.na(t.del), ((t.del - lt.del) * 100)/lt.del, NA),
     # ch.hom = ifelse(!is.na(lt.hom) & !is.na(t.hom), ((t.hom - lt.hom) * 100)/lt.hom, NA),
     
-    ch.agua = t.agua - lt.agua,
+    #ch.agua = t.agua - lt.agua,
     ch.dren = t.dren - lt.dren,
-    ch.elec = t.elec - lt.elec,
+    #ch.elec = t.elec - lt.elec,
     ch.del = t.del - lt.del,
     ch.hom = t.hom - lt.hom
     

@@ -280,7 +280,7 @@ summary(fin)
 fin <- fin %>% 
   mutate(muni = substr(muniYear, 1, 5)) %>% 
   group_by(muni) %>% 
-  na_ma(weighting = "exponential", k = 2) %>% 
+  na_ma(weighting = "exponential", k = 1) %>% 
   ungroup() %>% 
   select(-muni)
 

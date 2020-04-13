@@ -6,7 +6,7 @@ library(stringr)
 
 inp <- "/home/dhjs/Documentos/R_projects/electoral_accountability/databases"
 list.files(inp)
-out <- "/home/dhjs/Documentos/R_projects/electoral_accountability/regression/alternative"
+out <- "/home/dhjs/Documentos/R_projects/electoral_accountability/alternative"
 
 cri <- read.csv(paste(inp, "Crimes.csv", sep = "/"))
 cri <- cri %>% 
@@ -81,11 +81,18 @@ ungroup() %>%
     lt.hom = (hom_lag/lag_pob) * 100000,
     #Valor presente - valor pasado / valor pasado
     
-    ch.agua = t.agua - lt.agua,
+    ch.agua = ifelse(!is.na(lt.agua) & !is.na(t.agua), ((t.agua - lt.agua) * 100)/lt.agua, NA),
+    # ch.dren = ifelse(!is.na(lt.dren) & !is.na(t.dren), ((t.dren - lt.dren) * 100)/lt.dren, NA),
+    ch.elec = ifelse(!is.na(lt.elec) & !is.na(t.elec), ((t.elec - lt.elec) * 100)/lt.elec, NA),
+    
+    #ch.agua = t.agua - lt.agua,
     ch.dren = t.dren - lt.dren,
-    ch.elec = t.elec - lt.elec,
+    #ch.elec = t.elec - lt.elec,
     ch.del = t.del - lt.del,
-    ch.hom = t.hom - lt.hom
+    ch.hom = t.hom - lt.hom,
+    
+    ch.agua = ifelse(is.infinite(ch.agua), NA, ch.agua),
+    ch.elec = ifelse(is.infinite(ch.elec), NA, ch.elec)
     
   ) %>% 
   mutate(

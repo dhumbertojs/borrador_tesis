@@ -68,11 +68,12 @@ try <- try %>%
     ch.dren = t.dren - lt.dren,
     #ch.elec = t.elec - lt.elec,
     ch.del = t.del - lt.del,
-    ch.hom = t.hom - lt.hom
+    ch.hom = t.hom - lt.hom,
+    
+    ch.agua = ifelse(is.infinite(ch.agua), NA, ch.agua),
+    ch.elec = ifelse(is.infinite(ch.elec), NA, ch.elec)
     
   )  %>% 
- # filter(!is.infinite(ch.agua) & !is.infinite(ch.dren) & !is.infinite(ch.elec) & 
- #          !is.infinite(ch.del) & !is.infinite(ch.hom)) %>% 
  ungroup() %>% 
   # select(-c(agua, dren, elec, tot_del, hom, 
   #          t.agua, t.dren, t.elec, t.del, t.hom, 

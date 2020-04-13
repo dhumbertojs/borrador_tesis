@@ -7,7 +7,7 @@ library(scales)
 
 inp <- "/home/dhjs/Documentos/R_projects/electoral_accountability"
 list.files(inp)
-out <- "/home/dhjs/Documentos/R_projects/electoral_accountability/pre-analysis"
+out <- "/home/dhjs/Documentos/R_projects/electoral_accountability/graphs"
 
 options(scipen=999)
 
@@ -231,23 +231,18 @@ ggplot(data, aes(x = ch.hom, y = inc.ch, col = inc_top)) +
        x = "Cambio % de homicidios", y = "Cambio % de votos al incumbent")
 ggsave("point_ch.hom_tot.png", path = paste(out, "scatter", sep = "/"), dpi = 300)
 
-# 2. Primer filtro -----------------------------------------------------------
+# 2. Capped -----------------------------------------------------------
 
 ##So... qué vamos a quitar? 
 #Empecemos con el 10% superior e inferior
 
 data1 <- data %>% 
   filter(
-    ch.agua <= quantile(ch.agua, 0.95, na.rm = T) & 
-      ch.agua >= quantile(ch.agua, 0.05, na.rm = T) &
-      ch.dren <= quantile(ch.dren, 0.95, na.rm = T) & 
-      ch.dren >= quantile(ch.dren, 0.05, na.rm = T) &
-      ch.elec <= quantile(ch.elec, 0.95, na.rm = T) & 
-      ch.elec >= quantile(ch.elec, 0.05, na.rm = T) &
-      ch.del <= quantile(ch.del, 0.95, na.rm = T) & 
-      ch.del >= quantile(ch.del, 0.05, na.rm = T) &
-      ch.hom <= quantile(ch.hom, 0.95, na.rm = T) & 
-      ch.hom >= quantile(ch.hom, 0.05, na.rm = T)
+    ch.agua <= 100 & ch.agua >= -100 & 
+      ch.elec <= 100 & ch.elec >= -100 & 
+      ch.dren <= 100 & ch.dren >= -100 &
+      ch.del <= 100 & ch.del >= -100 & 
+      ch.hom <= 100 & ch.hom >= -100
   )
 summary(data1)
 
@@ -435,27 +430,27 @@ ggplot(data1, aes(x = ch.hom, y = inc.ch, col = inc_top)) +
 ggsave("primer_point_ch.hom_tot.png", path = paste(out, "scatter", sep = "/"), dpi = 300)
 
 
-# 3. Segundo filtro -----------------------------------------------------------
+# 3. Cropped -----------------------------------------------------------
 
 ##So... qué vamos a quitar? 
 #Empecemos con el 10% superior e inferior
 
 data2 <- data %>% 
   mutate(
-    ch.agua = ifelse(ch.agua <= quantile(ch.agua, 0.95, na.rm = T) & 
-                       ch.agua >= quantile(ch.agua, 0.05, na.rm = T), ch.agua, NA),
+    ch.agua = ifelse(ch.agua <= quantile(ch.agua, 0.975, na.rm = T) & 
+                       ch.agua >= quantile(ch.agua, 0.025, na.rm = T), ch.agua, NA),
     
-    ch.dren = ifelse(ch.dren <= quantile(ch.dren, 0.95, na.rm = T) &
-                     ch.dren >= quantile(ch.dren, 0.05, na.rm = T) , ch.dren, NA),
+    ch.dren = ifelse(ch.dren <= quantile(ch.dren, 0.975, na.rm = T) &
+                     ch.dren >= quantile(ch.dren, 0.025, na.rm = T) , ch.dren, NA),
        
-    ch.elec = ifelse(ch.elec <= quantile(ch.elec, 0.95, na.rm = T) &
-                     ch.elec >= quantile(ch.elec, 0.05, na.rm = T), ch.elec, NA),
+    ch.elec = ifelse(ch.elec <= quantile(ch.elec, 0.975, na.rm = T) &
+                     ch.elec >= quantile(ch.elec, 0.025, na.rm = T), ch.elec, NA),
     
-    ch.del = ifelse(ch.del <= quantile(ch.del, 0.95, na.rm = T) &
-                    ch.del >= quantile(ch.del, 0.05, na.rm = T), ch.del, NA),
+    ch.del = ifelse(ch.del <= quantile(ch.del, 0.975, na.rm = T) &
+                    ch.del >= quantile(ch.del, 0.025, na.rm = T), ch.del, NA),
     
-    ch.hom = ifelse(ch.hom <= quantile(ch.hom, 0.95, na.rm = T) & 
-                    ch.hom >= quantile(ch.hom, 0.05, na.rm = T), ch.hom, NA)
+    ch.hom = ifelse(ch.hom <= quantile(ch.hom, 0.975, na.rm = T) & 
+                    ch.hom >= quantile(ch.hom, 0.025, na.rm = T), ch.hom, NA)
   )
   
 nrow(data2)

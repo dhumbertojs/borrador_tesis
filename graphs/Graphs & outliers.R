@@ -648,15 +648,15 @@ data3 <- data %>%
   mutate(
     ch.agua = ifelse(ch.agua <= 100, ch.agua, NA),
     
-    ch.dren = ifelse(ch.dren < 100 &
+    ch.dren = ifelse(ch.dren < -100 |
                        ch.dren > 100 , NA, ch.dren),
     
     ch.elec = ifelse(ch.elec <= 100, ch.elec, NA),
     
-    ch.del = ifelse(ch.del < 100 &
+    ch.del = ifelse(ch.del < -100 |
                       ch.del > 100, NA, ch.del),
     
-    ch.hom = ifelse(ch.hom < 100 & 
+    ch.hom = ifelse(ch.hom < -100 | 
                       ch.hom > 100, NA, ch.hom)
   )
 

@@ -63,7 +63,7 @@ stargazer(u1, u2, u3, u4, u5, u6, u7, u8, u9, u10,
                                "Concordancia", "Constante"),
           dep.var.labels = c("Cambio % del incumbent", "Alternancia"),
           type = "html", 
-          out = paste(out, "todos_FE.html", sep = "/"), 
+          out = paste(out, "todos_FE_crop.html", sep = "/"), 
           flip = T)
 
 
@@ -93,7 +93,7 @@ stargazer(panfe1, panfe2, panfe3, panfe4, panfe5, panfe6, panfe7, panfe8, panfe9
                                "Homicidios", "Población", "Índice de marginación", 
                                "Concordancia", "Constante"),
           dep.var.labels = c("Cambio % del incumbent", "Alternancia"),
-          type = "html", out = paste(out, "PAN_FE.html", sep = "/"), flip = T)
+          type = "html", out = paste(out, "PAN_FE_crop.html", sep = "/"), flip = T)
 
 #PRI####
 
@@ -122,7 +122,7 @@ stargazer(prife1, prife2, prife3, prife4, prife5, prife6, prife7, prife8, prife9
                                "Homicidios", "Población", "Índice de marginación", 
                                "Concordancia", "Constante"),
           dep.var.labels = c("Cambio % del incumbent", "Alternancia"),
-          type = "html", out = paste(out, "PRI_FE.html", sep = "/"), flip = T)
+          type = "html", out = paste(out, "PRI_FE_crop.html", sep = "/"), flip = T)
 
 
 #PRD####
@@ -152,7 +152,7 @@ stargazer(prdfe1, prdfe2, prdfe3, prdfe4, prdfe5, prdfe6, prdfe7, prdfe8, prdfe9
                                "Homicidios", "Población", "Índice de marginación", 
                                "Concordancia", "Constante"),
           dep.var.labels = c("Cambio % del incumbent", "Alternancia"),
-          type = "html", out = paste(out, "PRD_FE.html", sep = "/"), flip = T)
+          type = "html", out = paste(out, "PRD_FE_crop.html", sep = "/"), flip = T)
 
 # Capped ------------------------------------------------------------------
 
@@ -161,15 +161,15 @@ datacap <- data %>%
   mutate(
     ch.agua = ifelse(ch.agua <= 100, ch.agua, NA),
     
-    ch.dren = ifelse(ch.dren < 100 &
+    ch.dren = ifelse(ch.dren < -100 |
                        ch.dren > 100 , NA, ch.dren),
     
     ch.elec = ifelse(ch.elec <= 100, ch.elec, NA),
     
-    ch.del = ifelse(ch.del < 100 &
+    ch.del = ifelse(ch.del < -100 |
                       ch.del > 100, NA, ch.del),
     
-    ch.hom = ifelse(ch.hom < 100 & 
+    ch.hom = ifelse(ch.hom < -100 | 
                       ch.hom > 100, NA, ch.hom)
   )
 
@@ -194,7 +194,7 @@ stargazer(u1, u2, u3, u4, u5, u6, u7, u8, u9, u10,
                                "Concordancia", "Constante"),
           dep.var.labels = c("Cambio % del incumbent", "Alternancia"),
           type = "html", 
-          out = paste(out, "todos_FE.html", sep = "/"), 
+          out = paste(out, "todos_FE_cap.html", sep = "/"), 
           flip = T)
 
 
@@ -224,7 +224,7 @@ stargazer(panfe1, panfe2, panfe3, panfe4, panfe5, panfe6, panfe7, panfe8, panfe9
                                "Homicidios", "Población", "Índice de marginación", 
                                "Concordancia", "Constante"),
           dep.var.labels = c("Cambio % del incumbent", "Alternancia"),
-          type = "html", out = paste(out, "PAN_FE.html", sep = "/"), flip = T)
+          type = "html", out = paste(out, "PAN_FE_cap.html", sep = "/"), flip = T)
 
 #PRI####
 
@@ -253,7 +253,7 @@ stargazer(prife1, prife2, prife3, prife4, prife5, prife6, prife7, prife8, prife9
                                "Homicidios", "Población", "Índice de marginación", 
                                "Concordancia", "Constante"),
           dep.var.labels = c("Cambio % del incumbent", "Alternancia"),
-          type = "html", out = paste(out, "PRI_FE.html", sep = "/"), flip = T)
+          type = "html", out = paste(out, "PRI_FE_cap.html", sep = "/"), flip = T)
 
 
 #PRD####
@@ -283,4 +283,4 @@ stargazer(prdfe1, prdfe2, prdfe3, prdfe4, prdfe5, prdfe6, prdfe7, prdfe8, prdfe9
                                "Homicidios", "Población", "Índice de marginación", 
                                "Concordancia", "Constante"),
           dep.var.labels = c("Cambio % del incumbent", "Alternancia"),
-          type = "html", out = paste(out, "PRD_FE.html", sep = "/"), flip = T)
+          type = "html", out = paste(out, "PRD_FE_cap.html", sep = "/"), flip = T)

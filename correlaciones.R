@@ -5,7 +5,7 @@ library(dplyr)
 library(tidyr)
 library(Hmisc)
 
-inp <- "/home/dhjs/Documentos/R_projects/electoral_accountability"
+inp <- "/Users/dhjs/Documents/projects/electoral_accountability"
 list.files(inp)
 
 data <- read.csv(paste(inp, "final.csv", sep = "/"))
@@ -27,7 +27,10 @@ tabla <- data2 %>%
   summarise_all(funs(mean, sd, min, max), na.rm = T) %>% 
   pivot_longer(everything()) %>% 
   separate(name, into = c("variable", "stat"), sep = "_") %>% 
-  mutate(value = round(value, 3))
+  mutate(value = round(value, 3)) %>% 
+  pivot_wider(
+    names_from = stat
+  )
 
 
 corr <- data2 %>% 
@@ -40,16 +43,16 @@ rcorr(as.matrix(corr), type = "pearson")
 
 ##el otro calculo
 
-data3 <- data %>% 
-  select(
-    muniYear, state, muni, year, wintop_state, win_top, inc_top, conco,        
-    inc.ch2, IM, POB_TOT, ch.agua2, ch.dren2, ch.elec2, ch.del2, ch.hom2, alt, edo.year     
-  )
+# data3 <- data %>% 
+#   select(
+#     muniYear, state, muni, year, wintop_state, win_top, inc_top, conco,        
+#     inc.ch2, IM, POB_TOT, ch.agua2, ch.dren2, ch.elec2, ch.del2, ch.hom2, alt, edo.year     
+#   )
 
-tabla <- data3 %>% 
+tabla <- data %>% 
   select(
     IM, POB_TOT,
-    inc.ch2, ch.agua2, ch.dren2, ch.elec2, ch.del2, ch.hom2     
+    inc.ch, ch.agua, ch.dren, ch.elec, ch.del, ch.hom     
   ) %>% 
   rename(POB = POB_TOT) %>% 
   summarise_all(funs(mean, sd, min, max), na.rm = T) %>% 

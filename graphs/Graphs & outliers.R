@@ -5,9 +5,9 @@ library(dplyr)
 library(ggplot2)
 library(scales)
 
-inp <- "/home/dhjs/Documentos/R_projects/electoral_accountability"
+inp <- "/Users/dhjs/Documents/projects/electoral_accountability"
 list.files(inp)
-out <- "/home/dhjs/Documentos/R_projects/electoral_accountability/graphs"
+out <- paste(inp, "graphs", sep = "/")
 
 options(scipen=999)
 
@@ -463,7 +463,7 @@ ggplot(data2, aes(x = inc.ch)) +
   labs(title = "Diagrama de densidad",
        subtitle = "Cambio en % de votos al Incumbent",
        x = "", y = "")
-ggsave("segundo_densidad_incumbent.png", 
+ggsave("segundo_densidad_incumbent_crop.png", 
        path = paste(out, "densidad", sep = "/"),
        dpi = 300)
 
@@ -472,7 +472,7 @@ ggplot(data2, aes(x = ch.agua)) +
   labs(title = "Diagrama de densidad",
        subtitle = "Cambio en tomas de agua por 100k",
        x = "", y = "")
-ggsave("segundo_densidad_agua.png", 
+ggsave("segundo_densidad_agua_crop.png", 
        path = paste(out, "densidad", sep = "/"),
        dpi = 300)
 
@@ -481,7 +481,7 @@ ggplot(data2, aes(x = ch.dren)) +
   labs(title = "Diagrama de densidad",
        subtitle = "Cambio en drenaje por cada 100k",
        x = "", y = "")
-ggsave("segundo_densidad_drenaje.png", 
+ggsave("segundo_densidad_drenaje_crop.png", 
        path = paste(out, "densidad", sep = "/"),
        dpi = 300)
 
@@ -490,7 +490,7 @@ ggplot(data2, aes(x = ch.elec)) +
   labs(title = "Diagrama de densidad",
        subtitle = "Cambio en tomas de electricidad por cada 100k",
        x = "", y = "")
-ggsave("segundo_densidad_electricidad.png", 
+ggsave("segundo_densidad_electricidad_crop.png", 
        path = paste(out, "densidad", sep = "/"),
        dpi = 300)
 
@@ -499,7 +499,7 @@ ggplot(data2, aes(x = ch.del)) +
   labs(title = "Diagrama de densidad",
        subtitle = "Cambio en total de delitos por cada 100k",
        x = "", y = "")
-ggsave("segundo_densidad_delitos.png", 
+ggsave("segundo_densidad_delitos_crop.png", 
        path = paste(out, "densidad", sep = "/"),
        dpi = 300)
 
@@ -508,7 +508,7 @@ ggplot(data2, aes(x = ch.hom)) +
   labs(title = "Diagrama de densidad",
        subtitle = "Cambio en homicidios por cada 100k",
        x = "", y = "")
-ggsave("segundo_densidad_homicidios.png", 
+ggsave("segundo_densidad_homicidios_crop.png", 
        path = paste(out, "densidad", sep = "/"),
        dpi = 300)
 
@@ -521,7 +521,7 @@ ggplot(data2, aes(x = inc_top, y = ch.agua)) +
   labs(title = "Boxplot por partido",
        subtitle = "Diferencia en tasa de agua",
        x = "", y = "")
-ggsave("segundo_boxplot_agua.png", 
+ggsave("segundo_boxplot_agua_crop.png", 
        path = paste(out, "boxplot", sep = "/"),
        dpi = 300)
 
@@ -531,7 +531,7 @@ ggplot(data2, aes(x = inc_top, y = ch.dren)) +
   labs(title = "Boxplot por partido",
        subtitle = "Diferencia en tasa de drenaje",
        x = "", y = "")
-ggsave("segundo_boxplot_drenaje.png", 
+ggsave("segundo_boxplot_drenaje_crop.png", 
        path = paste(out, "boxplot", sep = "/"),
        dpi = 300)
 
@@ -541,7 +541,7 @@ ggplot(data2, aes(x = inc_top, y = ch.elec)) +
   labs(title = "Boxplot por partido",
        subtitle = "Diferencia en tasa de electricidad",
        x = "", y = "")
-ggsave("segundo_boxplot_electricidad.png", 
+ggsave("segundo_boxplot_electricidad_crop.png", 
        path = paste(out, "boxplot", sep = "/"),
        dpi = 300)
 
@@ -551,7 +551,7 @@ ggplot(data2, aes(x = inc_top, y = ch.del)) +
   labs(title = "Boxplot por partido",
        subtitle = "Diferencia en tasa de delitos",
        x = "", y = "")
-ggsave("segundo_boxplot_delitos.png", 
+ggsave("segundo_boxplot_delitos_crop.png", 
        path = paste(out, "boxplot", sep = "/"),
        dpi = 300)
 
@@ -561,7 +561,7 @@ ggplot(data2, aes(x = inc_top, y = ch.hom)) +
   labs(title = "Boxplot por partido",
        subtitle = "Diferencia en tasa de homicidios",
        x = "", y = "")
-ggsave("segundo_boxplot_homicidios.png", 
+ggsave("segundo_boxplot_homicidios_crop.png", 
        path = paste(out, "boxplot", sep = "/"),
        dpi = 300)
 
@@ -605,7 +605,7 @@ ggplot(data2, aes(x = ch.agua, y = inc.ch, col = inc_top)) +
   geom_smooth(method = "lm", se = F) +
   labs(title = "Diagrama de dispersión de agua", subtitle = "Todas las observaciones", 
        x = "Cambio % de agua", y = "Cambio % de votos al incumbent")
-ggsave("segundo_point_ch.agua_tot.png", path = paste(out, "scatter", sep = "/"), dpi = 300)
+ggsave("segundo_point_ch.agua_tot_crop.png", path = paste(out, "scatter", sep = "/"), dpi = 300)
 
 ggplot(data2, aes(x = ch.dren, y = inc.ch, col = inc_top)) +
   geom_jitter(alpha = 0.3) +
@@ -613,7 +613,7 @@ ggplot(data2, aes(x = ch.dren, y = inc.ch, col = inc_top)) +
   geom_smooth(method = "lm", se = F) +
   labs(title = "Diagrama de dispersión de drenaje", subtitle = "Todas las observaciones", 
        x = "Cambio % de drenaje", y = "Cambio % de votos al incumbent")
-ggsave("segundo_point_ch.dren_tot.png", path = paste(out, "scatter", sep = "/"), dpi = 300)
+ggsave("segundo_point_ch.dren_tot_crop.png", path = paste(out, "scatter", sep = "/"), dpi = 300)
 
 ggplot(data2, aes(x = ch.elec, y = inc.ch, col = inc_top)) +
   geom_jitter(alpha = 0.3) +
@@ -621,7 +621,7 @@ ggplot(data2, aes(x = ch.elec, y = inc.ch, col = inc_top)) +
   geom_smooth(method = "lm", se = F) +
   labs(title = "Diagrama de dispersión de electricidad", subtitle = "Todas las observaciones", 
        x = "Cambio % de eectricidad", y = "Cambio % de votos al incumbent")
-ggsave("segundo_point_ch.elec_tot.png", path = paste(out, "scatter", sep = "/"), dpi = 300)
+ggsave("segundo_point_ch.elec_tot_crop.png", path = paste(out, "scatter", sep = "/"), dpi = 300)
 
 ggplot(data2, aes(x = ch.del, y = inc.ch, col = inc_top)) +
   geom_jitter(alpha = 0.3) +
@@ -629,7 +629,7 @@ ggplot(data2, aes(x = ch.del, y = inc.ch, col = inc_top)) +
   geom_smooth(method = "lm", se = F) +
   labs(title = "Diagrama de dispersión de delitos", subtitle = "Todas las observaciones", 
        x = "Cambio % de delitos", y = "Cambio % de votos al incumbent")
-ggsave("segundo_point_ch.del_tot.png", path = paste(out, "scatter", sep = "/"), dpi = 300)
+ggsave("segundo_point_ch.del_tot_crop.png", path = paste(out, "scatter", sep = "/"), dpi = 300)
 
 ggplot(data2, aes(x = ch.hom, y = inc.ch, col = inc_top)) +
   geom_jitter(alpha = 0.3) +
@@ -637,4 +637,211 @@ ggplot(data2, aes(x = ch.hom, y = inc.ch, col = inc_top)) +
   geom_smooth(method = "lm", se = F) +
   labs(title = "Diagrama de dispersión de homicidios", subtitle = "Todas las observaciones", 
        x = "Cambio % de homicidios", y = "Cambio % de votos al incumbent")
-ggsave("segundo_point_ch.hom_tot.png", path = paste(out, "scatter", sep = "/"), dpi = 300)
+ggsave("segundo_point_ch.hom_tot_crop.png", path = paste(out, "scatter", sep = "/"), dpi = 300)
+
+# 4. Capped  -----------------------------------------------------------
+
+##So... qué vamos a quitar? 
+#Empecemos con el 10% superior e inferior
+
+data3 <- data %>% 
+  mutate(
+    ch.agua = ifelse(ch.agua <= 100, ch.agua, NA),
+    
+    ch.dren = ifelse(ch.dren < 100 &
+                       ch.dren > 100 , NA, ch.dren),
+    
+    ch.elec = ifelse(ch.elec <= 100, ch.elec, NA),
+    
+    ch.del = ifelse(ch.del < 100 &
+                      ch.del > 100, NA, ch.del),
+    
+    ch.hom = ifelse(ch.hom < 100 & 
+                      ch.hom > 100, NA, ch.hom)
+  )
+
+nrow(data2)
+summary(data2)
+
+# 4.1 Diagramas de densidad ---------------------------------------------------
+
+ggplot(data3, aes(x = inc.ch)) +
+  geom_density() +
+  labs(title = "Diagrama de densidad",
+       subtitle = "Cambio en % de votos al Incumbent",
+       x = "", y = "")
+ggsave("segundo_densidad_incumbent_cap.png", 
+       path = paste(out, "densidad", sep = "/"),
+       dpi = 300)
+
+ggplot(data3, aes(x = ch.agua)) +
+  geom_density() +
+  labs(title = "Diagrama de densidad",
+       subtitle = "Cambio en tomas de agua por 100k",
+       x = "", y = "")
+ggsave("segundo_densidad_agua_cap.png", 
+       path = paste(out, "densidad", sep = "/"),
+       dpi = 300)
+
+ggplot(data3, aes(x = ch.dren)) +
+  geom_density() +
+  labs(title = "Diagrama de densidad",
+       subtitle = "Cambio en drenaje por cada 100k",
+       x = "", y = "")
+ggsave("segundo_densidad_drenaje_cap.png", 
+       path = paste(out, "densidad", sep = "/"),
+       dpi = 300)
+
+ggplot(data3, aes(x = ch.elec)) +
+  geom_density() +
+  labs(title = "Diagrama de densidad",
+       subtitle = "Cambio en tomas de electricidad por cada 100k",
+       x = "", y = "")
+ggsave("segundo_densidad_electricidad_cap.png", 
+       path = paste(out, "densidad", sep = "/"),
+       dpi = 300)
+
+ggplot(data3, aes(x = ch.del)) +
+  geom_density() +
+  labs(title = "Diagrama de densidad",
+       subtitle = "Cambio en total de delitos por cada 100k",
+       x = "", y = "")
+ggsave("segundo_densidad_delitos_cap.png", 
+       path = paste(out, "densidad", sep = "/"),
+       dpi = 300)
+
+ggplot(data3, aes(x = ch.hom)) +
+  geom_density() +
+  labs(title = "Diagrama de densidad",
+       subtitle = "Cambio en homicidios por cada 100k",
+       x = "", y = "")
+ggsave("segundo_densidad_homicidios_cap.png", 
+       path = paste(out, "densidad", sep = "/"),
+       dpi = 300)
+
+
+# 4.2 Boxplots ----------------------------------------------------------------
+
+ggplot(data3, aes(x = inc_top, y = ch.agua)) +
+  geom_boxplot() +
+  geom_hline(yintercept = mean(data3$ch.agua, na.rm = T), color = "red") +
+  labs(title = "Boxplot por partido",
+       subtitle = "Diferencia en tasa de agua",
+       x = "", y = "")
+ggsave("segundo_boxplot_agua_cap.png", 
+       path = paste(out, "boxplot", sep = "/"),
+       dpi = 300)
+
+ggplot(data3, aes(x = inc_top, y = ch.dren)) +
+  geom_boxplot() +
+  geom_hline(yintercept = mean(data3$ch.dren, na.rm = T), color = "red") +
+  labs(title = "Boxplot por partido",
+       subtitle = "Diferencia en tasa de drenaje",
+       x = "", y = "")
+ggsave("segundo_boxplot_drenaje_cap.png", 
+       path = paste(out, "boxplot", sep = "/"),
+       dpi = 300)
+
+ggplot(data3, aes(x = inc_top, y = ch.elec)) +
+  geom_boxplot() +
+  geom_hline(yintercept = mean(data3$ch.elec, na.rm = T), color = "red") +
+  labs(title = "Boxplot por partido",
+       subtitle = "Diferencia en tasa de electricidad",
+       x = "", y = "")
+ggsave("segundo_boxplot_electricidad_cap.png", 
+       path = paste(out, "boxplot", sep = "/"),
+       dpi = 300)
+
+ggplot(data3, aes(x = inc_top, y = ch.del)) +
+  geom_boxplot() +
+  geom_hline(yintercept = mean(data3$ch.del, na.rm = T), color = "red") +
+  labs(title = "Boxplot por partido",
+       subtitle = "Diferencia en tasa de delitos",
+       x = "", y = "")
+ggsave("segundo_boxplot_delitos_cap.png", 
+       path = paste(out, "boxplot", sep = "/"),
+       dpi = 300)
+
+ggplot(data3, aes(x = inc_top, y = ch.hom)) +
+  geom_boxplot() +
+  geom_hline(yintercept = mean(data3$ch.hom, na.rm = T), color = "red") +
+  labs(title = "Boxplot por partido",
+       subtitle = "Diferencia en tasa de homicidios",
+       x = "", y = "")
+ggsave("segundo_boxplot_homicidios_cap.png", 
+       path = paste(out, "boxplot", sep = "/"),
+       dpi = 300)
+
+
+ggplot(data3, aes(x = as.factor(alt), y = ch.agua)) +
+  geom_boxplot() +
+  labs(title = "Boxplot por alternancia",
+       subtitle = "Diferencia en tasa de agua",
+       x = "", y = "")
+
+ggplot(data3, aes(x = as.factor(alt), y = ch.dren)) +
+  geom_boxplot() +
+  labs(title = "Boxplot por alternancia",
+       subtitle = "Diferencia en tasa de drenaje",
+       x = "", y = "")
+
+ggplot(data3, aes(x = as.factor(alt), y = ch.elec)) +
+  geom_boxplot() +
+  labs(title = "Boxplot por alternancia",
+       subtitle = "Diferencia en tasa de electricidad",
+       x = "", y = "")
+
+ggplot(data3, aes(x = as.factor(alt), y = ch.del)) +
+  geom_boxplot() +
+  labs(title = "Boxplot por alternancia",
+       subtitle = "Diferencia en tasa de delitos",
+       x = "", y = "")
+
+ggplot(data3, aes(x = as.factor(alt), y = ch.hom)) +
+  geom_boxplot() +
+  labs(title = "Boxplot por alternancia",
+       subtitle = "Diferencia en tasa de homicidios",
+       x = "", y = "")
+
+
+# 4.3 Scatter -------------------------------------------------------------
+
+ggplot(data3, aes(x = ch.agua, y = inc.ch, col = inc_top)) +
+  geom_jitter(alpha = 0.3) +
+  scale_colour_manual(values = party, name = "Partido") +
+  geom_smooth(method = "lm", se = F) +
+  labs(title = "Diagrama de dispersión de agua", subtitle = "Todas las observaciones", 
+       x = "Cambio % de agua", y = "Cambio % de votos al incumbent")
+ggsave("segundo_point_ch.agua_tot_cap.png", path = paste(out, "scatter", sep = "/"), dpi = 300)
+
+ggplot(data3, aes(x = ch.dren, y = inc.ch, col = inc_top)) +
+  geom_jitter(alpha = 0.3) +
+  scale_colour_manual(values = party, name = "Partido") +
+  geom_smooth(method = "lm", se = F) +
+  labs(title = "Diagrama de dispersión de drenaje", subtitle = "Todas las observaciones", 
+       x = "Cambio % de drenaje", y = "Cambio % de votos al incumbent")
+ggsave("segundo_point_ch.dren_tot_cap.png", path = paste(out, "scatter", sep = "/"), dpi = 300)
+
+ggplot(data3, aes(x = ch.elec, y = inc.ch, col = inc_top)) +
+  geom_jitter(alpha = 0.3) +
+  scale_colour_manual(values = party, name = "Partido") +
+  geom_smooth(method = "lm", se = F) +
+  labs(title = "Diagrama de dispersión de electricidad", subtitle = "Todas las observaciones", 
+       x = "Cambio % de eectricidad", y = "Cambio % de votos al incumbent")
+ggsave("segundo_point_ch.elec_tot_cap.png", path = paste(out, "scatter", sep = "/"), dpi = 300)
+
+ggplot(data3, aes(x = ch.del, y = inc.ch, col = inc_top)) +
+  geom_jitter(alpha = 0.3) +
+  scale_colour_manual(values = party, name = "Partido") +
+  geom_smooth(method = "lm", se = F) +
+  labs(title = "Diagrama de dispersión de delitos", subtitle = "Todas las observaciones", 
+       x = "Cambio % de delitos", y = "Cambio % de votos al incumbent")
+ggsave("segundo_point_ch.del_tot_cap.png", path = paste(out, "scatter", sep = "/"), dpi = 300)
+
+ggplot(data3, aes(x = ch.hom, y = inc.ch, col = inc_top)) +
+  geom_jitter(alpha = 0.3) +
+  scale_colour_manual(values = party, name = "Partido") +
+  geom_smooth(method = "lm", se = F) +
+  labs(title = "Diagrama de dispersión de homicidios", subtitle = "Todas las observaciones", 
+       x = "Cambio % de homicidios", y = "Cambio % de votos al incumbent")
+ggsave("segundo_point_ch.hom_tot_cap.png", path = paste(out, "scatter", sep = "/"), dpi = 300)

@@ -14,8 +14,9 @@ options(scipen=999)
 data <- read.csv(paste(inp, "final.csv", sep = "/"))
 nrow(data) #17,023
 data <- data %>% 
-  filter(!is.na(inc_top)# & !is.na(alt)
-         )
+  filter(!is.na(inc_top) & # & !is.na(alt)
+         inc_top != "Otros"
+           )
 nrow(data)
 #13890
 summary(data)
@@ -188,47 +189,61 @@ cuant <- cuant %>%
   mutate(Porcentaje = paste0(seq(0, 1, length = 11)*100, "%")) %>% 
   select(Porcentaje, agua, dren, elec, del, hom)
 
-
 # 1.3 Scatter -------------------------------------------------------------
 
 ggplot(data, aes(x = ch.agua, y = inc.ch, col = inc_top)) +
   geom_jitter(alpha = 0.3) +
   scale_colour_manual(values = party, name = "Partido") +
   geom_smooth(method = "lm", se = F) +
+  # scale_x_continuous(labels = percent_format(1L)) +
+  # scale_y_continuous(labels = percent_format(1L)) +
   labs(title = "Diagrama de dispersión de agua", subtitle = "Todas las observaciones", 
-       x = "Cambio % de agua", y = "Cambio % de votos al incumbent")
+       x = "Cambio % de agua", y = "Cambio % de votos al incumbent") +
+  theme(legend.position = "bottom")
 ggsave("point_ch.agua_tot.png", path = paste(out, "scatter", sep = "/"), dpi = 300)
 
 ggplot(data, aes(x = ch.dren, y = inc.ch, col = inc_top)) +
   geom_jitter(alpha = 0.3) +
   scale_colour_manual(values = party, name = "Partido") +
   geom_smooth(method = "lm", se = F) +
+  # scale_x_continuous(labels = percent_format(1L)) +
+  # scale_y_continuous(labels = percent_format(1L)) +
   labs(title = "Diagrama de dispersión de drenaje", subtitle = "Todas las observaciones", 
-       x = "Cambio % de drenaje", y = "Cambio % de votos al incumbent")
+       x = "Cambio % de drenaje", y = "Cambio % de votos al incumbent") +
+  theme(legend.position = "bottom")
 ggsave("point_ch.dren_tot.png", path = paste(out, "scatter", sep = "/"), dpi = 300)
 
 ggplot(data, aes(x = ch.elec, y = inc.ch, col = inc_top)) +
   geom_jitter(alpha = 0.3) +
   scale_colour_manual(values = party, name = "Partido") +
   geom_smooth(method = "lm", se = F) +
+  scale_x_continuous(labels = percent_format(1L)) +
+  scale_y_continuous(labels = percent_format(1L)) +
   labs(title = "Diagrama de dispersión de electricidad", subtitle = "Todas las observaciones", 
-       x = "Cambio % de eectricidad", y = "Cambio % de votos al incumbent")
+       x = "Cambio % de electricidad", y = "Cambio % de votos al incumbent") +
+  theme(legend.position = "bottom")
 ggsave("point_ch.elec_tot.png", path = paste(out, "scatter", sep = "/"), dpi = 300)
 
 ggplot(data, aes(x = ch.del, y = inc.ch, col = inc_top)) +
   geom_jitter(alpha = 0.3) +
   scale_colour_manual(values = party, name = "Partido") +
   geom_smooth(method = "lm", se = F) +
+  # scale_x_continuous(labels = percent_format(1L)) +
+  # scale_y_continuous(labels = percent_format(1L)) +
   labs(title = "Diagrama de dispersión de delitos", subtitle = "Todas las observaciones", 
-       x = "Cambio % de delitos", y = "Cambio % de votos al incumbent")
+       x = "Cambio % de delitos", y = "Cambio % de votos al incumbent") +
+  theme(legend.position = "bottom")
 ggsave("point_ch.del_tot.png", path = paste(out, "scatter", sep = "/"), dpi = 300)
 
 ggplot(data, aes(x = ch.hom, y = inc.ch, col = inc_top)) +
   geom_jitter(alpha = 0.3) +
   scale_colour_manual(values = party, name = "Partido") +
   geom_smooth(method = "lm", se = F) +
+  # scale_x_continuous(labels = percent_format(1L)) +
+  # scale_y_continuous(labels = percent_format(1L)) +
   labs(title = "Diagrama de dispersión de homicidios", subtitle = "Todas las observaciones", 
-       x = "Cambio % de homicidios", y = "Cambio % de votos al incumbent")
+       x = "Cambio % de homicidios", y = "Cambio % de votos al incumbent") +
+  theme(legend.position = "bottom")
 ggsave("point_ch.hom_tot.png", path = paste(out, "scatter", sep = "/"), dpi = 300)
 
 # 2. Capped -----------------------------------------------------------
@@ -393,44 +408,59 @@ ggplot(data1, aes(x = ch.agua, y = inc.ch, col = inc_top)) +
   geom_jitter(alpha = 0.3) +
   scale_colour_manual(values = party, name = "Partido") +
   geom_smooth(method = "lm", se = F) +
+  # scale_x_continuous(labels = percent_format(1L)) +
+  # scale_y_continuous(labels = percent_format(1L)) +
   labs(title = "Diagrama de dispersión de agua", subtitle = "Todas las observaciones", 
-       x = "Cambio % de agua", y = "Cambio % de votos al incumbent")
+       x = "Cambio % de agua", y = "Cambio % de votos al incumbent") +
+  theme(legend.position = "bottom")
 ggsave("primer_point_ch.agua_tot.png", path = paste(out, "scatter", sep = "/"), dpi = 300)
 
 ggplot(data1, aes(x = ch.dren, y = inc.ch, col = inc_top)) +
   geom_jitter(alpha = 0.3) +
   scale_colour_manual(values = party, name = "Partido") +
   geom_smooth(method = "lm", se = F) +
+  # scale_x_continuous(labels = percent_format(1L)) +
+  # scale_y_continuous(labels = percent_format(1L)) +
   labs(title = "Diagrama de dispersión de drenaje", subtitle = "Todas las observaciones", 
-       x = "Cambio % de drenaje", y = "Cambio % de votos al incumbent")
+       x = "Cambio % de drenaje", y = "Cambio % de votos al incumbent") +
+  theme(legend.position = "bottom")
 ggsave("primer_point_ch.dren_tot.png", path = paste(out, "scatter", sep = "/"), dpi = 300)
 
 ggplot(data1, aes(x = ch.elec, y = inc.ch, col = inc_top)) +
   geom_jitter(alpha = 0.3) +
   scale_colour_manual(values = party, name = "Partido") +
   geom_smooth(method = "lm", se = F) +
+  # scale_x_continuous(labels = percent_format(1L)) +
+  # scale_y_continuous(labels = percent_format(1L)) +
   labs(title = "Diagrama de dispersión de electricidad", subtitle = "Todas las observaciones", 
-       x = "Cambio % de eectricidad", y = "Cambio % de votos al incumbent")
+       x = "Cambio % de electricidad", y = "Cambio % de votos al incumbent") +
+  theme(legend.position = "bottom")
 ggsave("primer_point_ch.elec_tot.png", path = paste(out, "scatter", sep = "/"), dpi = 300)
 
 ggplot(data1, aes(x = ch.del, y = inc.ch, col = inc_top)) +
   geom_jitter(alpha = 0.3) +
   scale_colour_manual(values = party, name = "Partido") +
   geom_smooth(method = "lm", se = F) +
+  # scale_x_continuous(labels = percent_format(1L)) +
+  # scale_y_continuous(labels = percent_format(1L)) +
   labs(title = "Diagrama de dispersión de delitos", subtitle = "Todas las observaciones", 
-       x = "Cambio % de delitos", y = "Cambio % de votos al incumbent")
+       x = "Cambio % de delitos", y = "Cambio % de votos al incumbent") +
+  theme(legend.position = "bottom")
 ggsave("primer_point_ch.del_tot.png", path = paste(out, "scatter", sep = "/"), dpi = 300)
 
 ggplot(data1, aes(x = ch.hom, y = inc.ch, col = inc_top)) +
   geom_jitter(alpha = 0.3) +
   scale_colour_manual(values = party, name = "Partido") +
   geom_smooth(method = "lm", se = F) +
+  # scale_x_continuous(labels = percent_format(1L)) +
+  # scale_y_continuous(labels = percent_format(1L)) +
   labs(title = "Diagrama de dispersión de homicidios", subtitle = "Todas las observaciones", 
-       x = "Cambio % de homicidios", y = "Cambio % de votos al incumbent")
+       x = "Cambio % de homicidios", y = "Cambio % de votos al incumbent") +
+  theme(legend.position = "bottom")
 ggsave("primer_point_ch.hom_tot.png", path = paste(out, "scatter", sep = "/"), dpi = 300)
 
 
-# 3. Cropped -----------------------------------------------------------
+  # 3. Cropped -----------------------------------------------------------
 
 ##So... qué vamos a quitar? 
 #Empecemos con el 10% superior e inferior
@@ -603,40 +633,55 @@ ggplot(data2, aes(x = ch.agua, y = inc.ch, col = inc_top)) +
   geom_jitter(alpha = 0.3) +
   scale_colour_manual(values = party, name = "Partido") +
   geom_smooth(method = "lm", se = F) +
+  # scale_x_continuous(labels = percent_format(1L)) +
+  # scale_y_continuous(labels = percent_format(1L)) +
   labs(title = "Diagrama de dispersión de agua", subtitle = "Todas las observaciones", 
-       x = "Cambio % de agua", y = "Cambio % de votos al incumbent")
+       x = "Cambio % de agua", y = "Cambio % de votos al incumbent") +
+  theme(legend.position = "bottom")
 ggsave("segundo_point_ch.agua_tot_crop.png", path = paste(out, "scatter", sep = "/"), dpi = 300)
 
 ggplot(data2, aes(x = ch.dren, y = inc.ch, col = inc_top)) +
   geom_jitter(alpha = 0.3) +
   scale_colour_manual(values = party, name = "Partido") +
   geom_smooth(method = "lm", se = F) +
+  # scale_x_continuous(labels = percent_format(1L)) +
+  # scale_y_continuous(labels = percent_format(1L)) +
   labs(title = "Diagrama de dispersión de drenaje", subtitle = "Todas las observaciones", 
-       x = "Cambio % de drenaje", y = "Cambio % de votos al incumbent")
+       x = "Cambio % de drenaje", y = "Cambio % de votos al incumbent") +
+  theme(legend.position = "bottom")
 ggsave("segundo_point_ch.dren_tot_crop.png", path = paste(out, "scatter", sep = "/"), dpi = 300)
 
 ggplot(data2, aes(x = ch.elec, y = inc.ch, col = inc_top)) +
   geom_jitter(alpha = 0.3) +
   scale_colour_manual(values = party, name = "Partido") +
   geom_smooth(method = "lm", se = F) +
+  # scale_x_continuous(labels = percent_format(1L)) +
+  # scale_y_continuous(labels = percent_format(1L)) +
   labs(title = "Diagrama de dispersión de electricidad", subtitle = "Todas las observaciones", 
-       x = "Cambio % de eectricidad", y = "Cambio % de votos al incumbent")
+       x = "Cambio % de electricidad", y = "Cambio % de votos al incumbent") +
+  theme(legend.position = "bottom")
 ggsave("segundo_point_ch.elec_tot_crop.png", path = paste(out, "scatter", sep = "/"), dpi = 300)
 
 ggplot(data2, aes(x = ch.del, y = inc.ch, col = inc_top)) +
   geom_jitter(alpha = 0.3) +
   scale_colour_manual(values = party, name = "Partido") +
   geom_smooth(method = "lm", se = F) +
+  # scale_x_continuous(labels = percent_format(1L)) +
+  # scale_y_continuous(labels = percent_format(1L)) +
   labs(title = "Diagrama de dispersión de delitos", subtitle = "Todas las observaciones", 
-       x = "Cambio % de delitos", y = "Cambio % de votos al incumbent")
+       x = "Cambio % de delitos", y = "Cambio % de votos al incumbent") +
+  theme(legend.position = "bottom")
 ggsave("segundo_point_ch.del_tot_crop.png", path = paste(out, "scatter", sep = "/"), dpi = 300)
 
 ggplot(data2, aes(x = ch.hom, y = inc.ch, col = inc_top)) +
   geom_jitter(alpha = 0.3) +
   scale_colour_manual(values = party, name = "Partido") +
   geom_smooth(method = "lm", se = F) +
+  # scale_x_continuous(labels = percent_format(1L)) +
+  # scale_y_continuous(labels = percent_format(1L)) +
   labs(title = "Diagrama de dispersión de homicidios", subtitle = "Todas las observaciones", 
-       x = "Cambio % de homicidios", y = "Cambio % de votos al incumbent")
+       x = "Cambio % de homicidios", y = "Cambio % de votos al incumbent") +
+  theme(legend.position = "bottom")
 ggsave("segundo_point_ch.hom_tot_crop.png", path = paste(out, "scatter", sep = "/"), dpi = 300)
 
 # 4. Capped  -----------------------------------------------------------
@@ -810,38 +855,53 @@ ggplot(data3, aes(x = ch.agua, y = inc.ch, col = inc_top)) +
   geom_jitter(alpha = 0.3) +
   scale_colour_manual(values = party, name = "Partido") +
   geom_smooth(method = "lm", se = F) +
+  # scale_x_continuous(labels = percent_format(1L)) +
+  # scale_y_continuous(labels = percent_format(1L)) +
   labs(title = "Diagrama de dispersión de agua", subtitle = "Todas las observaciones", 
-       x = "Cambio % de agua", y = "Cambio % de votos al incumbent")
+       x = "Cambio % de agua", y = "Cambio % de votos al incumbent") +
+  theme(legend.position = "bottom")
 ggsave("segundo_point_ch.agua_tot_cap.png", path = paste(out, "scatter", sep = "/"), dpi = 300)
 
 ggplot(data3, aes(x = ch.dren, y = inc.ch, col = inc_top)) +
   geom_jitter(alpha = 0.3) +
   scale_colour_manual(values = party, name = "Partido") +
   geom_smooth(method = "lm", se = F) +
+  # scale_x_continuous(labels = percent_format(1L)) +
+  # scale_y_continuous(labels = percent_format(1L)) +
   labs(title = "Diagrama de dispersión de drenaje", subtitle = "Todas las observaciones", 
-       x = "Cambio % de drenaje", y = "Cambio % de votos al incumbent")
+       x = "Cambio % de drenaje", y = "Cambio % de votos al incumbent") +
+  theme(legend.position = "bottom")
 ggsave("segundo_point_ch.dren_tot_cap.png", path = paste(out, "scatter", sep = "/"), dpi = 300)
 
 ggplot(data3, aes(x = ch.elec, y = inc.ch, col = inc_top)) +
   geom_jitter(alpha = 0.3) +
   scale_colour_manual(values = party, name = "Partido") +
   geom_smooth(method = "lm", se = F) +
+  # scale_x_continuous(labels = percent_format(1L)) +
+  # scale_y_continuous(labels = percent_format(1L)) +
   labs(title = "Diagrama de dispersión de electricidad", subtitle = "Todas las observaciones", 
-       x = "Cambio % de eectricidad", y = "Cambio % de votos al incumbent")
+       x = "Cambio % de electricidad", y = "Cambio % de votos al incumbent") +
+  theme(legend.position = "bottom")
 ggsave("segundo_point_ch.elec_tot_cap.png", path = paste(out, "scatter", sep = "/"), dpi = 300)
 
 ggplot(data3, aes(x = ch.del, y = inc.ch, col = inc_top)) +
   geom_jitter(alpha = 0.3) +
   scale_colour_manual(values = party, name = "Partido") +
   geom_smooth(method = "lm", se = F) +
+  # scale_x_continuous(labels = percent_format(1L)) +
+  # scale_y_continuous(labels = percent_format(1L)) +
   labs(title = "Diagrama de dispersión de delitos", subtitle = "Todas las observaciones", 
-       x = "Cambio % de delitos", y = "Cambio % de votos al incumbent")
+       x = "Cambio % de delitos", y = "Cambio % de votos al incumbent") +
+  theme(legend.position = "bottom")
 ggsave("segundo_point_ch.del_tot_cap.png", path = paste(out, "scatter", sep = "/"), dpi = 300)
 
 ggplot(data3, aes(x = ch.hom, y = inc.ch, col = inc_top)) +
   geom_jitter(alpha = 0.3) +
   scale_colour_manual(values = party, name = "Partido") +
   geom_smooth(method = "lm", se = F) +
+  # scale_x_continuous(labels = percent_format(1L)) +
+  # scale_y_continuous(labels = percent_format(1L)) +
   labs(title = "Diagrama de dispersión de homicidios", subtitle = "Todas las observaciones", 
-       x = "Cambio % de homicidios", y = "Cambio % de votos al incumbent")
+       x = "Cambio % de homicidios", y = "Cambio % de votos al incumbent") +
+  theme(legend.position = "bottom")
 ggsave("segundo_point_ch.hom_tot_cap.png", path = paste(out, "scatter", sep = "/"), dpi = 300)

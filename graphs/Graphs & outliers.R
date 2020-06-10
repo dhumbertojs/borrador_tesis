@@ -422,7 +422,7 @@ ggplot(data1, aes(x = ch.dren, y = inc.ch, col = inc_top)) +
   # scale_x_continuous(labels = percent_format(1L)) +
   # scale_y_continuous(labels = percent_format(1L)) +
   labs(title = "Diagrama de dispersión de drenaje", subtitle = "Todas las observaciones", 
-       x = "Cambio % de drenaje", y = "Cambio % de votos al incumbent") +
+       x = "Cambio en la tasa de drenaje", y = "Cambio % de votos al incumbent") +
   theme(legend.position = "bottom")
 ggsave("primer_point_ch.dren_tot.png", path = paste(out, "scatter", sep = "/"), dpi = 300)
 
@@ -444,7 +444,7 @@ ggplot(data1, aes(x = ch.del, y = inc.ch, col = inc_top)) +
   # scale_x_continuous(labels = percent_format(1L)) +
   # scale_y_continuous(labels = percent_format(1L)) +
   labs(title = "Diagrama de dispersión de delitos", subtitle = "Todas las observaciones", 
-       x = "Cambio % de delitos", y = "Cambio % de votos al incumbent") +
+       x = "Cambio en la tasa de delitos", y = "Cambio % de votos al incumbent") +
   theme(legend.position = "bottom")
 ggsave("primer_point_ch.del_tot.png", path = paste(out, "scatter", sep = "/"), dpi = 300)
 
@@ -455,7 +455,7 @@ ggplot(data1, aes(x = ch.hom, y = inc.ch, col = inc_top)) +
   # scale_x_continuous(labels = percent_format(1L)) +
   # scale_y_continuous(labels = percent_format(1L)) +
   labs(title = "Diagrama de dispersión de homicidios", subtitle = "Todas las observaciones", 
-       x = "Cambio % de homicidios", y = "Cambio % de votos al incumbent") +
+       x = "Cambio en la tasa de homicidios", y = "Cambio % de votos al incumbent") +
   theme(legend.position = "bottom")
 ggsave("primer_point_ch.hom_tot.png", path = paste(out, "scatter", sep = "/"), dpi = 300)
 
@@ -647,7 +647,7 @@ ggplot(data2, aes(x = ch.dren, y = inc.ch, col = inc_top)) +
   # scale_x_continuous(labels = percent_format(1L)) +
   # scale_y_continuous(labels = percent_format(1L)) +
   labs(title = "Diagrama de dispersión de drenaje", subtitle = "Todas las observaciones", 
-       x = "Cambio % de drenaje", y = "Cambio % de votos al incumbent") +
+       x = "Cambio en la tasa de drenaje", y = "Cambio % de votos al incumbent") +
   theme(legend.position = "bottom")
 ggsave("segundo_point_ch.dren_tot_crop.png", path = paste(out, "scatter", sep = "/"), dpi = 300)
 
@@ -669,7 +669,7 @@ ggplot(data2, aes(x = ch.del, y = inc.ch, col = inc_top)) +
   # scale_x_continuous(labels = percent_format(1L)) +
   # scale_y_continuous(labels = percent_format(1L)) +
   labs(title = "Diagrama de dispersión de delitos", subtitle = "Todas las observaciones", 
-       x = "Cambio % de delitos", y = "Cambio % de votos al incumbent") +
+       x = "Cambio en la tasa de delitos", y = "Cambio % de votos al incumbent") +
   theme(legend.position = "bottom")
 ggsave("segundo_point_ch.del_tot_crop.png", path = paste(out, "scatter", sep = "/"), dpi = 300)
 
@@ -680,7 +680,7 @@ ggplot(data2, aes(x = ch.hom, y = inc.ch, col = inc_top)) +
   # scale_x_continuous(labels = percent_format(1L)) +
   # scale_y_continuous(labels = percent_format(1L)) +
   labs(title = "Diagrama de dispersión de homicidios", subtitle = "Todas las observaciones", 
-       x = "Cambio % de homicidios", y = "Cambio % de votos al incumbent") +
+       x = "Cambio en la tasa de homicidios", y = "Cambio % de votos al incumbent") +
   theme(legend.position = "bottom")
 ggsave("segundo_point_ch.hom_tot_crop.png", path = paste(out, "scatter", sep = "/"), dpi = 300)
 
@@ -869,7 +869,7 @@ ggplot(data3, aes(x = ch.dren, y = inc.ch, col = inc_top)) +
   # scale_x_continuous(labels = percent_format(1L)) +
   # scale_y_continuous(labels = percent_format(1L)) +
   labs(title = "Diagrama de dispersión de drenaje", subtitle = "Todas las observaciones", 
-       x = "Cambio % de drenaje", y = "Cambio % de votos al incumbent") +
+       x = "Cambio en la tasa de drenaje", y = "Cambio % de votos al incumbent") +
   theme(legend.position = "bottom")
 ggsave("segundo_point_ch.dren_tot_cap.png", path = paste(out, "scatter", sep = "/"), dpi = 300)
 
@@ -891,7 +891,7 @@ ggplot(data3, aes(x = ch.del, y = inc.ch, col = inc_top)) +
   # scale_x_continuous(labels = percent_format(1L)) +
   # scale_y_continuous(labels = percent_format(1L)) +
   labs(title = "Diagrama de dispersión de delitos", subtitle = "Todas las observaciones", 
-       x = "Cambio % de delitos", y = "Cambio % de votos al incumbent") +
+       x = "Cambio la tasa de delitos", y = "Cambio % de votos al incumbent") +
   theme(legend.position = "bottom")
 ggsave("segundo_point_ch.del_tot_cap.png", path = paste(out, "scatter", sep = "/"), dpi = 300)
 
@@ -902,6 +902,6 @@ ggplot(data3, aes(x = ch.hom, y = inc.ch, col = inc_top)) +
   # scale_x_continuous(labels = percent_format(1L)) +
   # scale_y_continuous(labels = percent_format(1L)) +
   labs(title = "Diagrama de dispersión de homicidios", subtitle = "Todas las observaciones", 
-       x = "Cambio % de homicidios", y = "Cambio % de votos al incumbent") +
+       x = "Cambio en la tasa de homicidios", y = "Cambio % de votos al incumbent") +
   theme(legend.position = "bottom")
 ggsave("segundo_point_ch.hom_tot_cap.png", path = paste(out, "scatter", sep = "/"), dpi = 300)

@@ -1,18 +1,18 @@
 rm(list = ls())
-setwd("~")
+#setwd("~")
 
 library(dplyr)
 library(tidyr)
 library(Hmisc)
 library(stargazer)
+library(openxlsx)
 
 inp <- "/Users/dhjs/Documents/projects/electoral_accountability"
 list.files(inp)
 
 data <- read.csv(paste(inp, "final.csv", sep = "/"))
-##Hay 10,230 observaciones
+##Hay 17,023 observaciones
 
-#Estas son las variables originales
 data2 <- data %>% 
   select(
     muniYear, state, muni, year, wintop_state, win_top, inc_top, conco,        
@@ -25,13 +25,6 @@ tabla <- data2 %>%
     inc.ch, ch.agua, ch.dren, ch.elec, ch.del, ch.hom     
   ) %>% 
   rename(POB = POB_TOT) %>% 
-  # summarise_all(funs(mean, sd, min, max), na.rm = T) %>% 
-  # pivot_longer(everything()) %>% 
-  # separate(name, into = c("variable", "stat"), sep = "_") %>% 
-  # mutate(value = round(value, 3)) %>% 
-  # pivot_wider(
-  #   names_from = stat
-  # )
   stargazer(
     type = "html",
     title = "Estadística descriptiva",
@@ -58,33 +51,8 @@ corr <- data2 %>%
 
 rcorr(as.matrix(corr), type = "pearson")
 
-##el otro calculo
 
-# data3 <- data %>% 
-#   select(
-#     muniYear, state, muni, year, wintop_state, win_top, inc_top, conco,        
-#     inc.ch2, IM, POB_TOT, ch.agua2, ch.dren2, ch.elec2, ch.del2, ch.hom2, alt, edo.year     
-#   )
-
-# tabla <- data %>% 
-#   select(
-#     IM, POB_TOT,
-#     inc.ch, ch.agua, ch.dren, ch.elec, ch.del, ch.hom     
-#   ) %>% 
-#   rename(POB = POB_TOT) %>% 
-#   summarise_all(funs(mean, sd, min, max), na.rm = T) %>% 
-#   pivot_longer(everything()) %>% 
-#   separate(name, into = c("variable", "stat"), sep = "_") %>% 
-#   mutate(value = round(value, 3))
-
-
-# corr <- data3 %>% 
-#   select(
-#     alt, inc.ch2, ch.agua2, ch.dren2, ch.elec2, ch.del2, ch.hom2, IM, POB_TOT
-#   ) %>% 
-#   rename(pob = POB_TOT, im = IM)
-# 
-# rcorr(as.matrix(corr), type = "pearson")
+# 5% de cada extremo ------------------------------------------------------
 
 data3 <- data %>% 
   mutate(
@@ -114,13 +82,6 @@ tabla2 <- data3 %>%
     inc.ch, ch.agua, ch.dren, ch.elec, ch.del, ch.hom     
   ) %>% 
   rename(POB = POB_TOT) %>% 
-  # summarise_all(funs(mean, sd, min, max), na.rm = T) %>% 
-  # pivot_longer(everything()) %>% 
-  # separate(name, into = c("variable", "stat"), sep = "_") %>% 
-  # mutate(value = round(value, 3)) %>% 
-  # pivot_wider(
-  #   names_from = stat
-  # )
   stargazer(
     type = "html",
     title = "Estadística descriptiva",
@@ -145,4 +106,16 @@ corr2 <- data3 %>%
   ) %>% 
   rename(pob = POB_TOT, im = IM)
 
-rcorr(as.matrix(corr2), type = "pearson")
+cor <- rcorr(as.matrix(corr2), type = "pearson")
+
+wb <- createWorkbook()
+sh <- addWorksheet(wb, "Correlacion")
+writeData(wb, sh, cor[[1]])
+
+sh <- addWorksheet(wb, "Observaciones")
+writeData(wb, sh, cor[[2]])
+
+sh <- addWorksheet(wb, "valores p")
+writeData(wb, sh, cor[[3]])
+
+saveWorkbook(wb, paste(inp, "Correlaciones.xlsx", sep = "/"), overwrite = T) 

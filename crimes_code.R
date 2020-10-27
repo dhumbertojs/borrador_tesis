@@ -6,9 +6,9 @@ library(readxl)
 library(tidyr)
 library(imputeTS)
 
-inp <- "/home/dhjs/Documentos/R_projects/electoral_accountability/datos/bienes"
+inp <- "/Users/dhjs/Documents/projects/electoral_accountability/datos/bienes"
 list.files(inp)
-out <- "/home/dhjs/Documentos/R_projects/electoral_accountability/databases"
+out <- "/Users/dhjs/Documents/projects/electoral_accountability/databases"
 
 data <- read_excel(paste(inp, "SIMBAD_19046_20191010012052836.xlsx", sep = "/"), skip = 3)
 
@@ -187,7 +187,7 @@ fin <- fin %>%
   select(-muni)  
 
 summary(fin)
-
+nrow(fin)
 ##De los datos originales hay muchos NA
 #En total de delitos hay 7,994
 #En homicidios hay 10,100

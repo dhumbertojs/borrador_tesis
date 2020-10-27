@@ -4,41 +4,35 @@ setwd("~")
 library(dplyr)
 library(stringr)
 
-inp <- "/home/dhjs/Documentos/R_projects/electoral_accountability/datos"
+inp <- "/Users/dhjs/Documents/projects/electoral_accountability/datos"
 list.files(inp)
-out <- "/home/dhjs/Documentos/R_projects/electoral_accountability/databases"
+out <- "/Users/dhjs/Documents/projects/electoral_accountability/databases"
 
-data <- read.csv(paste(inp, "data.csv", sep = "/"))
-
-data <- data %>% 
+data <- read.csv(paste(inp, "data.csv", sep = "/")) %>% 
   select(-c(PRI_ofi, PAN_ofi, PRD_ofi, win, win_top, conco))
   
-
 data <- data %>% 
   mutate(
     win = as.character(Winner2),
     win = sapply(strsplit(win, "_"), "[", 1),
-    win_top = ifelse(win == "PRI", "PRI",
-                     ifelse(win == "PAN", "PAN",
-                            ifelse(win == "PRD", "PRD", 
-                                   ifelse(is.na(win), NA, "Otros"))))
+    win_top = case_when(
+      win == "PRI" ~ "PRI",
+      win == "PAN" ~ "PAN",
+      win == "PRD" ~ "PRD", 
+      T ~ "otros")
   ) %>% 
   group_by(muni) %>% 
   mutate(
-    inc = lag(win, n = 1, order_by = year)
+    inc = lag(win, n = 1, order_by = year),
+    inc_top = lag(win_top, n = 1, order_by = year)
   ) %>% 
-  ungroup()
-
-data <- data %>% 
+  ungroup() %>% 
   mutate(
-    inc_top = ifelse(inc == "PRI", "PRI",
-                     ifelse(inc == "PAN", "PAN",
-                            ifelse(inc == "PRD", "PRD", 
-                                   ifelse(is.na(inc), NA, "Otros")))),
+    alt = ifelse(win != inc, 1, 0),
     PAN.s = PAN/total,
     PRI.s = PRI/total,
     PRD.s = PRD/total
-  ) #%>% filter(inc_top != "Otros" & !is.na(Winner2))
+  )
 
 data <- data %>% 
   group_by(muni) %>% 
@@ -47,31 +41,17 @@ data <- data %>%
     lag_PRI.s = lag(PRI.s, n = 1, order_by = year),
     lag_PRD.s = lag(PRD.s, n = 1, order_by = year)
   ) %>% 
-  ungroup()
-
-data <- data %>% 
+  ungroup() %>% 
   mutate(
-    # PAN.ch = ifelse(!is.na(PAN.s) & !is.na(lag_PAN.s), 
-    #                                        (PAN.s - lag_PAN.s)/lag_PAN.s, NA),
-    # PRI.ch = ifelse(!is.na(PRI.s) & !is.na(lag_PRI.s), 
-    #                                        (PRI.s - lag_PRI.s)/lag_PRI.s, NA),
-    # PRD.ch = ifelse(!is.na(PRD.s) & !is.na(lag_PRD.s), 
-    #                                        (PRD.s - lag_PRD.s)/lag_PRD.s, NA),
-    
     PAN.ch = PAN.s - lag_PAN.s,
     PRI.ch = PRI.s - lag_PRI.s,
     PRD.ch = PRD.s - lag_PRD.s,
-    
-    # inc.ch = ifelse(inc_top == "PAN", PAN.ch,
-    #                 ifelse(inc_top == "PRI", PRI.ch,
-    #                        ifelse(inc_top == "PRD", PRD.ch, NA))),
     
     inc.ch = ifelse(inc_top == "PAN", PAN.ch,
                     ifelse(inc_top == "PRI", PRI.ch,
                            ifelse(inc_top == "PRD", PRD.ch, NA))),
     
     conco = ifelse(win_top == wintop_state, 1, 0)
-  ) %>% 
-  filter(!is.infinite(inc.ch))
+  )
 
 write.csv(data, paste(out, "Electoral.csv", sep = "/"), row.names = F)

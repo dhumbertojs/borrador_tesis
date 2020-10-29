@@ -696,6 +696,7 @@ ggplot(data2, aes(x = ch.agua, y = inc.ch, col = inc_top)) +
   geom_smooth(method = "lm", se = F, color = "black") +
   # scale_x_continuous(labels = percent_format(1L)) +
   # scale_y_continuous(labels = percent_format(1L)) +
+  #ylim(-100, 100) +
   labs(title = "Diagrama de dispersión de agua", #subtitle = "Todas las observaciones", 
        x = "Cambio % de agua", y = "Cambio % de votos al incumbent") +
   facet_wrap(. ~ inc_top) +

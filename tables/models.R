@@ -1,12 +1,14 @@
 rm(list = ls())
 setwd("~")
 
-library(dplyr)
-library(stargazer)
-library(lfe)
-library(lme4)
-library(glmmML)
-library(tidyr)
+# library(dplyr)
+# library(stargazer)
+# library(lfe)
+# library(lme4)
+# library(glmmML)
+# library(tidyr)
+
+pacman::p_load(dplyr, stargazer, lfe, lme4, glmmML, tidyr)
 
 inp <- "/Users/dhjs/Documents/projects/electoral_accountability"
 list.files(inp)
@@ -60,7 +62,7 @@ u9 <- glmer(alt ~ ch.del + log(POB_TOT) + IM + conco + (muni | edo.year), datac,
 u10 <- glmer(alt ~ ch.hom + log(POB_TOT) + IM + conco + (muni | edo.year), datac, family = binomial(link = "logit"))
 
 stargazer(u1, u2, u3, u4, u5, u6, u7, u8, u9, u10,
-          title = "Tabla 4. Todas las observaciones",
+          title = "Tabla 5. Todas las observaciones",
           covariate.labels = c("Agua", "Electricidad", "Drenaje", "Total de delitos", 
                                "Homicidios", "Población", "Índice de marginación", 
                                "Concordancia", "Constante"),
@@ -91,7 +93,7 @@ panfe10 <- glmer(alt ~ ch.hom + log(POB_TOT) + IM + conco + (muni | edo.year), d
                  family = binomial(link = "logit"))
 
 stargazer(panfe1, panfe2, panfe3, panfe4, panfe5, panfe6, panfe7, panfe8, panfe9, panfe10, 
-          title = "Tabla 5. Municipios gobernados por el PAN",
+          title = "Tabla 6. Municipios gobernados por el PAN",
           covariate.labels = c("Agua", "Electricidad", "Drenaje", "Total de delitos", 
                                "Homicidios", "Población", "Índice de marginación", 
                                "Concordancia", "Constante"),
@@ -120,7 +122,7 @@ prife10 <- glmer(alt ~ ch.hom + log(POB_TOT) + IM + conco + (muni | edo.year), d
                  family = binomial(link = "logit"))
 
 stargazer(prife1, prife2, prife3, prife4, prife5, prife6, prife7, prife8, prife9, prife10, 
-          title = "Tabla 6. Municipios gobernados por el PRI",
+          title = "Tabla 7. Municipios gobernados por el PRI",
           covariate.labels = c("Agua", "Electricidad", "Drenaje", "Total de delitos", 
                                "Homicidios", "Población", "Índice de marginación", 
                                "Concordancia", "Constante"),
@@ -150,7 +152,7 @@ prdfe10 <- glmer(alt ~ ch.hom + log(POB_TOT) + IM + conco + (muni | edo.year), d
                  family = binomial(link = "logit"))
 
 stargazer(prdfe1, prdfe2, prdfe3, prdfe4, prdfe5, prdfe6, prdfe7, prdfe8, prdfe9, prdfe10, 
-          title = "Tabla 7. Municipios gobernados por el PRD",
+          title = "Tabla 8. Municipios gobernados por el PRD",
           covariate.labels = c("Agua", "Electricidad", "Drenaje", "Total de delitos", 
                                "Homicidios", "Población", "Índice de marginación", 
                                "Concordancia", "Constante"),
@@ -191,7 +193,7 @@ u9 <- glmer(alt ~ ch.del + log(POB_TOT) + IM + conco + (muni | edo.year), dataca
 u10 <- glmer(alt ~ ch.hom + log(POB_TOT) + IM + conco + (muni | edo.year), datacap, family = binomial(link = "logit"))
 
 stargazer(u1, u2, u3, u4, u5, u6, u7, u8, u9, u10,
-          title = "Tabla 4. Todas las observaciones",
+          title = "Tabla 5. Todas las observaciones",
           covariate.labels = c("Agua", "Electricidad", "Drenaje", "Total de delitos", 
                                "Homicidios", "Población", "Índice de marginación", 
                                "Concordancia", "Constante"),
@@ -222,7 +224,7 @@ panfe10 <- glmer(alt ~ ch.hom + log(POB_TOT) + IM + conco + (muni | edo.year), d
                  family = binomial(link = "logit"))
 
 stargazer(panfe1, panfe2, panfe3, panfe4, panfe5, panfe6, panfe7, panfe8, panfe9, panfe10, 
-          title = "Tabla 5. Municipios gobernados por el PAN",
+          title = "Tabla 6. Municipios gobernados por el PAN",
           covariate.labels = c("Agua", "Electricidad", "Drenaje", "Total de delitos", 
                                "Homicidios", "Población", "Índice de marginación", 
                                "Concordancia", "Constante"),
@@ -251,7 +253,7 @@ prife10 <- glmer(alt ~ ch.hom + log(POB_TOT) + IM + conco + (muni | edo.year), d
                  family = binomial(link = "logit"))
 
 stargazer(prife1, prife2, prife3, prife4, prife5, prife6, prife7, prife8, prife9, prife10, 
-          title = "Tabla 6. Municipios gobernados por el PRI",
+          title = "Tabla 7. Municipios gobernados por el PRI",
           covariate.labels = c("Agua", "Electricidad", "Drenaje", "Total de delitos", 
                                "Homicidios", "Población", "Índice de marginación", 
                                "Concordancia", "Constante"),
@@ -281,7 +283,7 @@ prdfe10 <- glmer(alt ~ ch.hom + log(POB_TOT) + IM + conco + (muni | edo.year), d
                  family = binomial(link = "logit"))
 
 stargazer(prdfe1, prdfe2, prdfe3, prdfe4, prdfe5, prdfe6, prdfe7, prdfe8, prdfe9, prdfe10, 
-          title = "Tabla 7. Municipios gobernados por el PRD",
+          title = "Tabla 8. Municipios gobernados por el PRD",
           covariate.labels = c("Agua", "Electricidad", "Drenaje", "Total de delitos", 
                                "Homicidios", "Población", "Índice de marginación", 
                                "Concordancia", "Constante"),

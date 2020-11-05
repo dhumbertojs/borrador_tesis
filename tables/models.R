@@ -65,7 +65,7 @@ stargazer(u1, u2, u3, u4, u5, u6, u7, u8, u9, u10,
           title = "Tabla 5. Todas las observaciones",
           covariate.labels = c("Agua", "Electricidad", "Drenaje", "Total de delitos", 
                                "Homicidios", "Población", "Índice de marginación", 
-                               "Concordancia", "Constante"),
+                               "Yuxtaposición", "Constante"),
           dep.var.labels = c("Cambio % del incumbent", "Alternancia"),
           type = "html", 
           out = paste(out, "todos_FE_crop.html", sep = "/"), 
@@ -96,7 +96,7 @@ stargazer(panfe1, panfe2, panfe3, panfe4, panfe5, panfe6, panfe7, panfe8, panfe9
           title = "Tabla 6. Municipios gobernados por el PAN",
           covariate.labels = c("Agua", "Electricidad", "Drenaje", "Total de delitos", 
                                "Homicidios", "Población", "Índice de marginación", 
-                               "Concordancia", "Constante"),
+                               "Yuxtaposición", "Constante"),
           dep.var.labels = c("Cambio % del incumbent", "Alternancia"),
           type = "html", out = paste(out, "PAN_FE_crop.html", sep = "/"), flip = T)
 
@@ -125,7 +125,7 @@ stargazer(prife1, prife2, prife3, prife4, prife5, prife6, prife7, prife8, prife9
           title = "Tabla 7. Municipios gobernados por el PRI",
           covariate.labels = c("Agua", "Electricidad", "Drenaje", "Total de delitos", 
                                "Homicidios", "Población", "Índice de marginación", 
-                               "Concordancia", "Constante"),
+                               "Yuxtaposición", "Constante"),
           dep.var.labels = c("Cambio % del incumbent", "Alternancia"),
           type = "html", out = paste(out, "PRI_FE_crop.html", sep = "/"), flip = T)
 
@@ -155,7 +155,7 @@ stargazer(prdfe1, prdfe2, prdfe3, prdfe4, prdfe5, prdfe6, prdfe7, prdfe8, prdfe9
           title = "Tabla 8. Municipios gobernados por el PRD",
           covariate.labels = c("Agua", "Electricidad", "Drenaje", "Total de delitos", 
                                "Homicidios", "Población", "Índice de marginación", 
-                               "Concordancia", "Constante"),
+                               "Yuxtaposición", "Constante"),
           dep.var.labels = c("Cambio % del incumbent", "Alternancia"),
           type = "html", out = paste(out, "PRD_FE_crop.html", sep = "/"), flip = T)
 
@@ -196,7 +196,7 @@ stargazer(u1, u2, u3, u4, u5, u6, u7, u8, u9, u10,
           title = "Tabla 5. Todas las observaciones",
           covariate.labels = c("Agua", "Electricidad", "Drenaje", "Total de delitos", 
                                "Homicidios", "Población", "Índice de marginación", 
-                               "Concordancia", "Constante"),
+                               "Yuxtaposición", "Constante"),
           dep.var.labels = c("Cambio % del incumbent", "Alternancia"),
           type = "html", 
           out = paste(out, "todos_FE_cap.html", sep = "/"), 
@@ -227,7 +227,7 @@ stargazer(panfe1, panfe2, panfe3, panfe4, panfe5, panfe6, panfe7, panfe8, panfe9
           title = "Tabla 6. Municipios gobernados por el PAN",
           covariate.labels = c("Agua", "Electricidad", "Drenaje", "Total de delitos", 
                                "Homicidios", "Población", "Índice de marginación", 
-                               "Concordancia", "Constante"),
+                               "Yuxtaposición", "Constante"),
           dep.var.labels = c("Cambio % del incumbent", "Alternancia"),
           type = "html", out = paste(out, "PAN_FE_cap.html", sep = "/"), flip = T)
 
@@ -256,7 +256,7 @@ stargazer(prife1, prife2, prife3, prife4, prife5, prife6, prife7, prife8, prife9
           title = "Tabla 7. Municipios gobernados por el PRI",
           covariate.labels = c("Agua", "Electricidad", "Drenaje", "Total de delitos", 
                                "Homicidios", "Población", "Índice de marginación", 
-                               "Concordancia", "Constante"),
+                               "Yuxtaposición", "Constante"),
           dep.var.labels = c("Cambio % del incumbent", "Alternancia"),
           type = "html", out = paste(out, "PRI_FE_cap.html", sep = "/"), flip = T)
 
@@ -286,6 +286,6 @@ stargazer(prdfe1, prdfe2, prdfe3, prdfe4, prdfe5, prdfe6, prdfe7, prdfe8, prdfe9
           title = "Tabla 8. Municipios gobernados por el PRD",
           covariate.labels = c("Agua", "Electricidad", "Drenaje", "Total de delitos", 
                                "Homicidios", "Población", "Índice de marginación", 
-                               "Concordancia", "Constante"),
+                               "Yuxtaposición", "Constante"),
           dep.var.labels = c("Cambio % del incumbent", "Alternancia"),
           type = "html", out = paste(out, "PRD_FE_cap.html", sep = "/"), flip = T)

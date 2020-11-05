@@ -12,9 +12,6 @@ nrow(data) #17,023
 data <- data %>% 
   filter(!is.na(inc_top) & # & !is.na(alt)
            inc_top != "Otros"
-  ) %>% 
-  mutate(
-    inc.ch = inc.ch*100
   )
 nrow(data)
 #13890
@@ -169,7 +166,7 @@ ggplot(data, aes(x = inc_top, y = ch.hom)) +
   geom_hline(aes(yintercept = mean(data$ch.hom, na.rm = T))) +
   facet_wrap(. ~ alt)
 
-da <- data %>% 
+data %>% 
   mutate(cont = 1) %>% 
   group_by(year, alt) %>% 
   summarise(
@@ -193,4 +190,23 @@ data %>%
   mutate(
     total = sum(tot),
     porc = tot*100/total
+  )
+
+chsy <- data %>% 
+  group_by(state, year) %>% 
+  summarise(
+    mean.agua = mean(ch.agua, na.rm = T),
+    median.agua = median(ch.agua, na.rm = T),
+    
+    mean.elec = mean(ch.elec, na.rm = T),
+    median.elec = median(ch.elec, na.rm = T),
+    
+    mean.dren = mean(ch.dren, na.rm = T),
+    median.dren = median(ch.dren, na.rm = T),
+
+    mean.del = mean(ch.del, na.rm = T),
+    median.del = median(ch.del, na.rm = T),
+    
+    mean.hom = mean(ch.hom, na.rm = T),
+    median.hom = median(ch.hom, na.rm = T)
   )

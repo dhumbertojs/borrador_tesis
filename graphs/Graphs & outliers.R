@@ -929,7 +929,7 @@ ggplot(data3, aes(x = ch.agua, y = inc.ch, col = inc_top)) +
   geom_smooth(method = "lm", se = F, color = "black") +
   # scale_x_continuous(labels = percent_format(1L)) +
   # scale_y_continuous(labels = percent_format(1L)) +
-  labs(title = "Diagrama de dispersión de agua", subtitle = "Todas las observaciones", 
+  labs(title = "Diagrama de dispersión de agua",# subtitle = "Todas las observaciones", 
        x = "Cambio % de agua", y = "Cambio % de votos al incumbent") +
   facet_wrap(. ~ inc_top) +
   theme_classic() +
@@ -942,7 +942,7 @@ ggplot(data3, aes(x = ch.dren, y = inc.ch, col = inc_top)) +
   geom_smooth(method = "lm", se = F, color = "black") +
   # scale_x_continuous(labels = percent_format(1L)) +
   # scale_y_continuous(labels = percent_format(1L)) +
-  labs(title = "Diagrama de dispersión de drenaje", subtitle = "Todas las observaciones", 
+  labs(title = "Diagrama de dispersión de drenaje", #subtitle = "Todas las observaciones", 
        x = "Cambio en la tasa de drenaje", y = "Cambio % de votos al incumbent") +
   facet_wrap(. ~ inc_top) +
   theme_classic() +
@@ -955,7 +955,7 @@ ggplot(data3, aes(x = ch.elec, y = inc.ch, col = inc_top)) +
   geom_smooth(method = "lm", se = F, color = "black") +
   # scale_x_continuous(labels = percent_format(1L)) +
   # scale_y_continuous(labels = percent_format(1L)) +
-  labs(title = "Diagrama de dispersión de electricidad", subtitle = "Todas las observaciones", 
+  labs(title = "Diagrama de dispersión de electricidad", #subtitle = "Todas las observaciones", 
        x = "Cambio % de electricidad", y = "Cambio % de votos al incumbent") +
   facet_wrap(. ~ inc_top) +
   theme_classic() +
@@ -968,7 +968,7 @@ ggplot(data3, aes(x = ch.del, y = inc.ch, col = inc_top)) +
   geom_smooth(method = "lm", se = F, color = "black") +
   # scale_x_continuous(labels = percent_format(1L)) +
   # scale_y_continuous(labels = percent_format(1L)) +
-  labs(title = "Diagrama de dispersión de delitos", subtitle = "Todas las observaciones", 
+  labs(title = "Diagrama de dispersión de delitos", #subtitle = "Todas las observaciones", 
        x = "Cambio la tasa de delitos", y = "Cambio % de votos al incumbent") +
   facet_wrap(. ~ inc_top) +
   theme_classic() +
@@ -981,7 +981,7 @@ ggplot(data3, aes(x = ch.hom, y = inc.ch, col = inc_top)) +
   geom_smooth(method = "lm", se = F, color = "black") +
   # scale_x_continuous(labels = percent_format(1L)) +
   # scale_y_continuous(labels = percent_format(1L)) +
-  labs(title = "Diagrama de dispersión de homicidios", subtitle = "Todas las observaciones", 
+  labs(title = "Diagrama de dispersión de homicidios", #subtitle = "Todas las observaciones", 
        x = "Cambio en la tasa de homicidios", y = "Cambio % de votos al incumbent") +
   facet_wrap(. ~ inc_top) +
   theme_classic() +

@@ -3,14 +3,21 @@ setwd("~")
 
 library(dplyr)
 library(stringr)
+library(tidyr)
+library(purrr)
 
 inp <- "/Users/dhjs/Documents/projects/electoral_accountability/databases"
 list.files(inp)
 out <- "/Users/dhjs/Documents/projects/electoral_accountability/"
 
 cri <- read.csv(paste(inp, "Crimes.csv", sep = "/"))
-ele <- read.csv(paste(inp, "Electoral.csv", sep = "/"))
-mar <- read.csv(paste(inp, "margination.csv", sep = "/"))
+ele <- read.csv(paste(inp, "Electoral.csv", sep = "/")) #%>% 
+  # mutate(muni = str_pad(muni, width = 5, side = "left", pad = "0"))
+mar <- read.csv(paste(inp, "margination.csv", sep = "/")) %>% 
+  rename(year = AÑO, muni = CVE_MUN) %>% 
+  select(-POB_TOT) %>% 
+  mutate(muni = str_pad(muni, width = 5, side = "left", pad = "0"))
+pob <- read.csv(paste(inp, "poblation.csv", sep = "/"))
 ser <- read.csv(paste(inp, "Services.csv", sep = "/"))
 
 summary(ele)##Estos son los datos electorales 1980-2015
@@ -23,7 +30,22 @@ summary(cri)#Datos de carpetas de investigacion 1994-2010
 #En homicidios hay 10,100 NA
 summary(mar)#Datos de marginación y población de 1990-2015
 #En el Indice de Marginación hay 3,285 NA
+summary(pob)
 #En poblacion hay 500 NA
+
+muni <- levels(as.factor(mar$muni))
+year <- 1990:2015
+years <- data.frame(year)
+years <- filter(years, !year %in% c(1990, 1995, 2000, 2005, 2010, 2015))
+im <- map(years$year, 
+              ~ bind_cols(.x, muni))
+im <- bind_rows(im) %>% 
+  rename(year = ...1, muni = ...2) %>% 
+  mutate(muniYear = paste(muni, year, sep = "_"))
+mar <- bind_rows(mar, im) %>% 
+  arrange(muniYear) %>% 
+  fill(IM) %>% 
+  select(-c(muni, year))
 
 # #64,710 observaciones
 nrow(ele)#27,292
@@ -34,8 +56,9 @@ try <- ele %>%
   left_join(ser, by = "muniYear") %>% 
   left_join(cri, by = "muniYear") %>% 
 #13,373
-  left_join(mar, by = "muniYear")
+  left_join(mar, by = "muniYear") %>% 
 #11,142 observaciones
+  left_join(pob, by = "muniYear")
 
 try <- try %>% 
   mutate(

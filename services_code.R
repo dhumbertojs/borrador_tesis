@@ -7,9 +7,9 @@ library(tidyr)
 library(janitor)
 library(imputeTS)
 
-inp <- "/home/dhjs/Documentos/R_projects/electoral_accountability/datos/servicios"
+inp <- "/Users/dhjs/Documents/projects/electoral_accountability/datos/servicios"
 list.files(inp)
-out <- "/home/dhjs/Documentos/R_projects/electoral_accountability/databases"
+out <- "/Users/dhjs/Documents/R_projects/electoral_accountability/databases"
 
 data <- read_excel(paste(inp, "SIMBAD_45106_20191009115505598.xlsx", sep = "/"), skip = 3)
 
@@ -17,9 +17,9 @@ clave <- select(data, 1:2)
 
 d1994 <- data %>% select(3: 5) %>% 
   mutate(year = 1994) %>% bind_cols(clave) %>% 
-  rename(agua = `Tomas domiciliarias de agua entubada a/...3`, 
-         dren = `Sistemas de drenaje y alcantarillado a/...4`, 
-         elec = `Tomas instaladas de energía eléctrica a/...5`) %>% 
+  rename(agua = `Tomas domiciliarias de agua entubada a/`, 
+         dren = `Sistemas de drenaje y alcantarillado a/`, 
+         elec = `Tomas instaladas de energía eléctrica a/`) %>% 
   mutate(
     agua = as.character(agua),
     dren = as.character(dren),
@@ -27,9 +27,9 @@ d1994 <- data %>% select(3: 5) %>%
   )
 d1995 <- data %>% select(6: 8) %>% 
   mutate(year = 1995) %>% bind_cols(clave) %>% 
-  rename(agua = `Tomas domiciliarias de agua entubada a/...6`, 
-         dren = `Sistemas de drenaje y alcantarillado a/...7`, 
-         elec = `Tomas instaladas de energía eléctrica a/...8`) %>% 
+  rename(agua = `Tomas domiciliarias de agua entubada a/`, 
+         dren = `Sistemas de drenaje y alcantarillado a/`, 
+         elec = `Tomas instaladas de energía eléctrica a/`) %>% 
   mutate(
     agua = as.character(agua),
     dren = as.character(dren),
@@ -37,9 +37,9 @@ d1995 <- data %>% select(6: 8) %>%
   )
 d1996 <- data %>% select(9:11) %>% 
   mutate(year = 1996) %>% bind_cols(clave) %>% 
-  rename(agua = `Tomas domiciliarias de agua entubada a/...9`, 
-         dren = `Sistemas de drenaje y alcantarillado a/...10`, 
-         elec = `Tomas instaladas de energía eléctrica a/...11`) %>% 
+  rename(agua = `Tomas domiciliarias de agua entubada a/`, 
+         dren = `Sistemas de drenaje y alcantarillado a/`, 
+         elec = `Tomas instaladas de energía eléctrica a/`) %>% 
   mutate(
     agua = as.character(agua),
     dren = as.character(dren),
@@ -47,9 +47,9 @@ d1996 <- data %>% select(9:11) %>%
   )
 d1997 <- data %>% select(12:14) %>% 
   mutate(year = 1997) %>% bind_cols(clave) %>% 
-  rename(agua = `Tomas domiciliarias de agua entubada a/...12`, 
-         dren = `Sistemas de drenaje y alcantarillado a/...13`, 
-         elec = `Tomas instaladas de energía eléctrica a/...14`) %>% 
+  rename(agua = `Tomas domiciliarias de agua entubada a/`, 
+         dren = `Sistemas de drenaje y alcantarillado a/`, 
+         elec = `Tomas instaladas de energía eléctrica a/`) %>% 
   mutate(
     agua = as.character(agua),
     dren = as.character(dren),
@@ -57,9 +57,9 @@ d1997 <- data %>% select(12:14) %>%
   )
 d1998 <- data %>% select(15:17) %>% 
   mutate(year = 1998) %>% bind_cols(clave) %>% 
-  rename(agua = `Tomas domiciliarias de agua entubada a/...15`, 
-         dren = `Sistemas de drenaje y alcantarillado a/...16`, 
-         elec = `Tomas instaladas de energía eléctrica a/...17`) %>% 
+  rename(agua = `Tomas domiciliarias de agua entubada a/`, 
+         dren = `Sistemas de drenaje y alcantarillado a/`, 
+         elec = `Tomas instaladas de energía eléctrica a/`) %>% 
   mutate(
     agua = as.character(agua),
     dren = as.character(dren),
@@ -67,9 +67,9 @@ d1998 <- data %>% select(15:17) %>%
   )
 d1999 <- data %>% select(18:20) %>% 
   mutate(year = 1999) %>% bind_cols(clave) %>% 
-  rename(agua = `Tomas domiciliarias de agua entubada a/...18`, 
-         dren = `Sistemas de drenaje y alcantarillado a/...19`, 
-         elec = `Tomas instaladas de energía eléctrica a/...20`) %>% 
+  rename(agua = `Tomas domiciliarias de agua entubada a/`, 
+         dren = `Sistemas de drenaje y alcantarillado a/`, 
+         elec = `Tomas instaladas de energía eléctrica a/`) %>% 
   mutate(
     agua = as.character(agua),
     dren = as.character(dren),
@@ -77,9 +77,9 @@ d1999 <- data %>% select(18:20) %>%
   )
 d2000 <- data %>% select(21:23) %>% 
   mutate(year = 2000) %>% bind_cols(clave) %>% 
-  rename(agua = `Tomas domiciliarias de agua entubada a/...21`, 
-         dren = `Sistemas de drenaje y alcantarillado a/...22`, 
-         elec = `Tomas instaladas de energía eléctrica a/...23`) %>% 
+  rename(agua = `Tomas domiciliarias de agua entubada a/`, 
+         dren = `Sistemas de drenaje y alcantarillado a/`, 
+         elec = `Tomas instaladas de energía eléctrica a/`) %>% 
   mutate(
     agua = as.character(agua),
     dren = as.character(dren),
@@ -87,9 +87,9 @@ d2000 <- data %>% select(21:23) %>%
   )
 d2001 <- data %>% select(24:26) %>% 
   mutate(year = 2001) %>% bind_cols(clave) %>% 
-  rename(agua = `Tomas domiciliarias de agua entubada a/...24`, 
-         dren = `Sistemas de drenaje y alcantarillado a/...25`, 
-         elec = `Tomas instaladas de energía eléctrica a/...26`) %>% 
+  rename(agua = `Tomas domiciliarias de agua entubada a/`, 
+         dren = `Sistemas de drenaje y alcantarillado a/`, 
+         elec = `Tomas instaladas de energía eléctrica a/`) %>% 
   mutate(
     agua = as.character(agua),
     dren = as.character(dren),
@@ -97,9 +97,9 @@ d2001 <- data %>% select(24:26) %>%
   )
 d2002 <- data %>% select(27:29) %>% 
   mutate(year = 2002) %>% bind_cols(clave) %>% 
-  rename(agua = `Tomas domiciliarias de agua entubada a/...27`, 
-         dren = `Sistemas de drenaje y alcantarillado a/...28`, 
-         elec = `Tomas instaladas de energía eléctrica a/...29`) %>% 
+  rename(agua = `Tomas domiciliarias de agua entubada a/`, 
+         dren = `Sistemas de drenaje y alcantarillado a/`, 
+         elec = `Tomas instaladas de energía eléctrica a/`) %>% 
   mutate(
     agua = as.character(agua),
     dren = as.character(dren),
@@ -107,9 +107,9 @@ d2002 <- data %>% select(27:29) %>%
   )
 d2003 <- data %>% select(30:32) %>% 
   mutate(year = 2003) %>% bind_cols(clave) %>% 
-  rename(agua = `Tomas domiciliarias de agua entubada a/...30`, 
-         dren = `Sistemas de drenaje y alcantarillado a/...31`, 
-         elec = `Tomas instaladas de energía eléctrica a/...32`) %>% 
+  rename(agua = `Tomas domiciliarias de agua entubada a/`, 
+         dren = `Sistemas de drenaje y alcantarillado a/`, 
+         elec = `Tomas instaladas de energía eléctrica a/`) %>% 
   mutate(
     agua = as.character(agua),
     dren = as.character(dren),
@@ -117,9 +117,9 @@ d2003 <- data %>% select(30:32) %>%
   )
 d2004 <- data %>% select(33:35) %>% 
   mutate(year = 2004) %>% bind_cols(clave) %>% 
-  rename(agua = `Tomas domiciliarias de agua entubada a/...33`, 
-         dren = `Sistemas de drenaje y alcantarillado a/...34`, 
-         elec = `Tomas instaladas de energía eléctrica a/...35`) %>% 
+  rename(agua = `Tomas domiciliarias de agua entubada a/`, 
+         dren = `Sistemas de drenaje y alcantarillado a/`, 
+         elec = `Tomas instaladas de energía eléctrica a/`) %>% 
   mutate(
     agua = as.character(agua),
     dren = as.character(dren),
@@ -127,9 +127,9 @@ d2004 <- data %>% select(33:35) %>%
   )
 d2005 <- data %>% select(36:38) %>% 
   mutate(year = 2005) %>% bind_cols(clave) %>% 
-  rename(agua = `Tomas domiciliarias de agua entubada a/...36`, 
-         dren = `Sistemas de drenaje y alcantarillado a/...37`, 
-         elec = `Tomas instaladas de energía eléctrica a/...38`) %>% 
+  rename(agua = `Tomas domiciliarias de agua entubada a/`, 
+         dren = `Sistemas de drenaje y alcantarillado a/`, 
+         elec = `Tomas instaladas de energía eléctrica a/`) %>% 
   mutate(
     agua = as.character(agua),
     dren = as.character(dren),
@@ -137,9 +137,9 @@ d2005 <- data %>% select(36:38) %>%
   )
 d2006 <- data %>% select(39:41) %>% 
   mutate(year = 2006) %>% bind_cols(clave) %>% 
-  rename(agua = `Tomas domiciliarias de agua entubada a/...39`, 
-         dren = `Sistemas de drenaje y alcantarillado a/...40`, 
-         elec = `Tomas instaladas de energía eléctrica a/...41`) %>% 
+  rename(agua = `Tomas domiciliarias de agua entubada a/`, 
+         dren = `Sistemas de drenaje y alcantarillado a/`, 
+         elec = `Tomas instaladas de energía eléctrica a/`) %>% 
   mutate(
     agua = as.character(agua),
     dren = as.character(dren),
@@ -147,9 +147,9 @@ d2006 <- data %>% select(39:41) %>%
   )
 d2007 <- data %>% select(42:44) %>% 
   mutate(year = 2007) %>% bind_cols(clave) %>% 
-  rename(agua = `Tomas domiciliarias de agua entubada a/...42`, 
-         dren = `Sistemas de drenaje y alcantarillado a/...43`, 
-         elec = `Tomas instaladas de energía eléctrica a/...44`) %>% 
+  rename(agua = `Tomas domiciliarias de agua entubada a/`, 
+         dren = `Sistemas de drenaje y alcantarillado a/`, 
+         elec = `Tomas instaladas de energía eléctrica a/`) %>% 
   mutate(
     agua = as.character(agua),
     dren = as.character(dren),
@@ -157,9 +157,9 @@ d2007 <- data %>% select(42:44) %>%
   )
 d2008 <- data %>% select(45:47) %>% 
   mutate(year = 2008) %>% bind_cols(clave) %>% 
-  rename(agua = `Tomas domiciliarias de agua entubada a/...45`, 
-         dren = `Sistemas de drenaje y alcantarillado a/...46`, 
-         elec = `Tomas instaladas de energía eléctrica a/...47`) %>% 
+  rename(agua = `Tomas domiciliarias de agua entubada a/`, 
+         dren = `Sistemas de drenaje y alcantarillado a/`, 
+         elec = `Tomas instaladas de energía eléctrica a/`) %>% 
   mutate(
     agua = as.character(agua),
     dren = as.character(dren),
@@ -167,9 +167,9 @@ d2008 <- data %>% select(45:47) %>%
   )
 d2009 <- data %>% select(48:50) %>% 
   mutate(year = 2009) %>% bind_cols(clave) %>% 
-  rename(agua = `Tomas domiciliarias de agua entubada a/...48`, 
-         dren = `Sistemas de drenaje y alcantarillado a/...49`, 
-         elec = `Tomas instaladas de energía eléctrica a/...50`) %>% 
+  rename(agua = `Tomas domiciliarias de agua entubada a/`, 
+         dren = `Sistemas de drenaje y alcantarillado a/`, 
+         elec = `Tomas instaladas de energía eléctrica a/`) %>% 
   mutate(
     agua = as.character(agua),
     dren = as.character(dren),
@@ -177,9 +177,9 @@ d2009 <- data %>% select(48:50) %>%
   )
 d2010 <- data %>% select(51:53) %>% 
   mutate(year = 2010) %>% bind_cols(clave) %>% 
-  rename(agua = `Tomas domiciliarias de agua entubada a/...51`, 
-         dren = `Sistemas de drenaje y alcantarillado a/...52`, 
-         elec = `Tomas instaladas de energía eléctrica a/...53`) %>% 
+  rename(agua = `Tomas domiciliarias de agua entubada a/`, 
+         dren = `Sistemas de drenaje y alcantarillado a/`, 
+         elec = `Tomas instaladas de energía eléctrica a/`) %>% 
   mutate(
     agua = as.character(agua),
     dren = as.character(dren),
@@ -187,9 +187,9 @@ d2010 <- data %>% select(51:53) %>%
   )
 d2011 <- data %>% select(54:56) %>% 
   mutate(year = 2011) %>% bind_cols(clave) %>% 
-  rename(agua = `Tomas domiciliarias de agua entubada a/...54`, 
-         dren = `Sistemas de drenaje y alcantarillado a/...55`, 
-         elec = `Tomas instaladas de energía eléctrica a/...56`) %>% 
+  rename(agua = `Tomas domiciliarias de agua entubada a/`, 
+         dren = `Sistemas de drenaje y alcantarillado a/`, 
+         elec = `Tomas instaladas de energía eléctrica a/`) %>% 
   mutate(
     agua = as.character(agua),
     dren = as.character(dren),
@@ -197,9 +197,9 @@ d2011 <- data %>% select(54:56) %>%
   )
 d2012 <- data %>% select(57:59) %>% 
   mutate(year = 2012) %>% bind_cols(clave) %>% 
-  rename(agua = `Tomas domiciliarias de agua entubada a/...57`, 
-         dren = `Sistemas de drenaje y alcantarillado a/...58`, 
-         elec = `Tomas instaladas de energía eléctrica a/...59`) %>% 
+  rename(agua = `Tomas domiciliarias de agua entubada a/`, 
+         dren = `Sistemas de drenaje y alcantarillado a/`, 
+         elec = `Tomas instaladas de energía eléctrica a/`) %>% 
   mutate(
     agua = as.character(agua),
     dren = as.character(dren),
@@ -207,9 +207,9 @@ d2012 <- data %>% select(57:59) %>%
   )
 d2013 <- data %>% select(60:62) %>% 
   mutate(year = 2013) %>% bind_cols(clave) %>% 
-  rename(agua = `Tomas domiciliarias de agua entubada a/...60`, 
-         dren = `Sistemas de drenaje y alcantarillado a/...61`, 
-         elec = `Tomas instaladas de energía eléctrica a/...62`) %>% 
+  rename(agua = `Tomas domiciliarias de agua entubada a/`, 
+         dren = `Sistemas de drenaje y alcantarillado a/`, 
+         elec = `Tomas instaladas de energía eléctrica a/`) %>% 
   mutate(
     agua = as.character(agua),
     dren = as.character(dren),
@@ -217,9 +217,9 @@ d2013 <- data %>% select(60:62) %>%
   )
 d2014 <- data %>% select(63:65) %>% 
   mutate(year = 2014) %>% bind_cols(clave) %>% 
-  rename(agua = `Tomas domiciliarias de agua entubada a/...63`, 
-         dren = `Sistemas de drenaje y alcantarillado a/...64`, 
-         elec = `Tomas instaladas de energía eléctrica a/...65`) %>% 
+  rename(agua = `Tomas domiciliarias de agua entubada a/`, 
+         dren = `Sistemas de drenaje y alcantarillado a/`, 
+         elec = `Tomas instaladas de energía eléctrica a/`) %>% 
   mutate(
     agua = as.character(agua),
     dren = as.character(dren),
@@ -227,9 +227,9 @@ d2014 <- data %>% select(63:65) %>%
   )
 d2015 <- data %>% select(66:68) %>% 
   mutate(year = 2015) %>% bind_cols(clave) %>% 
-  rename(agua = `Tomas domiciliarias de agua entubada a/...66`, 
-         dren = `Sistemas de drenaje y alcantarillado a/...67`, 
-         elec = `Tomas instaladas de energía eléctrica a/...68`) %>% 
+  rename(agua = `Tomas domiciliarias de agua entubada a/`, 
+         dren = `Sistemas de drenaje y alcantarillado a/`, 
+         elec = `Tomas instaladas de energía eléctrica a/`) %>% 
   mutate(
     agua = as.character(agua),
     dren = as.character(dren),

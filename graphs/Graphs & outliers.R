@@ -205,9 +205,9 @@ cuant <- cuant %>%
 ggplot(data, aes(x = ch.agua, y = inc.ch, col = inc_top)) +
   geom_jitter(alpha = 0.3) +
   scale_colour_manual(values = party, name = "Partido") +
-  geom_smooth(method = "lm", se = F, color = "black") +
+  geom_smooth(method = "lm", se = F, color = "black") +   scale_y_continuous(limits = c(-100, 100)) +
+  scale_y_continuous(limits = c(-100, 100)) +
   # scale_x_continuous(labels = percent_format(1L)) +
-  # scale_y_continuous(labels = percent_format(1L)) +
   labs(title = "Diagrama de dispersión de agua", subtitle = "Todas las observaciones", 
        x = "Cambio % de agua", y = "Cambio % de votos al incumbent") +
   theme_classic() +
@@ -218,7 +218,7 @@ ggsave("point_ch.agua_tot.png", path = paste(out, "scatter", sep = "/"), dpi = 3
 ggplot(data, aes(x = ch.dren, y = inc.ch, col = inc_top)) +
   geom_jitter(alpha = 0.3) +
   scale_colour_manual(values = party, name = "Partido") +
-  geom_smooth(method = "lm", se = F, color = "black") +
+  geom_smooth(method = "lm", se = F, color = "black") +   scale_y_continuous(limits = c(-100, 100)) +
   # scale_x_continuous(labels = percent_format(1L)) +
   # scale_y_continuous(labels = percent_format(1L)) +
   labs(title = "Diagrama de dispersión de drenaje", subtitle = "Todas las observaciones", 
@@ -231,7 +231,7 @@ ggsave("point_ch.dren_tot.png", path = paste(out, "scatter", sep = "/"), dpi = 3
 ggplot(data, aes(x = ch.elec, y = inc.ch, col = inc_top)) +
   geom_jitter(alpha = 0.3) +
   scale_colour_manual(values = party, name = "Partido") +
-  geom_smooth(method = "lm", se = F, color = "black") +
+  geom_smooth(method = "lm", se = F, color = "black") +   scale_y_continuous(limits = c(-100, 100)) +
   scale_x_continuous(labels = percent_format(1L)) +
   scale_y_continuous(labels = percent_format(1L)) +
   labs(title = "Diagrama de dispersión de electricidad", subtitle = "Todas las observaciones", 
@@ -244,7 +244,7 @@ ggsave("point_ch.elec_tot.png", path = paste(out, "scatter", sep = "/"), dpi = 3
 ggplot(data, aes(x = ch.del, y = inc.ch, col = inc_top)) +
   geom_jitter(alpha = 0.3) +
   scale_colour_manual(values = party, name = "Partido") +
-  geom_smooth(method = "lm", se = F, color = "black") +
+  geom_smooth(method = "lm", se = F, color = "black") +   scale_y_continuous(limits = c(-100, 100)) +
   # scale_x_continuous(labels = percent_format(1L)) +
   # scale_y_continuous(labels = percent_format(1L)) +
   labs(title = "Diagrama de dispersión de delitos", subtitle = "Todas las observaciones", 
@@ -257,7 +257,7 @@ ggsave("point_ch.del_tot.png", path = paste(out, "scatter", sep = "/"), dpi = 30
 ggplot(data, aes(x = ch.hom, y = inc.ch, col = inc_top)) +
   geom_jitter(alpha = 0.3) +
   scale_colour_manual(values = party, name = "Partido") +
-  geom_smooth(method = "lm", se = F, color = "black") +
+  geom_smooth(method = "lm", se = F, color = "black") +   scale_y_continuous(limits = c(-100, 100)) +
   # scale_x_continuous(labels = percent_format(1L)) +
   # scale_y_continuous(labels = percent_format(1L)) +
   labs(title = "Diagrama de dispersión de homicidios", subtitle = "Todas las observaciones", 
@@ -449,7 +449,7 @@ ggplot(data1, aes(x = as.factor(alt), y = ch.hom)) +
 ggplot(data1, aes(x = ch.agua, y = inc.ch, col = inc_top)) +
   geom_jitter(alpha = 0.3) +
   scale_colour_manual(values = party, name = "Partido") +
-  geom_smooth(method = "lm", se = F, color = "black") +
+  geom_smooth(method = "lm", se = F, color = "black") +   scale_y_continuous(limits = c(-100, 100)) +
   # scale_x_continuous(labels = percent_format(1L)) +
   # scale_y_continuous(labels = percent_format(1L)) +
   labs(title = "Diagrama de dispersión de agua", subtitle = "Todas las observaciones", 
@@ -462,7 +462,7 @@ ggsave("primer_point_ch.agua_tot.png", path = paste(out, "scatter", sep = "/"), 
 ggplot(data1, aes(x = ch.dren, y = inc.ch, col = inc_top)) +
   geom_jitter(alpha = 0.3) +
   scale_colour_manual(values = party, name = "Partido") +
-  geom_smooth(method = "lm", se = F, color = "black") +
+  geom_smooth(method = "lm", se = F, color = "black") +   scale_y_continuous(limits = c(-100, 100)) +
   # scale_x_continuous(labels = percent_format(1L)) +
   # scale_y_continuous(labels = percent_format(1L)) +
   labs(title = "Diagrama de dispersión de drenaje", subtitle = "Todas las observaciones", 
@@ -475,7 +475,7 @@ ggsave("primer_point_ch.dren_tot.png", path = paste(out, "scatter", sep = "/"), 
 ggplot(data1, aes(x = ch.elec, y = inc.ch, col = inc_top)) +
   geom_jitter(alpha = 0.3) +
   scale_colour_manual(values = party, name = "Partido") +
-  geom_smooth(method = "lm", se = F, color = "black") +
+  geom_smooth(method = "lm", se = F, color = "black") +   scale_y_continuous(limits = c(-100, 100)) +
   # scale_x_continuous(labels = percent_format(1L)) +
   # scale_y_continuous(labels = percent_format(1L)) +
   labs(title = "Diagrama de dispersión de electricidad", subtitle = "Todas las observaciones", 
@@ -488,7 +488,7 @@ ggsave("primer_point_ch.elec_tot.png", path = paste(out, "scatter", sep = "/"), 
 ggplot(data1, aes(x = ch.del, y = inc.ch, col = inc_top)) +
   geom_jitter(alpha = 0.3) +
   scale_colour_manual(values = party, name = "Partido") +
-  geom_smooth(method = "lm", se = F, color = "black") +
+  geom_smooth(method = "lm", se = F, color = "black") +   scale_y_continuous(limits = c(-100, 100)) +
   # scale_x_continuous(labels = percent_format(1L)) +
   # scale_y_continuous(labels = percent_format(1L)) +
   labs(title = "Diagrama de dispersión de delitos", subtitle = "Todas las observaciones", 
@@ -496,12 +496,13 @@ ggplot(data1, aes(x = ch.del, y = inc.ch, col = inc_top)) +
   facet_wrap(. ~ inc_top) +
   theme_classic() +
   theme(legend.position = "null")
-ggsave("primer_point_ch.del_tot.png", path = paste(out, "scatter", sep = "/"), dpi = 300)
+ggsave("primer_point_ch.del_tot.png", path = paste(out, "scatter", sep = "/"), dpi = 300, 
+       width = 6, height = 5.21)
 
 ggplot(data1, aes(x = ch.hom, y = inc.ch, col = inc_top)) +
   geom_jitter(alpha = 0.3) +
   scale_colour_manual(values = party, name = "Partido") +
-  geom_smooth(method = "lm", se = F, color = "black") +
+  geom_smooth(method = "lm", se = F, color = "black") +   scale_y_continuous(limits = c(-100, 100)) +
   # scale_x_continuous(labels = percent_format(1L)) +
   # scale_y_continuous(labels = percent_format(1L)) +
   labs(title = "Diagrama de dispersión de homicidios", subtitle = "Todas las observaciones", 
@@ -510,6 +511,20 @@ ggplot(data1, aes(x = ch.hom, y = inc.ch, col = inc_top)) +
   theme_classic() +
   theme(legend.position = "null")
 ggsave("primer_point_ch.hom_tot.png", path = paste(out, "scatter", sep = "/"), dpi = 300)
+
+ggplot(data1, aes(x = IM, y = inc.ch, col = inc_top)) +
+  geom_jitter(alpha = 0.3) +
+  scale_colour_manual(values = party, name = "Partido") +
+  geom_smooth(method = "lm", se = F, color = "black") +   scale_y_continuous(limits = c(-100, 100)) +
+  # scale_x_continuous(labels = percent_format(1L)) +
+  # scale_y_continuous(labels = percent_format(1L)) +
+  labs(title = "Diagrama de dispersión del Índice de Marginación", #subtitle = "Todas las observaciones", 
+       x = "", y = "Cambio % de votos al incumbent") +
+  facet_wrap(. ~ inc_top) +
+  theme_classic() +
+  theme(legend.position = "null", panel.spacing.x = unit(6, "mm"))
+ggsave("primer_point_IM_tot_cap.png", path = paste(out, "scatter", sep = "/"), dpi = 300, height = 5.21, width = 6)
+
 
 
   # 3. Cropped -----------------------------------------------------------
@@ -693,7 +708,7 @@ ggplot(data2, aes(x = as.factor(alt), y = ch.hom)) +
 ggplot(data2, aes(x = ch.agua, y = inc.ch, col = inc_top)) +
   geom_jitter(alpha = 0.3) +
   scale_colour_manual(values = party, name = "Partido") +
-  geom_smooth(method = "lm", se = F, color = "black") +
+  geom_smooth(method = "lm", se = F, color = "black") +   scale_y_continuous(limits = c(-100, 100)) +
   # scale_x_continuous(labels = percent_format(1L)) +
   # scale_y_continuous(labels = percent_format(1L)) +
   #ylim(-100, 100) +
@@ -707,7 +722,7 @@ ggsave("segundo_point_ch.agua_tot_crop.png", path = paste(out, "scatter", sep = 
 ggplot(data2, aes(x = ch.dren, y = inc.ch, col = inc_top)) +
   geom_jitter(alpha = 0.3) +
   scale_colour_manual(values = party, name = "Partido") +
-  geom_smooth(method = "lm", se = F, color = "black") +
+  geom_smooth(method = "lm", se = F, color = "black") +   scale_y_continuous(limits = c(-100, 100)) +
   # scale_x_continuous(labels = percent_format(1L)) +
   # scale_y_continuous(labels = percent_format(1L)) +
   labs(title = "Diagrama de dispersión de drenaje", #subtitle = "Todas las observaciones", 
@@ -720,7 +735,7 @@ ggsave("segundo_point_ch.dren_tot_crop.png", path = paste(out, "scatter", sep = 
 ggplot(data2, aes(x = ch.elec, y = inc.ch, col = inc_top)) +
   geom_jitter(alpha = 0.3) +
   scale_colour_manual(values = party, name = "Partido") +
-  geom_smooth(method = "lm", se = F, color = "black") +
+  geom_smooth(method = "lm", se = F, color = "black") +   scale_y_continuous(limits = c(-100, 100)) +
   # scale_x_continuous(labels = percent_format(1L)) +
   # scale_y_continuous(labels = percent_format(1L)) +
   labs(title = "Diagrama de dispersión de electricidad", #subtitle = "Todas las observaciones", 
@@ -733,7 +748,7 @@ ggsave("segundo_point_ch.elec_tot_crop.png", path = paste(out, "scatter", sep = 
 ggplot(data2, aes(x = ch.del, y = inc.ch, col = inc_top)) +
   geom_jitter(alpha = 0.3) +
   scale_colour_manual(values = party, name = "Partido") +
-  geom_smooth(method = "lm", se = F, color = "black") +
+  geom_smooth(method = "lm", se = F, color = "black") +   scale_y_continuous(limits = c(-100, 100)) +
   # scale_x_continuous(labels = percent_format(1L)) +
   # scale_y_continuous(labels = percent_format(1L)) +
   labs(title = "Diagrama de dispersión de delitos", #subtitle = "Todas las observaciones", 
@@ -741,12 +756,12 @@ ggplot(data2, aes(x = ch.del, y = inc.ch, col = inc_top)) +
   facet_wrap(. ~ inc_top) +
   theme_classic() +
   theme(legend.position = "null", panel.spacing.x = unit(6, "mm"))
-ggsave("segundo_point_ch.del_tot_crop.png", path = paste(out, "scatter", sep = "/"), dpi = 300)
+ggsave("segundo_point_ch.del_tot_crop.png", path = paste(out, "scatter", sep = "/"), dpi = 300, height = 5.21, width = 6)
 
 ggplot(data2, aes(x = ch.hom, y = inc.ch, col = inc_top)) +
   geom_jitter(alpha = 0.3) +
   scale_colour_manual(values = party, name = "Partido") +
-  geom_smooth(method = "lm", se = F, color = "black") +
+  geom_smooth(method = "lm", se = F, color = "black") +   scale_y_continuous(limits = c(-100, 100)) +
   # scale_x_continuous(labels = percent_format(1L)) +
   # scale_y_continuous(labels = percent_format(1L)) +
   labs(title = "Diagrama de dispersión de homicidios", #subtitle = "Todas las observaciones", 
@@ -755,6 +770,19 @@ ggplot(data2, aes(x = ch.hom, y = inc.ch, col = inc_top)) +
   theme_classic() +
   theme(legend.position = "null", panel.spacing.x = unit(6, "mm"))
 ggsave("segundo_point_ch.hom_tot_crop.png", path = paste(out, "scatter", sep = "/"), dpi = 300)
+
+ggplot(data2, aes(x = IM, y = inc.ch, col = inc_top)) +
+  geom_jitter(alpha = 0.3) +
+  scale_colour_manual(values = party, name = "Partido") +
+  geom_smooth(method = "lm", se = F, color = "black") +   scale_y_continuous(limits = c(-100, 100)) +
+  # scale_x_continuous(labels = percent_format(1L)) +
+  # scale_y_continuous(labels = percent_format(1L)) +
+  labs(title = "Diagrama de dispersión del Índice de Marginación", #subtitle = "Todas las observaciones", 
+       x = "", y = "Cambio % de votos al incumbent") +
+  facet_wrap(. ~ inc_top) +
+  theme_classic() +
+  theme(legend.position = "null", panel.spacing.x = unit(6, "mm"))
+ggsave("segundo_point_IM_tot_crop.png", path = paste(out, "scatter", sep = "/"), dpi = 300, height = 5.21, width = 6)
 
 # 4. Capped  -----------------------------------------------------------
 
@@ -926,7 +954,7 @@ ggplot(data3, aes(x = as.factor(alt), y = ch.hom)) +
 ggplot(data3, aes(x = ch.agua, y = inc.ch, col = inc_top)) +
   geom_jitter(alpha = 0.3) +
   scale_colour_manual(values = party, name = "Partido") +
-  geom_smooth(method = "lm", se = F, color = "black") +
+  geom_smooth(method = "lm", se = F, color = "black") +   scale_y_continuous(limits = c(-100, 100)) +
   # scale_x_continuous(labels = percent_format(1L)) +
   # scale_y_continuous(labels = percent_format(1L)) +
   labs(title = "Diagrama de dispersión de agua",# subtitle = "Todas las observaciones", 
@@ -939,7 +967,7 @@ ggsave("segundo_point_ch.agua_tot_cap.png", path = paste(out, "scatter", sep = "
 ggplot(data3, aes(x = ch.dren, y = inc.ch, col = inc_top)) +
   geom_jitter(alpha = 0.3) +
   scale_colour_manual(values = party, name = "Partido") +
-  geom_smooth(method = "lm", se = F, color = "black") +
+  geom_smooth(method = "lm", se = F, color = "black") +   scale_y_continuous(limits = c(-100, 100)) +
   # scale_x_continuous(labels = percent_format(1L)) +
   # scale_y_continuous(labels = percent_format(1L)) +
   labs(title = "Diagrama de dispersión de drenaje", #subtitle = "Todas las observaciones", 
@@ -952,7 +980,7 @@ ggsave("segundo_point_ch.dren_tot_cap.png", path = paste(out, "scatter", sep = "
 ggplot(data3, aes(x = ch.elec, y = inc.ch, col = inc_top)) +
   geom_jitter(alpha = 0.3) +
   scale_colour_manual(values = party, name = "Partido") +
-  geom_smooth(method = "lm", se = F, color = "black") +
+  geom_smooth(method = "lm", se = F, color = "black") +   scale_y_continuous(limits = c(-100, 100)) +
   # scale_x_continuous(labels = percent_format(1L)) +
   # scale_y_continuous(labels = percent_format(1L)) +
   labs(title = "Diagrama de dispersión de electricidad", #subtitle = "Todas las observaciones", 
@@ -965,7 +993,7 @@ ggsave("segundo_point_ch.elec_tot_cap.png", path = paste(out, "scatter", sep = "
 ggplot(data3, aes(x = ch.del, y = inc.ch, col = inc_top)) +
   geom_jitter(alpha = 0.3) +
   scale_colour_manual(values = party, name = "Partido") +
-  geom_smooth(method = "lm", se = F, color = "black") +
+  geom_smooth(method = "lm", se = F, color = "black") +   scale_y_continuous(limits = c(-100, 100)) +
   # scale_x_continuous(labels = percent_format(1L)) +
   # scale_y_continuous(labels = percent_format(1L)) +
   labs(title = "Diagrama de dispersión de delitos", #subtitle = "Todas las observaciones", 
@@ -978,7 +1006,7 @@ ggsave("segundo_point_ch.del_tot_cap.png", path = paste(out, "scatter", sep = "/
 ggplot(data3, aes(x = ch.hom, y = inc.ch, col = inc_top)) +
   geom_jitter(alpha = 0.3) +
   scale_colour_manual(values = party, name = "Partido") +
-  geom_smooth(method = "lm", se = F, color = "black") +
+  geom_smooth(method = "lm", se = F, color = "black") +   scale_y_continuous(limits = c(-100, 100)) +
   # scale_x_continuous(labels = percent_format(1L)) +
   # scale_y_continuous(labels = percent_format(1L)) +
   labs(title = "Diagrama de dispersión de homicidios", #subtitle = "Todas las observaciones", 
@@ -987,3 +1015,16 @@ ggplot(data3, aes(x = ch.hom, y = inc.ch, col = inc_top)) +
   theme_classic() +
   theme(legend.position = "null")
 ggsave("segundo_point_ch.hom_tot_cap.png", path = paste(out, "scatter", sep = "/"), dpi = 300)
+
+ggplot(data3, aes(x = IM, y = inc.ch, col = inc_top)) +
+  geom_jitter(alpha = 0.3) +
+  scale_colour_manual(values = party, name = "Partido") +
+  geom_smooth(method = "lm", se = F, color = "black") +   scale_y_continuous(limits = c(-100, 100)) +
+  # scale_x_continuous(labels = percent_format(1L)) +
+  # scale_y_continuous(labels = percent_format(1L)) +
+  labs(title = "Diagrama de dispersión del Índice de Marginación", #subtitle = "Todas las observaciones", 
+       x = "", y = "Cambio % de votos al incumbent") +
+  facet_wrap(. ~ inc_top) +
+  theme_classic() +
+  theme(legend.position = "null", panel.spacing.x = unit(6, "mm"))
+ggsave("segundo_point_IM_tot_cap.png", path = paste(out, "scatter", sep = "/"), dpi = 300)

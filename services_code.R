@@ -9,7 +9,7 @@ library(imputeTS)
 
 inp <- "/Users/dhjs/Documents/projects/electoral_accountability/datos/servicios"
 list.files(inp)
-out <- "/Users/dhjs/Documents/R_projects/electoral_accountability/databases"
+out <- "/Users/dhjs/Documents/projects/electoral_accountability/databases"
 
 data <- read_excel(paste(inp, "SIMBAD_45106_20191009115505598.xlsx", sep = "/"), skip = 3)
 
@@ -265,6 +265,8 @@ fin <- fin %>%
   ) %>% 
   arrange(muniYear) %>% 
   select(muniYear, agua, dren, elec)
+
+write.csv(fin, paste(out, "Services_original.csv", sep = "/"), row.names = F)
 
 summary(fin)
 

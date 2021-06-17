@@ -100,13 +100,14 @@ ele_ser %>%
 data2 <- data %>% 
   select(
     muniYear, state, muni, year, wintop_state, win_top, inc_top, conco,        
-    inc.ch, IM, POB_TOT, ch.agua, ch.dren, ch.elec,  ch.hom, alt, edo.year     
+    inc.ch, IM, POB_TOT, ch.agua, ch.dren, ch.elec,  ch.hom, alt, edo.year,
+    d_gob, d_dipl, d_dipf, d_sen, d_pres
   )
 
 tabla <- data2 %>% 
   select(
     IM, POB_TOT,
-    inc.ch, ch.agua, ch.dren, ch.elec,  ch.hom     
+    inc.ch, ch.agua, ch.dren, ch.elec, ch.hom     
   ) %>% 
   rename(POB = POB_TOT) %>% 
   stargazer(
@@ -128,25 +129,39 @@ tabla <- data2 %>%
 
 corr <- data2 %>% 
   select(
-    alt, inc.ch, ch.agua, ch.dren, ch.elec, ch.hom, IM, POB_TOT
+    alt, inc.ch, ch.agua, ch.dren, ch.elec, ch.hom, IM, POB_TOT, 
+    conco, d_gob, d_dipl, d_dipf, d_sen, d_pres
   ) %>% 
   rename(pob = POB_TOT, im = IM)
 
-mr <- rcorr(as.matrix(corr))
+cor <- rcorr(as.matrix(corr), type = "pearson")
 
-cor1 <- as.data.frame(mr$n) %>% 
+wb <- createWorkbook()
+sh <- addWorksheet(wb, "Correlacion")
+writeData(wb, sh, cor[[1]])
+
+sh <- addWorksheet(wb, "Observaciones")
+writeData(wb, sh, cor[[2]])
+
+sh <- addWorksheet(wb, "valores p")
+writeData(wb, sh, cor[[3]])
+
+saveWorkbook(wb, paste(out, "Correlaciones_lead.xlsx", sep = "/"), overwrite = T) 
+
+
+cor1 <- as.data.frame(cor$n) %>% 
   stargazer(summary = F, 
             rownames = F, 
             type = "html",
             title = "Matriz de correlaciones",
-            out = paste(out, "observaciones.html", sep = "/"))
+            out = paste(out, "observaciones_lead.html", sep = "/"))
 
-cor2 <- round(as.data.frame(mr$r)) %>% 
+cor2 <- round(as.data.frame(cor$r)) %>% 
   stargazer(summary = F, 
             rownames = F, 
             type = "html",
             title = "Matriz de correlaciones",
-            out = paste(out, "matriz_correlaciones.html", sep = "/"))
+            out = paste(out, "matriz_correlaciones_lead.html", sep = "/"))
 
 # 5% de cada extremo ------------------------------------------------------
 
@@ -163,16 +178,18 @@ data3 <- data %>%
     
     ch.hom = ifelse(ch.hom <= quantile(ch.hom, 0.975, na.rm = T) & 
                       ch.hom >= quantile(ch.hom, 0.025, na.rm = T), ch.hom, NA)
-  )%>% 
-  select(
-    muniYear, state, muni, year, wintop_state, win_top, inc_top, conco,        
-    inc.ch, IM, POB_TOT, ch.agua, ch.dren, ch.elec,  ch.hom, alt, edo.year     
   )
+# %>% 
+#   select(
+#     muniYear, state, muni, year, wintop_state, win_top, inc_top, conco,        
+#     inc.ch, IM, POB_TOT, ch.agua, ch.dren, ch.elec,  ch.hom, alt, edo.year     
+#   )
 
 tabla2 <- data3 %>% 
   select(
     IM, POB_TOT,
-    inc.ch, ch.agua, ch.dren, ch.elec,  ch.hom     
+    inc.ch, ch.agua, ch.dren, ch.elec,ch.hom, 
+    d_gob, d_dipl, d_dipf, d_sen, d_pres
   ) %>% 
   rename(POB = POB_TOT) %>% 
   stargazer(
@@ -195,7 +212,8 @@ tabla2 <- data3 %>%
 
 corr2 <- data3 %>% 
   select(
-    alt, inc.ch, ch.agua, ch.dren, ch.elec,  ch.hom, IM, POB_TOT
+    alt, inc.ch, ch.agua, ch.dren, ch.elec,  ch.hom, IM, POB_TOT,
+    d_gob, d_dipl, d_dipf, d_sen, d_pres
   ) %>% 
   rename(pob = POB_TOT, im = IM)
 
@@ -211,7 +229,7 @@ writeData(wb, sh, cor[[2]])
 sh <- addWorksheet(wb, "valores p")
 writeData(wb, sh, cor[[3]])
 
-saveWorkbook(wb, paste(out, "Correlaciones.xlsx", sep = "/"), overwrite = T) 
+saveWorkbook(wb, paste(out, "Correlaciones_lead_95.xlsx", sep = "/"), overwrite = T) 
 
 
 cor1 <- as.data.frame(cor$n) %>% 
@@ -219,11 +237,11 @@ cor1 <- as.data.frame(cor$n) %>%
             rownames = F, 
             type = "html",
             title = "Matriz de correlaciones",
-            out = paste(out, "observaciones_95.html", sep = "/"))
+            out = paste(out, "observaciones_lead_95.html", sep = "/"))
 
 cor2 <- round(as.data.frame(cor$r)) %>% 
   stargazer(summary = F, 
             rownames = F, 
             type = "html",
             title = "Matriz de correlaciones",
-            out = paste(out, "matriz_correlaciones_95.html", sep = "/"))
+            out = paste(out, "matriz_correlaciones_lead_95.html", sep = "/"))

@@ -11,7 +11,7 @@ inp <- "./"
 out <- "./version_21/original/tables"
 plot <- "./version_21/original/plots"
 
-data <- read.csv(paste(inp, "final_original.csv", sep = "/"))
+data <- read.csv(paste(inp, "final_original_lead.csv", sep = "/"))
 
 ele_ser <- data %>% 
   mutate(
@@ -100,13 +100,15 @@ ele_ser %>%
 data2 <- data %>% 
   select(
     muniYear, state, muni, year, wintop_state, win_top, inc_top, conco,        
-    inc.ch, IM, POB_TOT, ch.agua, ch.dren, ch.elec,  ch.hom, alt, edo.year     
+    inc.ch, IM, POB_TOT, ch.agua, ch.dren, ch.elec,  ch.hom, alt, edo.year,
+    d_gob, d_dipl, d_dipf, d_sen, d_pres
   )
 
 tabla <- data2 %>% 
   select(
     IM, POB_TOT,
-    inc.ch, ch.agua, ch.dren, ch.elec,  ch.hom     
+    inc.ch, ch.agua, ch.dren, ch.elec, ch.hom,
+    d_gob, d_dipl, d_dipf, d_sen, d_pres
   ) %>% 
   rename(POB = POB_TOT) %>% 
   stargazer(
@@ -120,7 +122,13 @@ tabla <- data2 %>%
                          "Cambio porcentual de tomas de agua",
                          "Cambio porcentual de tomas de drenaje",
                          "Cambio porcentual de tomas de electricidad",
-                         "Cambio porcentual de carpetas de homicidios"),
+                         "Cambio en homicidios",
+                         "Concurrente gubernatura",
+                         "Concurrente diputaciones locales",
+                         "Concurrente diputaciones federales",
+                         "Concurrente senadurías",
+                         "Concurrente presidencia"
+                         ),
     omit.summary.stat = c("p25", "p75"),
     digits = 2,
     out = paste(out, "Descriptivos_total.html", sep = "/")
@@ -128,7 +136,8 @@ tabla <- data2 %>%
 
 corr <- data2 %>% 
   select(
-    alt, inc.ch, ch.agua, ch.dren, ch.elec, ch.hom, IM, POB_TOT
+    alt, inc.ch, ch.agua, ch.dren, ch.elec, ch.hom, IM, POB_TOT,
+    d_gob, d_dipl, d_dipf, d_sen, d_pres
   ) %>% 
   rename(pob = POB_TOT, im = IM)
 
@@ -138,10 +147,10 @@ cor1 <- as.data.frame(mr$n) %>%
   stargazer(summary = F, 
             rownames = F, 
             type = "html",
-            title = "Matriz de correlaciones",
+            title = "Matriz de correlaciones, observaciones",
             out = paste(out, "observaciones.html", sep = "/"))
 
-cor2 <- round(as.data.frame(mr$r)) %>% 
+cor2 <- as.data.frame(mr$r) %>% 
   stargazer(summary = F, 
             rownames = F, 
             type = "html",
@@ -166,13 +175,15 @@ data3 <- data %>%
   )%>% 
   select(
     muniYear, state, muni, year, wintop_state, win_top, inc_top, conco,        
-    inc.ch, IM, POB_TOT, ch.agua, ch.dren, ch.elec,  ch.hom, alt, edo.year     
+    inc.ch, IM, POB_TOT, ch.agua, ch.dren, ch.elec,  ch.hom, alt, edo.year,
+    d_gob, d_dipl, d_dipf, d_sen, d_pres
   )
 
 tabla2 <- data3 %>% 
   select(
     IM, POB_TOT,
-    inc.ch, ch.agua, ch.dren, ch.elec,  ch.hom     
+    inc.ch, ch.agua, ch.dren, ch.elec, ch.hom,
+    d_gob, d_dipl, d_dipf, d_sen, d_pres
   ) %>% 
   rename(POB = POB_TOT) %>% 
   stargazer(
@@ -186,42 +197,35 @@ tabla2 <- data3 %>%
                          "Cambio porcentual de tomas de agua",
                          "Cambio porcentual de tomas de drenaje",
                          "Cambio porcentual de tomas de electricidad",
-                         "Cambio porcentual de carpetas de delitos",
-                         "Cambio porcentual de carpetas de homicidios"),
+                         "Cambio en homicidios",
+                         "Concurrente gubernatura",
+                         "Concurrente diputaciones locales",
+                         "Concurrente diputaciones federales",
+                         "Concurrente senadurías",
+                         "Concurrente presidencia"
+                         ),
     omit.summary.stat = c("p25", "p75"),
     digits = 2,
     out = paste(out, "Descriptivos_95%.html", sep = "/")
   )
 
-corr2 <- data3 %>% 
+corr <- data3 %>% 
   select(
-    alt, inc.ch, ch.agua, ch.dren, ch.elec,  ch.hom, IM, POB_TOT
+    alt, inc.ch, ch.agua, ch.dren, ch.elec, ch.hom, IM, POB_TOT,
+    d_gob, d_dipl, d_dipf, d_sen, d_pres
   ) %>% 
   rename(pob = POB_TOT, im = IM)
 
-cor <- rcorr(as.matrix(corr2), type = "pearson")
+mr <- rcorr(as.matrix(corr))
 
-wb <- createWorkbook()
-sh <- addWorksheet(wb, "Correlacion")
-writeData(wb, sh, cor[[1]])
-
-sh <- addWorksheet(wb, "Observaciones")
-writeData(wb, sh, cor[[2]])
-
-sh <- addWorksheet(wb, "valores p")
-writeData(wb, sh, cor[[3]])
-
-saveWorkbook(wb, paste(out, "Correlaciones.xlsx", sep = "/"), overwrite = T) 
-
-
-cor1 <- as.data.frame(cor$n) %>% 
+cor1 <- as.data.frame(mr$n) %>% 
   stargazer(summary = F, 
             rownames = F, 
             type = "html",
-            title = "Matriz de correlaciones",
+            title = "Matriz de correlaciones, observaciones",
             out = paste(out, "observaciones_95.html", sep = "/"))
 
-cor2 <- round(as.data.frame(cor$r)) %>% 
+cor2 <- as.data.frame(mr$r) %>% 
   stargazer(summary = F, 
             rownames = F, 
             type = "html",

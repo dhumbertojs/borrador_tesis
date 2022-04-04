@@ -48,18 +48,29 @@ party <- c("PAN" = "#153588", "PRI" = "#E13A27",
            "PRD" = "#F6D626", "otros" = "#000000")
 
 party_series <- data %>% 
-  filter(!is.na(inc_top)) %>% 
   group_by(year) %>% 
-  count(inc_top) %>% 
+  count(win_top) %>% 
   mutate(
     total = sum(n),
     porcentaje = n/total
     )
+
+data %>% 
+  group_by(win_top) %>%
+  count() %>% 
+  ungroup() %>% 
+  mutate(
+    tot = sum(n),
+    porc = n*100/tot
+  )
+  summarise(
+    porcentaje = sum(porcentaje)
+  )
   
 ggplot(party_series, 
-       aes(x = year, y = porcentaje, group = inc_top)) +
-  geom_line(aes(color = inc_top), size = 2) +
-  geom_point(aes(color = inc_top), shape = 2, size = 4) +
+       aes(x = year, y = porcentaje, group = win_top)) +
+  geom_line(aes(color = win_top), size = 2) +
+  geom_point(aes(color = win_top), shape = 2, size = 4) +
   scale_y_continuous(labels = scales::percent_format()) +
   scale_x_continuous(breaks = (1994:2015)) +
   scale_colour_manual(values = party, name = "Partido") +

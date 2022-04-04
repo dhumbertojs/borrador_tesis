@@ -9,7 +9,7 @@ options(scipen=999)
 data <- read.csv(paste(inp, "final_original_lead.csv", sep = "/"))
 nrow(data) #17,023
 data <- data %>% 
-  filter(!is.na(inc_top)) %>% 
+  #filter(!is.na(inc_top)) %>% 
   mutate(
     edo.year = as.character(edo.year)
   )
@@ -40,14 +40,14 @@ datac <- data %>%
 #Efectos fijos
 
 u1 <- felm(inc.ch ~ ch.agua + log(POB_TOT) + IM + conco + d_dipl + d_dipf + d_sen + d_gob + d_pres 
-           | 0 | 0 | 0, datac)
+           | 0 | 0 | muni, datac)
 u2 <- felm(inc.ch ~ ch.elec + log(POB_TOT) + IM + conco + d_dipl + d_dipf + d_sen + d_gob + d_pres 
-           | 0 | 0 | 0, datac)
+           | 0 | 0 |muni, datac)
 u3 <- felm(inc.ch ~ ch.dren + log(POB_TOT) + IM + conco + d_dipl + d_dipf + d_sen + d_gob + d_pres 
-           | 0 | 0 | 0, datac)
-#u4 <- felm(inc.ch ~ ch.del + log(POB_TOT) + IM + conco | 0 | 0 | 0, datac)
+           | 0 | 0 |muni, datac)
+#u4 <- felm(inc.ch ~ ch.del + log(POB_TOT) + IM + conco | 0 | 0 |muni, datac)
 u5 <- felm(inc.ch ~ ch.hom + log(POB_TOT) + IM + conco + d_dipl + d_dipf + d_sen + d_gob + d_pres 
-           | 0 | 0 | 0, datac)
+           | 0 | 0 |muni, datac)
 
 u6 <- glm(alt ~ ch.agua + log(POB_TOT) + IM + conco + d_dipl + d_dipf + d_sen + d_gob + d_pres, 
             datac, family = binomial(link = "logit"))
@@ -82,14 +82,14 @@ stargazer(u1, u2, u3, #u4,
 #Efectos fijos
 
 panfe1 <- felm(inc.ch ~ ch.agua + log(POB_TOT) + IM + conco + d_dipl + d_dipf + d_sen + d_gob + d_pres
-                 | 0 | 0 | 0, datac, subset = inc_top == "PAN")
+                 | 0 | 0 |muni, datac, subset = inc_top == "PAN")
 panfe2 <- felm(inc.ch ~ ch.elec + log(POB_TOT) + IM + conco + d_dipl + d_dipf + d_sen + d_gob + d_pres 
-               | 0 | 0 | 0, datac, subset = inc_top == "PAN")
+               | 0 | 0 |muni, datac, subset = inc_top == "PAN")
 panfe3 <- felm(inc.ch ~ ch.dren + log(POB_TOT) + IM + conco + d_dipl + d_dipf + d_sen + d_gob + d_pres
-               | 0 | 0 | 0, datac, subset = inc_top == "PAN")
-#panfe4 <- felm(inc.ch ~ ch.del + log(POB_TOT) + IM + conco | 0 | 0 | 0, datac, subset = inc_top == "PAN")
+               | 0 | 0 |muni, datac, subset = inc_top == "PAN")
+#panfe4 <- felm(inc.ch ~ ch.del + log(POB_TOT) + IM + conco | 0 | 0 |muni, datac, subset = inc_top == "PAN")
 panfe5 <- felm(inc.ch ~ ch.hom + log(POB_TOT) + IM + conco + d_dipl + d_dipf + d_sen + d_gob + d_pres
-               | 0 | 0 | 0, datac, subset = inc_top == "PAN")
+               | 0 | 0 |muni, datac, subset = inc_top == "PAN")
 
 panfe6 <- glm(alt ~ ch.agua + log(POB_TOT) + IM + conco + d_dipl + d_dipf + d_sen + d_gob + d_pres,
                 datac, subset = inc_top == "PAN", 
@@ -127,14 +127,14 @@ stargazer(panfe1, panfe2, panfe3, #panfe4,
 #Efectos fijos
 
 prife1 <- felm(inc.ch ~ ch.agua + log(POB_TOT) + IM + conco + d_dipl + d_dipf + d_sen + d_gob + d_pres
-               | 0 | 0 | 0, datac, subset = inc_top == "PRI")
+               | 0 | 0 |muni, datac, subset = inc_top == "PRI")
 prife2 <- felm(inc.ch ~ ch.elec + log(POB_TOT) + IM + conco + d_dipl + d_dipf + d_sen + d_gob + d_pres
-               | 0 | 0 | 0, datac, subset = inc_top == "PRI")
+               | 0 | 0 |muni, datac, subset = inc_top == "PRI")
 prife3 <- felm(inc.ch ~ ch.dren + log(POB_TOT) + IM + conco + d_dipl + d_dipf + d_sen + d_gob + d_pres
-               | 0 | 0 | 0, datac, subset = inc_top == "PRI")
-#prife4 <- felm(inc.ch ~ ch.del + log(POB_TOT) + IM + conco | 0 | 0 | 0, datac, subset = inc_top == "PRI")
+               | 0 | 0 |muni, datac, subset = inc_top == "PRI")
+#prife4 <- felm(inc.ch ~ ch.del + log(POB_TOT) + IM + conco | 0 | 0 |muni, datac, subset = inc_top == "PRI")
 prife5 <- felm(inc.ch ~ ch.hom + log(POB_TOT) + IM + conco + d_dipl + d_dipf + d_sen + d_gob + d_pres
-               | 0 | 0 | 0, datac, subset = inc_top == "PRI")
+               | 0 | 0 |muni, datac, subset = inc_top == "PRI")
 
 prife6 <- glm(alt ~ ch.agua + log(POB_TOT) + IM + conco + d_dipl + d_dipf + d_sen + d_gob + d_pres,
                 datac, subset = inc_top == "PRI", 
@@ -173,14 +173,14 @@ stargazer(prife1, prife2, prife3, #prife4,
 #Efectos fijos
 
 prdfe1 <- felm(inc.ch ~ ch.agua + log(POB_TOT) + IM + conco + d_dipl + d_dipf + d_sen + d_gob + d_pres
-               | 0 | 0 | 0, datac, subset = inc_top == "PRD")
+               | 0 | 0 |muni, datac, subset = inc_top == "PRD")
 prdfe2 <- felm(inc.ch ~ ch.elec + log(POB_TOT) + IM + conco + d_dipl + d_dipf + d_sen + d_gob + d_pres
-               | 0 | 0 | 0, datac, subset = inc_top == "PRD")
+               | 0 | 0 |muni, datac, subset = inc_top == "PRD")
 prdfe3 <- felm(inc.ch ~ ch.dren + log(POB_TOT) + IM + conco + d_dipl + d_dipf + d_sen + d_gob + d_pres
-               | 0 | 0 | 0, datac, subset = inc_top == "PRD")
-#prdfe4 <- felm(inc.ch ~ ch.del + log(POB_TOT) + IM + conco | 0 | 0 | 0, datac, subset = inc_top == "PRD")
+               | 0 | 0 |muni, datac, subset = inc_top == "PRD")
+#prdfe4 <- felm(inc.ch ~ ch.del + log(POB_TOT) + IM + conco | 0 | 0 |muni, datac, subset = inc_top == "PRD")
 prdfe5 <- felm(inc.ch ~ ch.hom + log(POB_TOT) + IM + conco + d_dipl + d_dipf + d_sen + d_gob + d_pres
-               | 0 | 0 | 0, datac, subset = inc_top == "PRD")
+               | 0 | 0 |muni, datac, subset = inc_top == "PRD")
 
 prdfe6 <- glm(alt ~ ch.agua + log(POB_TOT) + IM + conco + d_dipl + d_dipf + d_sen + d_gob + d_pres,
                 datac, subset = inc_top == "PRD",
@@ -200,7 +200,7 @@ prdfe10 <- glm(alt ~ ch.hom + log(POB_TOT) + IM + conco + d_dipl + d_dipf + d_se
                  family = binomial(link = "logit"))
 
 stargazer(prdfe1, prdfe2, prdfe3, #prdfe4, 
-          prdfe5, #prdfe6, 
+          prdfe5, prdfe6, 
           prdfe7, prdfe8, #prdfe9, 
           prdfe10, 
           title = "Tabla 9. Municipios gobernados por el PRD",
@@ -238,14 +238,14 @@ datacap <- data %>%
 #Efectos fijos
 
 u1 <- felm(inc.ch ~ ch.agua + log(POB_TOT) + IM + conco + d_dipl + d_dipf + d_sen + d_gob + d_pres
-           | 0 | 0 | 0, datacap)
+           | 0 | 0 |muni, datacap)
 u2 <- felm(inc.ch ~ ch.elec + log(POB_TOT) + IM + conco + d_dipl + d_dipf + d_sen + d_gob + d_pres
-           | 0 | 0 | 0, datacap)
+           | 0 | 0 |muni, datacap)
 u3 <- felm(inc.ch ~ ch.dren + log(POB_TOT) + IM + conco + d_dipl + d_dipf + d_sen + d_gob + d_pres
-           | 0 | 0 | 0, datacap)
-#u4 <- felm(inc.ch ~ ch.del + log(POB_TOT) + IM + conco | 0 | 0 | 0, datacap)
+           | 0 | 0 |muni, datacap)
+#u4 <- felm(inc.ch ~ ch.del + log(POB_TOT) + IM + conco | 0 | 0 |muni, datacap)
 u5 <- felm(inc.ch ~ ch.hom + log(POB_TOT) + IM + conco + d_dipl + d_dipf + d_sen + d_gob + d_pres
-           | 0 | 0 | 0, datacap)
+           | 0 | 0 |muni, datacap)
 
 u6 <- glm(alt ~ ch.agua + log(POB_TOT) + IM + conco + d_dipl + d_dipf + d_sen + d_gob + d_pres, 
             datacap, family = binomial(link = "logit"))
@@ -280,14 +280,14 @@ stargazer(u1, u2, u3, #u4,
 #Efectos fijos
 
 panfe1 <- felm(inc.ch ~ ch.agua + log(POB_TOT) + IM + conco + d_dipl + d_dipf + d_sen + d_gob + d_pres
-               | 0 | 0 | 0, datacap, subset = inc_top == "PAN")
+               | 0 | 0 |muni, datacap, subset = inc_top == "PAN")
 panfe2 <- felm(inc.ch ~ ch.elec + log(POB_TOT) + IM + conco + d_dipl + d_dipf + d_sen + d_gob + d_pres
-               | 0 | 0 | 0, datacap, subset = inc_top == "PAN")
+               | 0 | 0 |muni, datacap, subset = inc_top == "PAN")
 panfe3 <- felm(inc.ch ~ ch.dren + log(POB_TOT) + IM + conco + d_dipl + d_dipf + d_sen + d_gob + d_pres
-               | 0 | 0 | 0, datacap, subset = inc_top == "PAN")
-#panfe4 <- felm(inc.ch ~ ch.del + log(POB_TOT) + IM + conco | 0 | 0 | 0, datacap, subset = inc_top == "PAN")
+               | 0 | 0 |muni, datacap, subset = inc_top == "PAN")
+#panfe4 <- felm(inc.ch ~ ch.del + log(POB_TOT) + IM + conco | 0 | 0 |muni, datacap, subset = inc_top == "PAN")
 panfe5 <- felm(inc.ch ~ ch.hom + log(POB_TOT) + IM + conco + d_dipl + d_dipf + d_sen + d_gob + d_pres
-               | 0 | 0 | 0, datacap, subset = inc_top == "PAN")
+               | 0 | 0 |muni, datacap, subset = inc_top == "PAN")
 
 panfe6 <- glm(alt ~ ch.agua + log(POB_TOT) + IM + conco + d_dipl + d_dipf + d_sen + d_gob + d_pres,
                 datacap, subset = inc_top == "PAN", 
@@ -325,14 +325,14 @@ stargazer(panfe1, panfe2, panfe3, #panfe4,
 #Efectos fijos
 
 prife1 <- felm(inc.ch ~ ch.agua + log(POB_TOT) + IM + conco + d_dipl + d_dipf + d_sen + d_gob + d_pres
-               | 0 | 0 | 0, datacap, subset = inc_top == "PRI")
+               | 0 | 0 |muni, datacap, subset = inc_top == "PRI")
 prife2 <- felm(inc.ch ~ ch.elec + log(POB_TOT) + IM + conco + d_dipl + d_dipf + d_sen + d_gob + d_pres
-               | 0 | 0 | 0, datacap, subset = inc_top == "PRI")
+               | 0 | 0 |muni, datacap, subset = inc_top == "PRI")
 prife3 <- felm(inc.ch ~ ch.dren + log(POB_TOT) + IM + conco + d_dipl + d_dipf + d_sen + d_gob + d_pres
-               | 0 | 0 | 0, datacap, subset = inc_top == "PRI")
-#prife4 <- felm(inc.ch ~ ch.del + log(POB_TOT) + IM + conco | 0 | 0 | 0, datacap, subset = inc_top == "PRI")
+               | 0 | 0 |muni, datacap, subset = inc_top == "PRI")
+#prife4 <- felm(inc.ch ~ ch.del + log(POB_TOT) + IM + conco | 0 | 0 |muni, datacap, subset = inc_top == "PRI")
 prife5 <- felm(inc.ch ~ ch.hom + log(POB_TOT) + IM + conco + d_dipl + d_dipf + d_sen + d_gob + d_pres
-               | 0 | 0 | 0, datacap, subset = inc_top == "PRI")
+               | 0 | 0 |muni, datacap, subset = inc_top == "PRI")
 
 prife6 <- glm(alt ~ ch.agua + log(POB_TOT) + IM + conco + d_dipl + d_dipf + d_sen + d_gob + d_pres,
                 datacap, subset = inc_top == "PRI", 
@@ -371,14 +371,14 @@ stargazer(prife1, prife2, prife3, #prife4,
 #Efectos fijos
 
 prdfe1 <- felm(inc.ch ~ ch.agua + log(POB_TOT) + IM + conco + d_dipl + d_dipf + d_sen + d_gob + d_pres
-               | 0 | 0 | 0, datacap, subset = inc_top == "PRD")
+               | 0 | 0 |muni, datacap, subset = inc_top == "PRD")
 prdfe2 <- felm(inc.ch ~ ch.elec + log(POB_TOT) + IM + conco + d_dipl + d_dipf + d_sen + d_gob + d_pres
-               | 0 | 0 | 0, datacap, subset = inc_top == "PRD")
+               | 0 | 0 |muni, datacap, subset = inc_top == "PRD")
 prdfe3 <- felm(inc.ch ~ ch.dren + log(POB_TOT) + IM + conco + d_dipl + d_dipf + d_sen + d_gob + d_pres
-               | 0 | 0 | 0, datacap, subset = inc_top == "PRD")
-#prdfe4 <- felm(inc.ch ~ ch.del + log(POB_TOT) + IM + conco | 0 | 0 | 0, datacap, subset = inc_top == "PRD")
+               | 0 | 0 |muni, datacap, subset = inc_top == "PRD")
+#prdfe4 <- felm(inc.ch ~ ch.del + log(POB_TOT) + IM + conco | 0 | 0 |muni, datacap, subset = inc_top == "PRD")
 prdfe5 <- felm(inc.ch ~ ch.hom + log(POB_TOT) + IM + conco + d_dipl + d_dipf + d_sen + d_gob + d_pres
-               | 0 | 0 | 0, datacap, subset = inc_top == "PRD")
+               | 0 | 0 |muni, datacap, subset = inc_top == "PRD")
 
 prdfe6 <- glm(alt ~ ch.agua + log(POB_TOT) + IM + conco + d_dipl + d_dipf + d_sen + d_gob + d_pres, 
                 datacap, subset = inc_top == "PRD",

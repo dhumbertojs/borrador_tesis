@@ -67,7 +67,7 @@ crimen <- read.csv(paste(inp, "homicidios.csv", sep = "/")) %>%
   
 cri <- crimen %>% 
   group_by(muni) %>% 
-  fill(hom) %>% 
+  #fill(hom) %>% 
   ungroup() %>% 
   select(-3)
 
@@ -76,7 +76,7 @@ crimen <- crimen %>%
   mutate(
     hom = lead(hom, 1)
   ) %>% 
-  fill(hom) %>% 
+  #fill(hom) %>% 
   ungroup() %>% 
   select(-3)
 
@@ -93,7 +93,7 @@ servicios <- read.csv(paste(inp, "Services_original.csv", sep = "/")) %>%
 
 ser <- servicios %>% 
   group_by(muni) %>% 
-  fill(c(agua, dren, elec), .direction = "down") %>% 
+  #fill(c(agua, dren, elec), .direction = "down") %>% 
   ungroup() %>% 
   select(-5)
 
@@ -104,7 +104,7 @@ servicios <- servicios %>%
     dren = lead(dren ,n = 1),
     elec = lead(elec, n = 1)  
   ) %>% 
-  fill(c(agua, dren, elec), .direction = "down") %>% 
+  #fill(c(agua, dren, elec), .direction = "down") %>% 
   ungroup() %>% 
   select(-5)
 
@@ -127,13 +127,16 @@ nrow(ele)#27,292
 ele <- filter(ele, year >= 1994)
 nrow(ele)#17,023
 
-try <- ele %>% 
-  left_join(ser, by = "muniYear") %>% 
+#try <- ele %>% 
+  #left_join(ser, by = "muniYear") %>% 
+try <- ser %>% 
+  #
   left_join(cri, by = "muniYear") %>% 
   #13,373
   left_join(mar, by = "muniYear") %>% 
   #11,142 observaciones
-  left_join(pob, by = "muniYear")
+  left_join(pob, by = "muniYear") %>% 
+  left_join(ele, by = "muniYear")
 
 
 serv_data <- try %>% 
@@ -155,6 +158,19 @@ serv_data <- try %>%
 #write_xlsx(serv_data, path = "./version_21/original/tables/elecciones_servicios_original.xlsx")
 
 try <- try %>% 
+  mutate(
+    year = as.numeric(sapply(strsplit(muniYear, "_"), "[", 2)),
+    trienio_inicio = ifelse(!is.na(muni), year, NA)
+  ) %>% 
+  fill(trienio_inicio, .direction = "up") %>% 
+  group_by(trienio_inicio) %>% 
+  mutate(
+    n_agua = ifelse(is.na(agua), 1, 0),
+    n_dren = ifelse(is.na(dren), 1, 0),
+    n_elec = ifelse(is.na(elec), 1, 0),
+    n_hom = ifelse(is.na(hom), 1, 0),
+  ) %>% 
+  ungroup() %>% 
   mutate(
     inc.ch = inc.ch*100,
     t.agua = (agua/POB_TOT) * 100000,
@@ -219,6 +235,8 @@ dada <- ele %>%
   left_join(pob, by = "muniYear")
 
 
+summary(dada)
+
 serv_data <- dada %>% 
   filter(!is.na(inc_top)) %>% 
   select(
@@ -238,6 +256,19 @@ serv_data <- dada %>%
 write_xlsx(serv_data, path = "./version_21/original/tables/elecciones_servicios_lead.xlsx")
 
 dada <- dada %>% 
+  mutate(
+    year = as.numeric(sapply(strsplit(muniYear, "_"), "[", 2)),
+    trienio_inicio = ifelse(!is.na(muni), year, NA)
+  ) %>% 
+  fill(trienio_inicio, .direction = "up") %>% 
+  group_by(trienio_inicio) %>% 
+  mutate(
+    n_agua = ifelse(is.na(agua), 1, 0),
+    n_dren = ifelse(is.na(dren), 1, 0),
+    n_elec = ifelse(is.na(elec), 1, 0),
+    n_hom = ifelse(is.na(hom), 1, 0),
+  ) %>% 
+  ungroup() %>% 
   mutate(
     inc.ch = inc.ch*100,
     t.agua = (agua/POB_TOT) * 100000,
